@@ -8,6 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-<h1>DDDDDDDDDDDDDDDD</h1>
+<h1>Marketplace Kaspi</h1>
+
+<?php
+/*echo  file_get_contents ( "https://kaspi.kz/merchantcabinet/#/orders/tabs" );
+*/?>
+<iframe width="800" height="700" src="https://ru.wikipedia.org/wiki/Форум" >
+    Ваш браузер не поддерживает плавающие фреймы!
+</iframe>
+
 </body>
 </html>
