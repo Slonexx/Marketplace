@@ -11,3 +11,4 @@ Route::get('/', function () {
 
 Route::get('/', [WebController::class, 'index']);
 Route::get('/supportHelp', [WebController::class, 'support']);
+Route::post('/supportHelp/Support', [WebController::class, 'supportSubmit'])->name("Support");
