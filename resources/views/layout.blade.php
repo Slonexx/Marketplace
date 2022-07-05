@@ -31,7 +31,7 @@
 
     </div>
 
-    <div class="main">
+    <div class="main main_background">
     @yield('content')
 
     </div>
@@ -95,7 +95,10 @@
         font-size: 20px; /* Увеличенный текст для включения прокрутки */
         padding: 0px 10px;
     }
-
+    .main_background{
+        height: 100%;
+        background: #dedede;
+    }
     /* Добавить активный класс для кнопки активного выпадающего списка */
     .active {
         background-color: green;
