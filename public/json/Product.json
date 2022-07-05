@@ -1,0 +1,26 @@
+{
+  "data": {
+    "type": "masterproducts",
+    "id": "MTA1NTExNTM2",
+    "attributes": {
+      "code": "105511536",
+      "name": "Ручка шариковая Erich Krause R-301 50 шт, цвет чернил синий"
+    },
+    "relationships": {
+      "merchantProduct": {
+        "links": {
+          "self": "https://kaspi.kz/shop/api/v2/masterproducts/MTA1NTExNTM2/relationships/merchantProduct",
+          "related": "https://kaspi.kz/shop/api/v2/masterproducts/MTA1NTExNTM2/merchantProduct"
+        },
+        "data": {
+          "type": "merchantproducts",
+          "id": "MTk2OTAwMSMjQUJDMTIzNDU"
+        }
+      }
+    },
+    "links": {
+      "self": "https://kaspi.kz/shop/api/v2/masterproducts/MTA1NTExNTM2"
+    }
+  },
+  "included": []
+}

@@ -165,7 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        //Collective\Bus\BusServiceProvider::class,
         /*
          * Application Service Providers...
          */
