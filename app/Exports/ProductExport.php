@@ -27,7 +27,15 @@ class ProductExport implements FromArray,WithEvents,WithHeadings
         return [
             AfterSheet::class => function(AfterSheet $event) {
                     $event->sheet->getDelegate()->getColumnDimension('A')->setWidth(15);
-                    $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(10);
+                    $event->sheet->getDelegate()->getColumnDimension('B')->setWidth(25);
+                    $event->sheet->getDelegate()->getColumnDimension('C')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('D')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('E')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('F')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('G')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('H')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('I')->setWidth(15);
+                    $event->sheet->getDelegate()->getColumnDimension('J')->setWidth(15);
             },
         ];
     }
@@ -35,8 +43,16 @@ class ProductExport implements FromArray,WithEvents,WithHeadings
     public function headings(): array
     {
         return [
-            'Name',
-            'Cost',
+            'SKU',
+            'model',
+            'brand',
+            'price',
+            'PP1',
+            'PP2',
+            'PP3',
+            'PP4',
+            'PP5',
+            'preorder'
         ];
     }
 
