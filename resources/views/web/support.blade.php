@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <br>
+    <br class="content">
     <div class="content">
         <h2 align="center">Написать нам на почту</h2>
         <div class="form_support">
@@ -59,12 +59,17 @@
 
 
     .content{
+        padding-top: 0px;
         margin: 5px;
         background: white;
         border-radius: 10px;
     }
-    .content h1{
-        padding: 10px;
+    .content h2{
+        padding-top: 10px;
+    }
+
+    .content br{
+        padding: 5px;
     }
 
 
