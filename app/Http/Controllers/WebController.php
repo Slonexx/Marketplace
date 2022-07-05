@@ -21,18 +21,9 @@ class WebController extends Controller
 
     public function supportSubmit(Request  $request){
 
-
-        Mail::send('emails.welcome', array('key' => 'value'), function($message)
-        {
-            $message->to('foo@example.com', 'Джон Смит')->subject('Привет!');
+        Mail::send('web.support', $date, function ($messages) use ($user){
+            $messages->to('');
         });
-        /*Mail::send(['text => mail'], ['name', 'web 1'], function($message){
-            $message->to('s.ivanov@smartinnovations.kz', 's.ivanov@smartinnovations')->subject('Test email');
-            $message->from('s.ivanov@smartinnovations.kz' , 's.ivanov@');
-        });*/
-
-
-        return $request;
 
     }
 

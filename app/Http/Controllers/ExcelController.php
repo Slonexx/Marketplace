@@ -16,7 +16,7 @@ class ExcelController extends Controller
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
         $apiKey = $request->token;
-        $client = new MsApiClient($uri,$apiKey);
+        $client = new ApiClientMC($uri,$apiKey);
         $data = $client->requestGet();
 
         //dd($data);
@@ -77,7 +77,7 @@ class ExcelController extends Controller
                 $product['preorder'] = "";
                 //dd($product);
                 array_push($arrProduct,$product);
-        } 
+        }
 
         //dd($arrProduct);
 
