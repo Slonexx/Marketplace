@@ -13,20 +13,27 @@
 </head>
 <body>
 
-    <div class="sidenav">
-        <div class="toc-list-h1">
-            <a href="/">Главное </a>
-            <a href="/">Настройки </a>
-            <a href="#about">Настройки </a>
-            <a href="routes">Настройки </a>
-        </div>
-        <div class="toc-footer">
-            <a href="/supportHelp">Написать нам</a>
-        </div>
+   <div class="sidenav">
+       <div class="toc-list-h1">
+           <a href="/">Главное </a>
+           <button class="dropdown-btn">Настройки
+               <i class="fa fa-caret-down"></i>
+           </button>
+           <div class="dropdown-container">
+               <a href="#">Ссылка 1</a>
+               <a href="#">Ссылка 2</a>
+               <a href="#">Ссылка 3</a>
+           </div>
+       </div>
+       <div class="toc-footer">
+           <a href="/supportHelp">Написать нам</a>
+       </div>
+
     </div>
 
     <div class="main">
     @yield('content')
+
     </div>
 </body>
 </html>
@@ -41,24 +48,6 @@
         background-color: #FAFAFA;
     }
 
-    .background{
-        color: #e7e7e7;
-    }
-
-    .sidenav {
-        height: 100%;
-        width: 20%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #111;
-        overflow-x: hidden;
-        padding-top: 20px;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
     .toc-footer a{
         position: absolute;
         left: 0;
@@ -67,28 +56,80 @@
         height: 80px;
     }
 
-    .sidenav a {
-        padding: 6px 8px 6px 16px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #818181;
-        display: block;
+    /* Фиксированный боковых навигационных ссылок, полной высоты */
+    .sidenav {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
     }
 
-    .sidenav a:hover {
+    /* Стиль боковых навигационных ссылок и раскрывающейся кнопки */
+    .sidenav a, .dropdown-btn {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #818181;
+        display: block;
+        border: none;
+        background: none;
+        width:100%;
+        text-align: left;
+        cursor: pointer;
+        outline: none;
+    }
+
+    /* При наведении курсора мыши */
+    .sidenav a:hover, .dropdown-btn:hover {
         color: #f1f1f1;
     }
 
+    /* Основное содержание */
     .main {
-        margin-top: 10px;
-        margin-left: 21%; /* Same as the width of the sidenav */
-        font-size: 28px; /* Increased text to enable scrolling */
-        padding: 0 10px;
+        margin-left: 200px; /* То же, что и ширина боковой навигации */
+        font-size: 20px; /* Увеличенный текст для включения прокрутки */
+        padding: 0px 10px;
     }
 
-    @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
+    /* Добавить активный класс для кнопки активного выпадающего списка */
+    .active {
+        background-color: green;
+        color: white;
+    }
+
+    /* Выпадающий контейнер (по умолчанию скрыт). Необязательно: добавьте более светлый цвет фона и некоторые левые отступы, чтобы изменить дизайн выпадающего содержимого */
+    .dropdown-container {
+        display: none;
+        background-color: #262626;
+        padding-left: 8px;
+    }
+
+    /* Необязательно: стиль курсора вниз значок */
+    .fa-caret-down {
+        float: right;
+        padding-right: 8px;
     }
 </style>
+
+<script>
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+        });
+    }
+</script>
 
