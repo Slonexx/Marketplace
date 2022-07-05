@@ -3,7 +3,6 @@
 @section('content')
     <br>
     <div class="content">
-        <br>
         <h2 align="center">Написать нам на почту</h2>
         <div class="form_support">
             <form action="/contact/submit" method="post">
