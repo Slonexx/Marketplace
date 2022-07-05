@@ -33,7 +33,6 @@
 
     <div class="main main_background">
     @yield('content')
-    <br>
     </div>
 </body>
 </html>

@@ -1,11 +1,13 @@
 @extends('layout')
 
 @section('content')
-    <br class="content">
+    <br class="brTOP">
     <div class="content">
         <h2 align="center">Написать нам на почту</h2>
         <div class="form_support">
-            <form action="/contact/submit" method="post">
+            <form action=" {{  route('Support') }} " method="post">
+                @csrf
+
                 <div class="form-group">
                     <label for="name">Введите имя </label>
                     <input type="text" name="name" placeholder="Введите Имя" id="name" class="form-control">
@@ -26,9 +28,8 @@
                     <textarea name="message" id="message" class="form-control" placeholder="Введите сообщение"></textarea>
                 </div>
 
-                <br>
                 <button type="submit" class="btn btn-success"> Отправить </button>
-                <br>
+
             </form>
 
         </div>
@@ -38,8 +39,12 @@
 
 <style>
     .form_support{
-        padding: 30px;
+        padding-top: 10px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 40px;
     }
+
     .form_support label{
         padding-left: 2px;
         padding-top: 10px;
@@ -48,18 +53,17 @@
     }
 
     .form_support button{
+        margin-top: 10px;
         background: green;
-       float: right;
+        float: right;
     }
     .form_support button:hover{
         background: black;
         float: right;
     }
 
-
-
     .content{
-        padding-top: 0px;
+        padding-top: 0;
         margin: 5px;
         background: white;
         border-radius: 10px;
