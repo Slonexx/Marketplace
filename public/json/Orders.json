@@ -1,0 +1,57 @@
+{
+  "data": [
+    {
+      "type": "orders",
+      "id": "MjA2ODQ2Nzgy",
+      "attributes": {
+        "code": "206846782",
+        "totalPrice": 90,
+        "paymentMode": "PREPAID",
+        "creationDate": 1657011516265,
+        "deliveryCostForSeller": 0,
+        "reservationDate": 1657695600000,
+        "isKaspiDelivery": false,
+        "deliveryMode": "DELIVERY_PICKUP",
+        "signatureRequired": false,
+        "preOrder": false,
+        "state": "NEW",
+        "approvedByBankDate": 1657011517155,
+        "status": "APPROVED_BY_BANK",
+        "customer": {
+          "id": "Nzc1MDQ5ODgyMQ",
+          "name": "Сергей",
+          "cellPhone": "7750498821",
+          "firstName": "Сергей",
+          "lastName": "Иванов"
+        },
+        "deliveryCost": 0
+      },
+      "relationships": {
+        "user": {
+          "links": {
+            "self": "https://kaspi.kz/shop/api/v2/orders/MjA2ODQ2Nzgy/relationships/user",
+            "related": "https://kaspi.kz/shop/api/v2/orders/MjA2ODQ2Nzgy/user"
+          },
+          "data": {
+            "type": "customers",
+            "id": "Nzc1MDQ5ODgyMQ"
+          }
+        },
+        "entries": {
+          "links": {
+            "self": "https://kaspi.kz/shop/api/v2/orders/MjA2ODQ2Nzgy/relationships/entries",
+            "related": "https://kaspi.kz/shop/api/v2/orders/MjA2ODQ2Nzgy/entries"
+          }
+        }
+      },
+      "links": {
+        "self": "https://kaspi.kz/shop/api/v2/orders/MjA2ODQ2Nzgy"
+      }
+    }
+  ],
+  "included": [],
+  "meta": {
+    "pageCount": 1,
+    "totalCount": 1
+  }
+}
