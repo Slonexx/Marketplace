@@ -1,0 +1,16 @@
+{
+  "data": {
+    "type": "merchantproducts",
+    "id": "MTk2OTAwMSMjQUJDMTIzNDU",
+    "attributes": {
+      "code": "ABC12345",
+      "name": "Ручка шариковая",
+      "manufacturer": "Erich Krause"
+    },
+    "relationships": {},
+    "links": {
+      "self": "https://kaspi.kz/shop/api/v2/merchantproducts/MTk2OTAwMSMjQUJDMTIzNDU"
+    }
+  },
+  "included": []
+}

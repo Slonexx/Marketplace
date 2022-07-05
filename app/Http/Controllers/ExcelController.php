@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ProductExport;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
+use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -17,17 +16,8 @@ class ExcelController extends Controller
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
         $apiKey = $request->token;
-        $headers = [
-            //'Accept' => 'application/json',
-            'Authorization' => $apiKey,
-        ];
-        $client = new Client();
-
-        $res = $client->request('GET', $uri ,[
-            'headers' => $headers,
-        ]);
-
-        $data = json_decode($res->getBody());
+        $client = new MsApiClient($uri,$apiKey);
+        $data = $client->requestGet();
 
         //dd($data);
         $arrProduct = array();
