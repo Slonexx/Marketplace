@@ -34,7 +34,7 @@ class WebController extends Controller
         $headers = [
             "From" => "sergei@smartkaspi.kz",
             "Reply-To" => "sergei@smartkaspi.kz",
-            //"Content-type" => "text/html; charset=utf-8",
+            "Content-type" => "text/plain; charset=utf-8",
         ];
 
 
@@ -54,10 +54,11 @@ class WebController extends Controller
 
     </body>
     </html>';*/
-        $message = " KaspiMarketplace: "."Форма обратной связи\r\n".
+        $message = "Форма обратной связи <br />".
             "Имя клиента: ".$request->name."\r\n".
             "Электронная почта: ".$request->email."\r\n".
             "Текст  сообщения:".$request->message."\r\n";
+        $message = wordwrap($message, 70, "\r\n");
 
         mail($to, $subject, $message, $headers);
         return redirect()->route('support')->with('success', 'Ваше сообщение успешно отправлено');
