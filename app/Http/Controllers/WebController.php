@@ -54,7 +54,7 @@ class WebController extends Controller
 
     </body>
     </html>';*/
-        $message = "Форма обратной связи <br />".
+        $message = "Форма обратной связи "."\r\n".
             "Имя клиента: ".$request->name."\r\n".
             "Электронная почта: ".$request->email."\r\n".
             "Текст  сообщения:".$request->message."\r\n";
