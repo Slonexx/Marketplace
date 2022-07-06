@@ -34,11 +34,11 @@ class WebController extends Controller
         $headers = [
             "From" => "sergei@smartkaspi.kz",
             "Reply-To" => "sergei@smartkaspi.kz",
-            "Content-type" => "text/html; charset=utf-8",
+            //"Content-type" => "text/html; charset=utf-8",
         ];
 
 
-        $message = '
+        /*$message = '
     <html>
     <body>
     <center>
@@ -53,8 +53,13 @@ class WebController extends Controller
                     <td>'.$request->message.'</td></tr>
 
     </body>
-    </html>';
-
+    </html>';*/
+        $message = [
+            "KaspiMarketplace" => "Форма обратной связи",
+            "Имя клиента" => $request->name,
+            "Электронная почта" => $request->email,
+            "Текст  сообщения" => $request->message,
+        ];
       /*  $data = new stdClass();
         $data->name = $request->name;
         $data->email = $request->email;
