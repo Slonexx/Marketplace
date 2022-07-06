@@ -26,7 +26,7 @@
            </div>
        </div>
        <div class="toc-footer">
-           <a href="/supportHelp">Написать нам</a>
+           <a href={{  route('support') }} >Написать нам</a>
        </div>
 
     </div>
