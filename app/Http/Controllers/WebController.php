@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\FeedbackMailer;
-use stdClass;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class WebController extends Controller
 {
@@ -37,23 +35,6 @@ class WebController extends Controller
             "Content-type" => "text/plain; charset=utf-8",
         ];
 
-
-        /*$message = '
-    <html>
-    <body>
-    <center>
-    <table border="1" cellpadding="6" cellspacing="0" width="90%" bgcolor="white">
-    <tr><td colspan="2" align="center" bgcolor="white"><b>Обратная связь </b></td></tr>';
-
-        $message .= '<tr> <td> <b>Имя клиента</b></td>
-                    <td>'.$request->name.'</td></tr>
-                    <tr><td><b>Электронная почта</b></td>
-                    <td>'.$request->email.'</td></tr>
-                    <tr><td><b> Текст  сообщения</b></td>
-                    <td>'.$request->message.'</td></tr>
-
-    </body>
-    </html>';*/
         $message = "Форма обратной связи "."\r\n".
             "Имя клиента: ".$request->name."\r\n".
             "Электронная почта: ".$request->email."\r\n".
@@ -61,7 +42,11 @@ class WebController extends Controller
         $message = wordwrap($message, 70, "\r\n");
 
         mail($to, $subject, $message, $headers);
-        return redirect()->route('support')->with('success', 'Ваше сообщение успешно отправлено');
+        //alert()->info("Какой то текст")->persistent("Закрыть")->autoclose(3500);
+
+        Alert::success('Сообщение отправлено', 'мы ответим вам в ближайшее время');
+        return back();
+       // return view('web.index');
     }
 
 

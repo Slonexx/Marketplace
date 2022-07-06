@@ -1,6 +1,9 @@
 @extends('layout')
 
 @section('content')
+
+    @include('sweet::alert')
+
     <br class="brTOP">
     <div class="content">
         <h2 align="center">Написать нам на почту</h2>
@@ -23,7 +26,9 @@
                               required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-success"> Отправить </button>
+                <button type="submit" class="btn btn-primary"> Отправить </button>
+
+                @include('sweetalert::alert')
 
             </form>
 
