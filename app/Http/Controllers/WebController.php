@@ -54,18 +54,10 @@ class WebController extends Controller
 
     </body>
     </html>';*/
-        $message = [
-            "KaspiMarketplace" => "Форма обратной связи",
-            "Имя клиента" => $request->name,
-            "Электронная почта" => $request->email,
-            "Текст  сообщения" => $request->message,
-        ];
-      /*  $data = new stdClass();
-        $data->name = $request->name;
-        $data->email = $request->email;
-        $data->message = $request->message;
-        Mail::to($data->email)->send(new FeedbackMailer($data));
-        return redirect()->route('support')->with('success', 'Ваше сообщение успешно отправлено');*/
+        $message = " KaspiMarketplace: "."Форма обратной связи\r\n".
+            "Имя клиента: ".$request->name."\r\n".
+            "Электронная почта: ".$request->email."\r\n".
+            "Текст  сообщения:".$request->message."\r\n";
 
         mail($to, $subject, $message, $headers);
         return redirect()->route('support')->with('success', 'Ваше сообщение успешно отправлено');
