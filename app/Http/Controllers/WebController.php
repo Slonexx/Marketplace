@@ -28,15 +28,16 @@ class WebController extends Controller
             'message' => 'required|max:500',
         ]);
 
-        $to = 'S.lone1212@yandex.kz';
+        $to = 'sergei@smartkaspi.kz';
         $subject = 'Обрантная связь с сайта Kaspi marketplace';
 
         /*$headers = "From: S.lone1212@yandex.kz\r\n";
         $headers .= "Reply-To: S.lone1212@yandex.kz\r\n";
         $headers .= "Content-type: text/html; charset=utf-8\r\n";*/
+
         $headers = [
-            "From" => "S.lone1212@yandex.kz",
-            "Reply-To" => "S.lone1212@yandex.kz",
+            "From" => "sergei@smartkaspi.kz",
+            "Reply-To" => "sergei@smartkaspi.kz",
             "Content-type" => "text/html; charset=utf-8",
         ];
 
@@ -65,7 +66,7 @@ class WebController extends Controller
         Mail::to($data->email)->send(new FeedbackMailer($data));
         return redirect()->route('support')->with('success', 'Ваше сообщение успешно отправлено');*/
 
-        mail($to, $subject, $message);
+        mail($to, $subject, $message, $headers);
         return redirect()->route('support')->with('success', 'Ваше сообщение успешно отправлено');
     }
 
