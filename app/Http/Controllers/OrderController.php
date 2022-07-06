@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiClientMC;
 use App\Http\Controllers\KaspiApiClient;
 
 class OrderController extends Controller
 {
-    public function getOrders(Request $request)
+    public function getOrdersFromKaspi($apiKey)
     {
         // $request->validate([
-        //     'token' => 'required|string'
+        //     'tokenKaspi' => 'required|string'
         // ]);
 
-        $uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1656688175000&filter[orders][creationDate][\$le]=1657033775000";
-        $apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
+        $uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1656688175000&filter[orders][creationDate][\$le]=1657111171000";
+        //$apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
 
         $client = new KaspiApiClient($uri,$apiKey);
         $jsonAllOrders = $client->requestGet(true);
         
         $ordersFromKaspi = [];
+        //dd($jsonAllOrders);
         foreach($jsonAllOrders->data as $key=>$row){
             $order = null;
             $order['id'] = $row->id;
@@ -27,7 +29,7 @@ class OrderController extends Controller
             $order['status'] = $row->attributes->status;
             $order['totalPrice'] = $row->attributes->totalPrice;
             $order['customer'] = $row->attributes->customer;
-            $order['kaspi_link'] = $row->links->self;
+            $order['link_self'] = $row->links->self;
 
             $uri = $row->relationships->entries->links->related;
             $client->setRequestUrl($uri);
@@ -38,6 +40,7 @@ class OrderController extends Controller
             foreach($jsonEntry->data as $key=>$row2){
                 $entry = null;
                 $entry['id'] = $row2->id;
+                $entry['basePrice'] = $row2->attributes->basePrice;
                 $entry['totalPrice'] = $row2->attributes->totalPrice;
                 $entry['quantity'] = $row2->attributes->quantity;
                 $entry['type'] = $row2->attributes->unitType;
@@ -66,6 +69,50 @@ class OrderController extends Controller
         }
 
         return $ordersFromKaspi;
+    }
+
+    public function getOrdersFromMS($apiKey)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
+        $client = new ApiClientMC($uri,$apiKey);
+        $jsonAllOrders = $client->requestGet();
+        //dd($jsonAllOrders);
+        $ordersFromMs = [];
+        $count = 0;
+        foreach ($jsonAllOrders->rows as $key => $row) {
+            $ordersFromMs[$count] = $row->externalCode;
+            $count++;
+        }
+        return $ordersFromMs;
+    }
+
+
+    public function getOrdersNotInserted($tokenMs,$tokenKaspi)
+    {
+        $ordersFromKaspi = $this->getOrdersFromKaspi($tokenKaspi);
+        //app(ProductController::class)->insertProducts($tokenMs,$ordersFromKaspi);
+        $ordersFromMs = $this->getOrdersFromMS($tokenMs);
+        
+        $notAddedOrders = [];
+        foreach($ordersFromKaspi as $order){
+            //dd($order["id"]);
+            if (in_array($order["id"],$ordersFromMs) == false) {
+               array_push($notAddedOrders,$order);
+            }
+        }
+
+        return $notAddedOrders;
 
     }
+
+    public function insertOrders(Request $request)
+    {
+        $request->validate([
+            'tokenKaspi' => 'required|string',
+            'tokenMs' => 'required|string',
+        ]);
+
+        return $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi);
+    }
+
 }
