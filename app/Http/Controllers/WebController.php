@@ -43,7 +43,9 @@ class WebController extends Controller
                     <tr><td><b>Электронная почта</b></td>
                     <td>'.$request->email.'</td></tr>
                     <tr><td><b> Текст  сообщения</b></td>
-                    <td>'.$request->message.'</td></tr>';
+                    <td>'.$request->message.'</td></tr>
+                    </html>
+    </body>';
 
       /*  $data = new stdClass();
         $data->name = $request->name;
