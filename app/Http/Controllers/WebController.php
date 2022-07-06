@@ -31,6 +31,16 @@ class WebController extends Controller
         $to = 'S.lone1212@yandex.kz';
         $subject = 'Обрантная связь с сайта Kaspi marketplace';
 
+        /*$headers = "From: S.lone1212@yandex.kz\r\n";
+        $headers .= "Reply-To: S.lone1212@yandex.kz\r\n";
+        $headers .= "Content-type: text/html; charset=utf-8\r\n";*/
+        $headers = [
+            "From" => "S.lone1212@yandex.kz",
+            "Reply-To" => "S.lone1212@yandex.kz",
+            "Content-type" => "text/html; charset=utf-8",
+        ];
+
+
         $message = '
     <html>
     <body>
@@ -44,8 +54,9 @@ class WebController extends Controller
                     <td>'.$request->email.'</td></tr>
                     <tr><td><b> Текст  сообщения</b></td>
                     <td>'.$request->message.'</td></tr>
-                    </html>
-    </body>';
+
+    </body>
+    </html>';
 
       /*  $data = new stdClass();
         $data->name = $request->name;
