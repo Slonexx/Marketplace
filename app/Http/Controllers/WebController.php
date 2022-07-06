@@ -31,10 +31,6 @@ class WebController extends Controller
         $to = 'sergei@smartkaspi.kz';
         $subject = 'Обрантная связь с сайта Kaspi marketplace';
 
-        /*$headers = "From: S.lone1212@yandex.kz\r\n";
-        $headers .= "Reply-To: S.lone1212@yandex.kz\r\n";
-        $headers .= "Content-type: text/html; charset=utf-8\r\n";*/
-
         $headers = [
             "From" => "sergei@smartkaspi.kz",
             "Reply-To" => "sergei@smartkaspi.kz",
