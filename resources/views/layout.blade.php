@@ -11,7 +11,7 @@
 
 
 </head>
-<body>
+<body style="background-color:#dcdcdc;">
 
    <div class="sidenav">
        <div class="toc-list-h1">
@@ -31,7 +31,7 @@
 
     </div>
 
-    <div class="main main_background">
+    <div class="main">
     @yield('content')
     </div>
 </body>
@@ -93,10 +93,6 @@
         margin-left: 200px; /* То же, что и ширина боковой навигации */
         font-size: 20px; /* Увеличенный текст для включения прокрутки */
         padding: 0px 10px;
-    }
-    .main_background{
-        height: 100%;
-        background: #dedede;
     }
     /* Добавить активный класс для кнопки активного выпадающего списка */
     .active {
