@@ -46,7 +46,7 @@ class WebController extends Controller
     <html>
     <body>
     <center>
-    <table border="1" cellpadding="6" cellspacing="0" width="90%" bgcolor="black">
+    <table border="1" cellpadding="6" cellspacing="0" width="90%" bgcolor="white">
     <tr><td colspan="2" align="center" bgcolor="black"><b>Обратная связь </b></td></tr>';
 
         $message .= '<tr> <td> <b>Имя клиента</b></td>
