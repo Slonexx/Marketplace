@@ -32,7 +32,7 @@ class WebController extends Controller
         $subject = 'Обрантная связь с сайта Kaspi marketplace';
 
         $headers = [
-            "From" => "sergei@smartkaspi.kz",
+            "From" => "$request->email",
             "Reply-To" => "sergei@smartkaspi.kz",
             "Content-type" => "text/html; charset=utf-8",
         ];
