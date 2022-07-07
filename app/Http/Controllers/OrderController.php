@@ -25,6 +25,7 @@ class OrderController extends Controller
         foreach($jsonAllOrders->data as $key=>$row){
             $order = null;
             $order['id'] = $row->id;
+            $order['code'] = $row->attributes->code;
             $order['state'] = $row->attributes->state;
             $order['status'] = $row->attributes->status;
             $order['totalPrice'] = $row->attributes->totalPrice;
@@ -101,8 +102,7 @@ class OrderController extends Controller
             }
         }
 
-        return $notAddedOrders;
-
+        return $this->mapOrdersToAdd($notAddedOrders,$tokenMs);
     }
 
     public function insertOrders(Request $request)
@@ -112,7 +112,82 @@ class OrderController extends Controller
             'tokenMs' => 'required|string',
         ]);
 
-        return $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi);
+        $orders = $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi);
+
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
+        $client = new ApiClientMC($uri,$request->tokenMs);
+
+        foreach ($orders as $order){
+            $client->requestPost($order);
+        }
+        return response([
+            "mesage" => "Inserted orders:".count($orders),
+        ]);
+    }
+
+    private function mapOrdersToAdd($orders,$apiKey)
+    {
+        $formattedOrders = [];
+        foreach ($orders as $order){
+             $formattedOrder = null;
+             $address = null;
+             foreach ($order['entries'] as $entry) {
+                $address = $entry['address']->formattedAddress;
+                $formattedOrder['shipmentAddressFull'] = ["addInfo" => $address];
+            }
+            $formattedOrder['agent'] = $this->getAgent($order['customer'], $address,$apiKey);
+            $formattedOrder['organization'] = $this->getContentJson('organization');
+            $formattedOrder['rate'] = $this->getContentJson('rate');
+            $formattedOrder['store'] = $this->getContentJson('store');
+            $formattedOrder['externalCode'] = $order['id'];
+            $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
+            //$formattedOrder['positions'] = $this->getPositions($order['entries'],$apiKey);
+            array_push($formattedOrders, $formattedOrder);
+        }
+
+        return $formattedOrders;
+    }
+
+    private function getAgent($customer, $address,$apiKey)
+    {
+       $meta = app(AgentController::class)->getAgent($customer,$address,$apiKey);
+       $res = [
+            "meta" => [
+                "href" => $meta->href,
+                "type" => $meta->type,
+                "mediaType" => $meta->mediaType,
+            ],
+       ];
+       return $res;
+    }
+
+
+    # APPROVED_BY_BANK – одобрен банком
+    #CANCELLED – отменён
+    #CANCELLING – ожидает отмены
+    #ACCEPTED_BY_MERCHANT– принят на обработку продавцом
+    #COMPLETED – завершён  
+    private function getState($status,$apiKey)
+    {
+       $meta = app(StateController::class)->getState($status,$apiKey);
+       $res = [
+            "meta" => [
+                "href" => $meta->href,
+                "type" => $meta->type,
+                "mediaType" => $meta->mediaType,
+            ],
+        ];
+        return $res;
+    }
+    
+    private function getPositions($entries,$apiKey)
+    {
+
+    }
+
+    private function getContentJson($filename) {
+        $path = public_path().'/json'.'/'.$filename.'.json';
+        return json_decode(file_get_contents($path),true);
     }
 
 }

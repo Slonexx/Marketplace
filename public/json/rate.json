@@ -1,0 +1,11 @@
+{
+    "currency": {
+        "meta": {
+            "href": "https://online.moysklad.ru/api/remap/1.2/entity/currency/1e496b32-d141-11ec-0a80-075e00bbab25",
+            "metadataHref": "https://online.moysklad.ru/api/remap/1.2/entity/currency/metadata",
+            "type": "currency",
+            "mediaType": "application/json",
+            "uuidHref": "https://online.moysklad.ru/app/#currency/edit?id=1e496b32-d141-11ec-0a80-075e00bbab25"
+        }
+    }
+}

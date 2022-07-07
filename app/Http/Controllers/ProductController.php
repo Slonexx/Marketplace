@@ -19,17 +19,17 @@ class ProductController extends Controller
                 //dd($entry);
                 if(array_search($entry['product']->code, $productIds) == false){
                     $productIds[$count] = $entry['product']->code;
-                    
+                    //dd($productIds[$count]);
                     $product['name'] = $entry['product']->name;
                     $product['article'] = $productIds[$count];
                     $product['attributes'] = [
                         0 => [
-                            "meta" => json_decode(file_get_contents(public_path().'/json/brand.json'),true),
+                            "meta" => $this->getContentJson('brand'),
                             "name" => "brand (KASPI)",
                             "value" => $entry['product']->manufacturer,
                         ],
                         1 => [
-                            "meta" =>json_decode(file_get_contents(public_path().'/json/export_bool.json'),true),
+                            "meta" =>$this->getContentJson('export_bool'),
                             "name" => "Добавлять товар на Kaspi",
                             "value" => true,
                         ],
@@ -37,12 +37,12 @@ class ProductController extends Controller
 
                     $product['salePrices'] = [
                         0 => [
-                            "value" => $entry['basePrice'],
-                            "currency" =>json_decode(file_get_contents(public_path().'/json/currency.json'),true),
-                            "priceType" =>json_decode(file_get_contents(public_path().'/json/price_type.json'),true),
+                            "value" => $entry['basePrice'] * 100,
+                            "currency" => $this->getContentJson('currency'),
+                            "priceType" => $this->getContentJson('price_type'),
                         ],
                     ];
-                    $product['uom'] =json_decode(file_get_contents(public_path().'/json/uom.json'),true);
+                    $product['uom'] = $this->getContentJson('uom');
                     $count++;
                     array_push($productsFromKaspi, $product);
                 }
@@ -58,16 +58,25 @@ class ProductController extends Controller
         $jsonProducts = $client->requestGet();
         $productsFromMs = [];
         $count = 0;
-        foreach($jsonProducts->rows as $row){
+        foreach($jsonProducts->rows as $key=>$row){
             $productsFromMs[$count] = $row->article;
             $count++;
         }
         //dd($productsFromMs);
+        return $productsFromMs;
     }
 
-    public function getNotAddedProducts($tokenMs,$tokenKaspi) {
-       return $productsFromKaspi = $this->getKaspiProducts($tokenKaspi);
-        //$productsFromMs = $this->getMsProducts($tokenMs);
+    public function getNotAddedProducts($tokenMs,$tokenKaspi) 
+    {
+       $productsFromKaspi = $this->getKaspiProducts($tokenKaspi);
+       $productsFromMs = $this->getMsProducts($tokenMs);
+       $notAddedProducts = [];
+       foreach($productsFromKaspi as $product){
+            if(in_array($product['article'],$productsFromMs) == false){
+                array_push($notAddedProducts, $product);
+            }
+       }
+       return $notAddedProducts;
     }
 
     public function insertProducts(Request $request) {
@@ -75,7 +84,23 @@ class ProductController extends Controller
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
         ]);
-       return $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi);
+        
+        $products = $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi);
+
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
+        $client = new ApiClientMC($uri,$request->tokenMs);
+
+        foreach ($products as $product){
+            $client->requestPost($product);
+        }
+        return response([
+            "mesage" => "Inserted products:".count($products),
+        ]);
+    }
+
+    private function getContentJson($filename) {
+        $path = public_path().'/json'.'/'.$filename.'.json';
+        return json_decode(file_get_contents($path),true);
     }
 
 }
