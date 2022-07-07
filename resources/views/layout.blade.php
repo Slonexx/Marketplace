@@ -13,27 +13,30 @@
 </head>
 <body style="background-color:#dcdcdc;">
 
-<div class="sidenav">
-    <div class="toc-list-h1">
-        <a href="/">Главное </a>
-        <button class="dropdown-btn">Настройки
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="#">Основаня настройка</a>
-            <a href="#">Ссылка 1</a>
-            <a href="#">Ссылка 2</a>
+   <div class="page">
+        <div class="sidenav">
+
+
+
+            <div class="toc-list-h1">
+                <a href="/">Главное </a>
+                <button class="dropdown-btn">Настройки<i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-container">
+                    <a href="#">Основаня настройка</a>
+                    <a href="#">Ссылка 1</a>
+                    <a href="#">Ссылка 2</a>
+                </div>
+            </div>
+            <div class="toc-footer">
+                <a href={{  route('support') }} >Написать нам</a>
+            </div>
+
+        </div>
+
+        <div class="main">
+                @yield('content')
         </div>
     </div>
-    <div class="toc-footer">
-        <a href={{  route('support') }} >Написать нам</a>
-    </div>
-
-</div>
-
-<div class="main">
-    @yield('content')
-</div>
 </body>
 </html>
 
