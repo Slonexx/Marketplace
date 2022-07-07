@@ -9,7 +9,7 @@
         <h2 align="center">Написать нам на почту</h2>
         <div class="form_support">
             <form action=" {{  route('Send') }} " method="post">
-                @csrf
+            @csrf <!-- {{ csrf_field() }} -->
 
                 <div class="form-group">
                     <input type="text" name="name" placeholder="Введите Имя, фамилия" id="name" class="form-control"
@@ -36,6 +36,8 @@
     </div>
 
 @endsection
+
+
 
 <style>
     .form_support{
