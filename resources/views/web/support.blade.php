@@ -4,7 +4,6 @@
 
     @include('sweet::alert')
 
-    <br class="brTOP">
     <div class="content">
         <h2 align="center">Написать нам на почту</h2>
         <div class="form_support">

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductPropertyController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\TestController2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +34,6 @@ Route::get('test', function ()
 {
     return view('test');
 });
+
+Route::get('getTest', [TestController::class,'getTest']);
+Route::get('getTest2', [TestController2::class,'getTest'])->name('Test');

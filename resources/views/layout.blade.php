@@ -1,3 +1,5 @@
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +15,7 @@
 </head>
 <body style="background-color:#dcdcdc;">
 
-   <div class="page">
+<div class="page">
         <div class="sidenav">
 
 
@@ -22,13 +24,18 @@
                 <a href="/">Главное </a>
                 <button class="dropdown-btn">Настройки<i class="fa fa-caret-down"></i></button>
                 <div class="dropdown-container">
-                    <a href="#">Основаня настройка</a>
+                    <a href={{  route('Setting_Main') }}>Основная настройка</a>
                     <a href="#">Ссылка 1</a>
                     <a href="#">Ссылка 2</a>
                 </div>
+                <hr class="">
             </div>
-            <div class="toc-footer">
-                <a href={{  route('support') }} >Написать нам</a>
+            <div class="">
+                <button class="dropdown-btn">Помощь
+                    <i class="fa fa-caret-down"></i></button>
+                    <div class="dropdown-container">
+                        <a href={{  route('support') }}>Написать нам</a>
+                    </div>
             </div>
 
         </div>
@@ -41,21 +48,12 @@
 </html>
 
 
-
 <style>
     body {
         font-family: 'Helvetica', 'Arial', sans-serif;
         color: #444444;
         font-size: 9pt;
         background-color: #FAFAFA;
-    }
-
-    .toc-footer a{
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 80px;
     }
 
     /* Фиксированный боковых навигационных ссылок, полной высоты */
@@ -76,7 +74,7 @@
         padding: 6px 8px 6px 16px;
         text-decoration: none;
         font-size: 20px;
-        color: #818181;
+        color: #bebebe;
         display: block;
         border: none;
         background: none;
@@ -88,7 +86,8 @@
 
     /* При наведении курсора мыши */
     .sidenav a:hover, .dropdown-btn:hover {
-        color: #f1f1f1;
+        background-color: #ffffff;
+        color: #EEA200;
     }
 
     /* Основное содержание */
