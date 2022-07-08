@@ -4,7 +4,7 @@
 
     <?php
 
-    echo $_SESSION['contextName'];
+
 
     ?>
 

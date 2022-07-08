@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class Setting_mainController extends Controller
 {
     public function index(){
-        $sessi = session()->all();
-        dd($sessi);
-        //return view('web.Setting_main');
+        session_start();
+        dd($_SESSION["store"]);
+        return view('web.Setting_main');
     }
 
     public function saveApiKey(Request $request){

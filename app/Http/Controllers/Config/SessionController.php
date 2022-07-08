@@ -25,6 +25,15 @@ class SessionController extends Controller
         return $result;
     }
 
+    public function getCookie($name_cookie){
+        session_start();
+
+        if(isset($_SESSION[$name_cookie])) {
+            echo ($_SESSION["API_KEY"]);
+        }
+
+        return $_SESSION[$name_cookie];
+    }
 
 
 

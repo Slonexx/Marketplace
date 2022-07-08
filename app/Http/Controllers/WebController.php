@@ -35,9 +35,9 @@ class WebController extends Controller
         //$sessi = session()->get('Store');
 
         $sessi = $_SESSION["store"];
-        dd($sessi);
+        //dd($sessi);
 
-        //return view('web.index');
+        return view('web.index');
     }
 
 
