@@ -9,27 +9,20 @@ use Illuminate\Http\Request;
 class Setting_mainController extends Controller
 {
     public function index(){
-        session_start();
-        dd($_SESSION["store"]);
         return view('web.Setting_main');
     }
 
     public function saveApiKey(Request $request){
-        session_start();
+
         $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
+        $API_KEY = $request->API_KEY;
+        $status = new KaspiApiClient($url,$API_KEY);
+        $message = $status->CheckAndSaveApiKey();
 
-        $status = new KaspiApiClient($url,$request->API_KEY);
-        $statusCode = $status->getStatus(false);
-
-        if ($statusCode == 200){
-            $res = "API ключ верный";
-            $_SESSION["API_KEY"] = $request->API_KEY;
-        } else {
-            $res = "API ключ не верный";
-        }
-            return response($res);
+            return response($message);
 
         //return back();
        // dd( $_SESSION["API_KEY"]);
     }
+
 }
