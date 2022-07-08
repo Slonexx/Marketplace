@@ -7,12 +7,16 @@ class KaspiApiClient {
     private $client;
 
     private $apiKey;
-    private $uri;
+    private $url;
 
-    public function __construct($uri,$apiKey)
+    public function __construct($url,$apiKey)
     {
         $this->apiKey = $apiKey;
-        $this->uri = $uri;
+        $this->url = $url;
+    }
+
+    public function setRequestUrl($url){
+        $this->url = $url;
     }
 
     public function requestGet($vnd)
@@ -29,7 +33,7 @@ class KaspiApiClient {
         ];
         $client = new Client();
 
-        $res = $client->request('GET', $this->uri ,[
+        $res = $client->request('GET', $this->url ,[
             'headers' => $headers,
         ]);
 

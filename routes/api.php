@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TestController2;
@@ -23,17 +24,14 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::post('orders', [OrderController::class,'insertOrders']);
+Route::post('products', [ProductController::class,'insertProducts']);
+
 Route::get('property',[ProductPropertyController::class,'getPropertiesByCategory']);
 Route::get('categories',[ProductPropertyController::class,'getAllCategories']);
 Route::get('values', [ProductPropertyController::class,'getValuesByPropertyCategory']);
 Route::get('excelProducts', [ExcelController::class,'getProductsExcel']);
 
-Route::get('orders', [OrderController::class,'getOrders']);
-
-Route::get('test', function ()
-{
-    return view('test');
-});
-
 Route::get('getTest', [TestController::class,'getTest']);
 Route::get('getTest2', [TestController2::class,'getTest'])->name('Test');
+
