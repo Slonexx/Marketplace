@@ -1,34 +1,33 @@
 @extends('layout')
 
 @section('content')
-    <br class="brTOP">
+
+    @include('sweet::alert')
+
     <div class="content">
         <h2 align="center">Написать нам на почту</h2>
         <div class="form_support">
-            <form action=" {{  route('Support') }} " method="post">
-                @csrf
+            <form action=" {{  route('Send') }} " method="post">
+            @csrf <!-- {{ csrf_field() }} -->
 
                 <div class="form-group">
-                    <label for="name">Введите имя </label>
-                    <input type="text" name="name" placeholder="Введите Имя" id="name" class="form-control">
+                    <input type="text" name="name" placeholder="Введите Имя, фамилия" id="name" class="form-control"
+                           required maxlength="100" value="{{ old('name') ?? '' }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Введите Email </label>
-                    <input type="text" name="email" placeholder="Введите email" id="email" class="form-control">
+                    <input type="email" name="email" placeholder="Адрес почты" id="email" class="form-control"
+                           required maxlength="100" value="{{ old('email') ?? '' }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="subject">Тема сообщения </label>
-                    <input type="text" name="subject" placeholder="Введите тему сообщения" id="subject" class="form-control">
+                    <textarea class="form-control" name="message" placeholder="Ваше сообщение"
+                              required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="message">Cообщения</label>
-                    <textarea name="message" id="message" class="form-control" placeholder="Введите сообщение"></textarea>
-                </div>
+                <button type="submit" class="btn btn-primary"> Отправить </button>
 
-                <button type="submit" class="btn btn-success"> Отправить </button>
+                @include('sweetalert::alert')
 
             </form>
 
@@ -37,19 +36,14 @@
 
 @endsection
 
+
+
 <style>
     .form_support{
         padding-top: 10px;
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 40px;
-    }
-
-    .form_support label{
-        padding-left: 2px;
-        padding-top: 10px;
-        padding-right: 10px;
-        padding-bottom: 5px;
     }
 
     .form_support button{
@@ -72,8 +66,10 @@
         padding-top: 10px;
     }
 
-    .content br{
-        padding: 5px;
+    .content div{
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 
 
