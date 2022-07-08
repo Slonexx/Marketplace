@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiClientMC;
 use App\Http\Controllers\KaspiApiClient;
+use App\Http\Controllers\AgentController;
+use App\Http\Controllers\StateController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\PositionController;
 
 class OrderController extends Controller
 {
@@ -102,7 +107,7 @@ class OrderController extends Controller
             }
         }
 
-        return $this->mapOrdersToAdd($notAddedOrders,$tokenMs);
+        return $notAddedOrders;
     }
 
     public function insertOrders(Request $request)
@@ -117,35 +122,39 @@ class OrderController extends Controller
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$request->tokenMs);
 
-        foreach ($orders as $order){
-            $client->requestPost($order);
+        $count = 0;
+        foreach ($orders as $order) {
+            $createdOrderId = $client->requestPost($this->mapOrderToAdd($order,$request->tokenMs))->id;
+            $this->setPositions($createdOrderId,$order['entries'],$request->tokenMs);
+            $count++;
         }
+
         return response([
-            "mesage" => "Inserted orders:".count($orders),
+            "mesage" => "Inserted orders:".$count,
         ]);
     }
 
-    private function mapOrdersToAdd($orders,$apiKey)
+    private function mapOrderToAdd($order,$apiKey)
     {
-        $formattedOrders = [];
-        foreach ($orders as $order){
+            //$formattedOrders = [];
              $formattedOrder = null;
              $address = null;
-             foreach ($order['entries'] as $entry) {
+            foreach ($order['entries'] as $entry) {
                 $address = $entry['address']->formattedAddress;
                 $formattedOrder['shipmentAddressFull'] = ["addInfo" => $address];
             }
             $formattedOrder['agent'] = $this->getAgent($order['customer'], $address,$apiKey);
-            $formattedOrder['organization'] = $this->getContentJson('organization');
-            $formattedOrder['rate'] = $this->getContentJson('rate');
-            $formattedOrder['store'] = $this->getContentJson('store');
+            $formattedOrder['organization'] = app(OrganizationController::class)->getKaspiOrganization($apiKey);
+            $formattedOrder['rate'] = [
+                "currency" => app(CurrencyController::class)->getKzCurrency($apiKey),
+            ];
+            $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
             $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
             //$formattedOrder['positions'] = $this->getPositions($order['entries'],$apiKey);
-            array_push($formattedOrders, $formattedOrder);
-        }
+            //array_push($formattedOrders, $formattedOrder);
 
-        return $formattedOrders;
+        return $formattedOrder;
     }
 
     private function getAgent($customer, $address,$apiKey)
@@ -160,13 +169,7 @@ class OrderController extends Controller
        ];
        return $res;
     }
-
-
-    # APPROVED_BY_BANK – одобрен банком
-    #CANCELLED – отменён
-    #CANCELLING – ожидает отмены
-    #ACCEPTED_BY_MERCHANT– принят на обработку продавцом
-    #COMPLETED – завершён  
+  
     private function getState($status,$apiKey)
     {
        $meta = app(StateController::class)->getState($status,$apiKey);
@@ -180,12 +183,13 @@ class OrderController extends Controller
         return $res;
     }
     
-    private function getPositions($entries,$apiKey)
+    private function setPositions($orderId,$entries,$apiKey)
     {
-
+        app(PositionController::class)->setPositions($orderId,$entries,$apiKey);
     }
 
-    private function getContentJson($filename) {
+    private function getContentJson($filename)
+    {
         $path = public_path().'/json'.'/'.$filename.'.json';
         return json_decode(file_get_contents($path),true);
     }
