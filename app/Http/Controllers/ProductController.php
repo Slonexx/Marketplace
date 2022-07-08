@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CurrencyController;
 
 class ProductController extends Controller
 {
-    public function getKaspiProducts($apiKey)
+    public function getKaspiProducts($apiKeyKaspi,$apiKeyMs)
     {
-        $ordersFromKaspi =app(OrderController::class)->getOrdersFromKaspi($apiKey);
+        $ordersFromKaspi =app(OrderController::class)->getOrdersFromKaspi($apiKeyKaspi);
         $productsFromKaspi = [];
         $count = 0;
         $productIds = [];
@@ -38,7 +39,7 @@ class ProductController extends Controller
                     $product['salePrices'] = [
                         0 => [
                             "value" => $entry['basePrice'] * 100,
-                            "currency" => $this->getContentJson('currency'),
+                            "currency" => app(CurrencyController::class)->getKzCurrency($apiKeyMs),
                             "priceType" => $this->getContentJson('price_type'),
                         ],
                     ];
@@ -68,7 +69,7 @@ class ProductController extends Controller
 
     public function getNotAddedProducts($tokenMs,$tokenKaspi) 
     {
-       $productsFromKaspi = $this->getKaspiProducts($tokenKaspi);
+       $productsFromKaspi = $this->getKaspiProducts($tokenKaspi,$tokenMs);
        $productsFromMs = $this->getMsProducts($tokenMs);
        $notAddedProducts = [];
        foreach($productsFromKaspi as $product){

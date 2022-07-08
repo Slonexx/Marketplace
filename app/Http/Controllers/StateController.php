@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class StateController extends Controller
 {
+    # APPROVED_BY_BANK – одобрен банком
+    #CANCELLED – отменён
+    #CANCELLING – ожидает отмены
+    #ACCEPTED_BY_MERCHANT– принят на обработку продавцом
+    #COMPLETED – завершён
     public function getState($statusOrder,$apiKey){
 
         $status = null;
