@@ -25,6 +25,7 @@ class AgentController extends Controller
     public function createAgent($customer,$address,$apiKey){
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty";
         $client = new ApiClientMC($uri,$apiKey);
+        $attributes = app(AgentAttributesController::class)->getAttributes($apiKey);
         $agent = [
             'name' => 'Kaspi client '.$customer->name,
             "legalLastName" => $customer->lastName,
@@ -34,18 +35,18 @@ class AgentController extends Controller
             "companyType" => "individual",
             "attributes" => [
                 0 => [
-                    "meta" => $this->getContentJson('gos'),
+                    "meta" => $attributes["meta"],
                     "name" => "Государственное учреждение",
-                    "value" => $this->getContentJson('gos_val'),
+                    "value" => $attributes["value"],
                 ],
             ],
         ];
         return $client->requestPost($agent)->meta;
     }
 
-    private function getContentJson($filename) {
-        $path = public_path().'/json'.'/'.$filename.'.json';
-        return json_decode(file_get_contents($path),true);
-    }
+    // private function getContentJson($filename) {
+    //     $path = public_path().'/json'.'/'.$filename.'.json';
+    //     return json_decode(file_get_contents($path),true);
+    // }
 
 }

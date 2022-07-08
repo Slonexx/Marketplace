@@ -13,6 +13,10 @@ class ApiClientMC {
         $this->uri = $uri;
     }
 
+    public function setRequestUrl($uri){
+        $this->uri = $uri;
+    }
+
     public function requestGet()
     {
         //$accept = "application/json";

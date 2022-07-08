@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\UomController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\PriceTypeController;
+use App\Http\Controllers\ProductAttributesController;
 
 class ProductController extends Controller
 {
@@ -25,12 +28,12 @@ class ProductController extends Controller
                     $product['article'] = $productIds[$count];
                     $product['attributes'] = [
                         0 => [
-                            "meta" => $this->getContentJson('brand'),
+                            "meta" => app(ProductAttributesController::class)->getAttribute("brand (KASPI)",$apiKeyMs),
                             "name" => "brand (KASPI)",
                             "value" => $entry['product']->manufacturer,
                         ],
                         1 => [
-                            "meta" =>$this->getContentJson('export_bool'),
+                            "meta" => app(ProductAttributesController::class)->getAttribute("Добавлять товар на Kaspi",$apiKeyMs),
                             "name" => "Добавлять товар на Kaspi",
                             "value" => true,
                         ],
@@ -40,10 +43,10 @@ class ProductController extends Controller
                         0 => [
                             "value" => $entry['basePrice'] * 100,
                             "currency" => app(CurrencyController::class)->getKzCurrency($apiKeyMs),
-                            "priceType" => $this->getContentJson('price_type'),
+                            "priceType" => app(PriceTypeController::class)->getPriceType($apiKeyMs),
                         ],
                     ];
-                    $product['uom'] = $this->getContentJson('uom');
+                    $product['uom'] = app(UomController::class)->getUom($apiKeyMs);
                     $count++;
                     array_push($productsFromKaspi, $product);
                 }
@@ -99,9 +102,9 @@ class ProductController extends Controller
         ]);
     }
 
-    private function getContentJson($filename) {
-        $path = public_path().'/json'.'/'.$filename.'.json';
-        return json_decode(file_get_contents($path),true);
-    }
+    // private function getContentJson($filename) {
+    //     $path = public_path().'/json'.'/'.$filename.'.json';
+    //     return json_decode(file_get_contents($path),true);
+    // }
 
 }

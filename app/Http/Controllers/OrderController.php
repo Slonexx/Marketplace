@@ -188,10 +188,10 @@ class OrderController extends Controller
         app(PositionController::class)->setPositions($orderId,$entries,$apiKey);
     }
 
-    private function getContentJson($filename)
-    {
-        $path = public_path().'/json'.'/'.$filename.'.json';
-        return json_decode(file_get_contents($path),true);
-    }
+    // private function getContentJson($filename)
+    // {
+    //     $path = public_path().'/json'.'/'.$filename.'.json';
+    //     return json_decode(file_get_contents($path),true);
+    // }
 
 }
