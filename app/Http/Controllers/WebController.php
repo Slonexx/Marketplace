@@ -24,11 +24,17 @@ class WebController extends Controller
 
        //$test = app(SessionController::class)->SessionInitialization();
 
-        $sessi = new SessionController();
-        $sessi->SessionInitialization();
+        $ApiKey = "4a539f95d34697f6b6cf4130050757126a54e882";
 
-        $sessi = session()->all();
-        $sessi = session()->get('id');
+        $sessi = new SessionController();
+      //  app(SessionController::class)->SessionInitialization($ApiKey);
+
+        $sessi->SessionInitialization($ApiKey);
+
+        //$sessi = session()->all();
+        //$sessi = session()->get('Store');
+
+        $sessi = $_SESSION["store"];
         dd($sessi);
 
         //return view('web.index');
