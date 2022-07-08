@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class Setting_mainController extends Controller
 {
     public function index(){
-        return view('web.setting_main');
+        return view('web.Setting_main');
     }
 
     public function saveApiKey(Request $request){
