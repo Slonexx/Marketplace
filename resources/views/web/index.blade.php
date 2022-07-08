@@ -2,6 +2,13 @@
 
 @section('content')
 
+    <?php
+
+    echo $_SESSION['contextName'];
+
+    ?>
+
+
 @endsection
 
 
