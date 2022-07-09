@@ -137,8 +137,8 @@ class OrderController extends Controller
     private function mapOrderToAdd($order,$apiKey)
     {
             //$formattedOrders = [];
-             $formattedOrder = null;
-             $address = null;
+            $formattedOrder = null;
+            $address = null;
             foreach ($order['entries'] as $entry) {
                 $address = $entry['address']->formattedAddress;
                 $formattedOrder['shipmentAddressFull'] = ["addInfo" => $address];
@@ -151,6 +151,16 @@ class OrderController extends Controller
             $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
             $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
+
+            $attributes = app(OrderAttributesController::class)->getAttributeDelivery($order['state'],$apiKey);
+            $formattedOrder['attributes'] = [
+                0 => [
+                    "meta" => $attributes["meta"],
+                    "name" => "Способ доставки",
+                    "value" => $attributes["value"],
+                ],
+            ];
+            $formattedOrder['salesChannel'] = app(SalesChannelController::class)->getSaleChannel($apiKey);
             //$formattedOrder['positions'] = $this->getPositions($order['entries'],$apiKey);
             //array_push($formattedOrders, $formattedOrder);
 

@@ -25,7 +25,7 @@ class AgentController extends Controller
     public function createAgent($customer,$address,$apiKey){
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty";
         $client = new ApiClientMC($uri,$apiKey);
-        $attributes = app(AgentAttributesController::class)->getAttributes($apiKey);
+        $attributes = app(AgentAttributesController::class)->getAttributeGos($apiKey);
         $agent = [
             'name' => 'Kaspi client '.$customer->name,
             "legalLastName" => $customer->lastName,

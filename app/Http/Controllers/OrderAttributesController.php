@@ -4,23 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AgentAttributesController extends Controller
+class OrderAttributesController extends Controller
 {
     private ApiClientMC $client;
 
-    public function getAttributeGos($apiKey)
+    public function getAttributeDelivery($stateOrder,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
+
+        $state = null;
+
+        switch ($stateOrder) {
+            case 'PICKUP':
+                $state = "Самовывоз";
+                break;
+            case 'DELIVERY':
+                case 'KASPI_DELIVERY':
+                $state = "Доставка";
+                break;
+            default:
+                $state = "Самовывоз";
+                break;
+        }
+
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
         $this->client = new ApiClientMC($uri,$apiKey);
         $json = $this->client->requestGet();
         $foundedMeta = null;
         $searchVal = null;
         foreach($json->rows as $row)
         {
-            if($row->name == "Государственное учреждение")
+            if($row->name == "Способ доставки")
             {
                 $foundedMeta = $row->meta;
-                $searchVal = $this->searchGosVal($row->customEntityMeta->href);
+                $searchVal = $this->searchDeliveryVal($row->customEntityMeta->href,$state);
                 break;
             }
         }
@@ -30,7 +46,7 @@ class AgentAttributesController extends Controller
         ];
     }
 
-    public function searchGosVal($uri)
+    public function searchDeliveryVal($uri, $state)
     {
         $this->client->setRequestUrl($uri);
         $entityMetaUri = $this->client->requestGet()->entityMeta->href;
@@ -39,7 +55,7 @@ class AgentAttributesController extends Controller
         $foundedMetaVal = null;
         foreach($json->rows as $row)
         {
-            if($row->name == "Нет")
+            if($row->name == $state)
             {
                 $foundedMetaVal = $row->meta;
                 break;
@@ -47,7 +63,7 @@ class AgentAttributesController extends Controller
         }
         return [
             "meta" => $foundedMetaVal,
-            "name" => "Нет",
+            "name" => $state,
         ];
     }
 
