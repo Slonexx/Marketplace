@@ -13,14 +13,9 @@ class WebController extends Controller
 
         $contextName = 'IFRAME';
 
-        $Vendor = app(VendorEndpointController::class);
-
-        $Vendor->VendorActive();
-
-        dd();
 
 
-        //return view('web.index');
+        return view('web.index');
     }
 
 
