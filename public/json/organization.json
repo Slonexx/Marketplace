@@ -1,9 +1,0 @@
-{
-    "meta": {
-        "href": "https://online.moysklad.ru/api/remap/1.2/entity/organization/4b82a4b3-fdae-11ec-0a80-06270002e187",
-        "metadataHref": "https://online.moysklad.ru/api/remap/1.2/entity/organization/metadata",
-        "type": "organization",
-        "mediaType": "application/json",
-        "uuidHref": "https://online.moysklad.ru/app/#mycompany/edit?id=4b82a4b3-fdae-11ec-0a80-06270002e187"
-    }
-}
