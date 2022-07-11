@@ -140,12 +140,7 @@ function jsonApi(): JsonApi {
 //  Logging
 //
 
-function loginfo($name, $msg) {
-    global $dirRoot;
-    $logDir = $dirRoot . 'logs';
-    @mkdir($logDir);
-    file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
-}
+
 
 //
 //  AppInstance state
