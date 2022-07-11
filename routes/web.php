@@ -14,7 +14,7 @@ Route::get('/', function () {
 });*/
 
 //Setting Vendor
-Route::get('/Vendor', [VendorEndpointController::class, 'Activate']);
+Route::get('/Vendor', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
 
 Route::get('/', [WebController::class, 'index']);
