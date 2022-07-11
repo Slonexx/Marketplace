@@ -1,19 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Config;
+namespace App\Http\Controllers\Config\Vendor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class vendor_endpointController extends Controller
+class VendorEndpointController extends Controller
 {
-
-    public function VendorActive(){
+    public function Activate(){
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
 
-        dd($method);
+        dd();
 
     }
-
 }

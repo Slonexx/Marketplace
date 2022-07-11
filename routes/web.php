@@ -12,6 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 });*/
 
+//Setting Vendor
+Route::get('/Vendor', [vendor::class, 'index']);
+
+
 Route::get('/', [WebController::class, 'index']);
 
 Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
