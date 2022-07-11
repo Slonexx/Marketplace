@@ -57,12 +57,10 @@ class DocumentController extends Controller
         $client->setRequestUrl($uri);
         $bodyOrder = [
             "customerOrder" => [
-                0 => [
-                    "meta" => $meta,
-                ],
+                "meta" => $meta,
             ],
         ];
-        dd($bodyOrder);
+        //dd($bodyOrder);
         $client->requestPut($bodyOrder);
     }
 }
