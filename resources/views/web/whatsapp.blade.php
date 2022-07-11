@@ -28,7 +28,6 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="fa-brands fa-whatsapp"></i>
                     Отправить </button>
-
             </form>
 
         </div>

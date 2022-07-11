@@ -37,7 +37,6 @@
                         <a href={{  route('support') }}>
                             <i class="fa-solid fa-at"></i>
                             Написать на почту</a>
-
                         <a  href={{  route('whatsapp') }} >
                             <i class="fa-brands fa-whatsapp"></i>
                             Написать в WhatsApp </a>
