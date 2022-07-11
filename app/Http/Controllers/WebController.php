@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Config\SessionController;
+use App\Http\Controllers\Config\vendor_endpointController;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -10,16 +11,16 @@ class WebController extends Controller
 {
     public function index(){
 
-        require_once 'Config/lib.php';
-
         $contextName = 'IFRAME';
 
-        $_SESSION['contextName'] = $contextName;
+        $Vendor = app(vendor_endpointController::class);
 
-       // require_once 'Config/user-context-loader.inc.php';
+        $Vendor->VendorActive();
+
+        dd();
 
 
-        return view('web.index');
+        //return view('web.index');
     }
 
 
