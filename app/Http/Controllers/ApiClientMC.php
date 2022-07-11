@@ -56,4 +56,21 @@ class ApiClientMC {
         return json_decode($res->getBody());
     }
 
+    public function requestPut($body){
+        $headers = [
+            //'Accept' => $accept,
+            'Authorization' => $this->apiKey,
+            'Content-Type' => 'application/json',
+        ];
+
+        $client = new Client([
+            'headers' => $headers,
+        ]);
+        $res = $client->put($this->uri,[
+           'body' => json_encode($body),
+        ]);
+
+        return json_decode($res->getBody());
+    }
+
 }
