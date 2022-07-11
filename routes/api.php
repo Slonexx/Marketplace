@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('orders', [OrderController::class,'insertOrders']);
+Route::post('orderStatus',[OrderController::class,'changeOrderStatus']);
 Route::post('products', [ProductController::class,'insertProducts']);
 
 Route::get('property',[ProductPropertyController::class,'getPropertiesByCategory']);

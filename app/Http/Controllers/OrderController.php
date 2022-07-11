@@ -10,6 +10,7 @@ use App\Http\Controllers\StateController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\PositionController;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class OrderController extends Controller
 {
@@ -137,8 +138,8 @@ class OrderController extends Controller
     private function mapOrderToAdd($order,$apiKey)
     {
             //$formattedOrders = [];
-             $formattedOrder = null;
-             $address = null;
+            $formattedOrder = null;
+            $address = null;
             foreach ($order['entries'] as $entry) {
                 $address = $entry['address']->formattedAddress;
                 $formattedOrder['shipmentAddressFull'] = ["addInfo" => $address];
@@ -151,6 +152,16 @@ class OrderController extends Controller
             $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
             $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
+
+            $attributes = app(OrderAttributesController::class)->getAttributeDelivery($order['state'],$apiKey);
+            $formattedOrder['attributes'] = [
+                0 => [
+                    "meta" => $attributes["meta"],
+                    "name" => "Способ доставки",
+                    "value" => $attributes["value"],
+                ],
+            ];
+            $formattedOrder['salesChannel'] = app(SalesChannelController::class)->getSaleChannel($apiKey);
             //$formattedOrder['positions'] = $this->getPositions($order['entries'],$apiKey);
             //array_push($formattedOrders, $formattedOrder);
 
@@ -188,10 +199,109 @@ class OrderController extends Controller
         app(PositionController::class)->setPositions($orderId,$entries,$apiKey);
     }
 
-    private function getContentJson($filename)
+    private function getOrdersKaspiWithStatus($apiKey)
     {
-        $path = public_path().'/json'.'/'.$filename.'.json';
-        return json_decode(file_get_contents($path),true);
+        $uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1656688175000&filter[orders][creationDate][\$le]=1657111171000";
+
+        $client = new KaspiApiClient($uri,$apiKey);
+        $jsonAllOrders = $client->requestGet(true);
+        
+        $ordersFromKaspi = [];
+        //dd($jsonAllOrders);
+        foreach($jsonAllOrders->data as $key=>$row){
+            $order = null;
+            $order['id'] = $row->id;
+            $order['orderStatus'] = $row->attributes->status;
+            switch ($row->attributes->status) {
+                case 'APPROVED_BY_BANK':
+                  $order['status'] = "Новый";
+                break;
+                case 'ACCEPTED_BY_MERCHANT':
+                  $order['status'] = "Подтвержден";
+                break;
+                case 'CANCELLED':
+                    case 'CANCELLING':
+                  $order['status'] = "Отменен";
+                break;
+                case 'COMPLETED':
+                  $order['status'] = "Доставлен";
+                break;
+                default:
+                  $order['status'] = "Новый";
+                break;
+            }
+            array_push($ordersFromKaspi, $order);
+        }
+
+        return $ordersFromKaspi;
     }
+
+    private function getOrdersMsWithStatus($apiKey)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
+        $client = new ApiClientMC($uri,$apiKey);
+        $jsonAllOrders = $client->requestGet();
+        //dd($jsonAllOrders);
+        $ordersFromMs = [];
+        foreach ($jsonAllOrders->rows as $key => $row) {
+            $status = $this->getStatusByMeta($row->state->meta->href,$apiKey);
+            $order['id'] = $row->id;
+            $order["externalCode"] =  $row->externalCode;
+            $order["status"] = $status;
+            array_push($ordersFromMs,$order);
+        }
+        return $ordersFromMs;
+    }
+
+    private function getStatusByMeta($uri,$apiKey)
+    {
+        $client = new ApiClientMC($uri,$apiKey);
+        $jsonStatus = $client->requestGet();
+        return $jsonStatus->name;
+    }
+
+    public function changeOrderStatus(Request $request)
+    {
+        $request->validate([
+            'tokenKaspi' => 'required|string',
+            'tokenMs' => 'required|string',
+        ]);
+
+        $ordersFromKaspi = $this->getOrdersKaspiWithStatus($request->tokenKaspi);
+        $ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
+
+        $count = 0;
+        foreach($ordersFromKaspi as $orderKaspi){
+            foreach($ordersFromMs as $orderMs){
+                if($orderKaspi['id'] == $orderMs['externalCode']){
+                    if($orderKaspi['status'] != $orderMs['status']){
+                        $metaState = app(StateController::class)->getState($orderKaspi['orderStatus'],$request->tokenMs);
+                        $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
+                        $count++;
+                    }
+                }
+            }
+        }
+
+        return response([
+            "message" => "Updated order status: ".$count,
+        ]);
+
+    }
+
+    private function changeOrderStatusMs($orderId,$metaState, $apiKey)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId;
+        $client = new ApiClientMC($uri,$apiKey);
+        $client->requestPut([
+            "state" => $metaState,
+        ]);
+    }
+
+    // private function getContentJson($filename)
+    // {
+    //     $path = public_path().'/json'.'/'.$filename.'.json';
+    //     return json_decode(file_get_contents($path),true);
+    // }
 
 }

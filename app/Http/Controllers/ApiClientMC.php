@@ -13,6 +13,10 @@ class ApiClientMC {
         $this->uri = $uri;
     }
 
+    public function setRequestUrl($uri){
+        $this->uri = $uri;
+    }
+
     public function requestGet()
     {
         //$accept = "application/json";
@@ -47,6 +51,23 @@ class ApiClientMC {
 
         $res = $client->post($this->uri,[
             'body' => json_encode($body),
+        ]);
+
+        return json_decode($res->getBody());
+    }
+
+    public function requestPut($body){
+        $headers = [
+            //'Accept' => $accept,
+            'Authorization' => $this->apiKey,
+            'Content-Type' => 'application/json',
+        ];
+
+        $client = new Client([
+            'headers' => $headers,
+        ]);
+        $res = $client->put($this->uri,[
+           'body' => json_encode($body),
         ]);
 
         return json_decode($res->getBody());

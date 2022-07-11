@@ -17,6 +17,7 @@ class PositionController extends Controller
                 "assortment" => [
                     "meta" => $this->searchProduct($entry['product'],$apiKey),
                 ],
+                "reserve" => $entry['quantity'],
             ];
             $client->requestPost($position);
         }
