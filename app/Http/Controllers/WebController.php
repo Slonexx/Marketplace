@@ -18,10 +18,6 @@ class WebController extends Controller
 
        // require_once 'Config/user-context-loader.inc.php';
 
-        $ApiKey = "4a539f95d34697f6b6cf4130050757126a54e882";
-        $sessi = new SessionController();
-        $sessi->SessionInitialization($ApiKey);
-
 
         return view('web.index');
     }
