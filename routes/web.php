@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Config\Vendor\VendorEndpointController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\Setting_mainController;
@@ -13,7 +14,7 @@ Route::get('/', function () {
 });*/
 
 //Setting Vendor
-Route::get('/Vendor', [vendor::class, 'index']);
+Route::get('/Vendor', [VendorEndpointController::class, 'Activate']);
 
 
 Route::get('/', [WebController::class, 'index']);
