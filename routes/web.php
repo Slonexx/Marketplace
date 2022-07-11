@@ -21,4 +21,5 @@ Route::get('/SupportHelp', [SupportController::class, 'support'])->name("support
 Route::post('/PostSupport', [SupportController::class, 'supportSend'])->name("Send");
 
 Route::get('/Whatsapp', [WhatsappController::class, 'Index'])->name("whatsapp");
+Route::post('/WhatsappSend', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
 
