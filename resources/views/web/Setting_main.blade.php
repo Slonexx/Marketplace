@@ -5,7 +5,26 @@
 
     <div class="content">
         <h2 align="center">Основные настройки</h2>
+
         <div class="form_support">
+
+            <p>Настройки интеграции</p>
+
+            <div class="settings-title row">
+                <div id="settings-help" class="help-popup" style="left: 22px; top: 34.9px; display: none;">
+                    <span class="quotation-icon-down"></span>
+                    <div class="popupContent">
+                        <div class="popup-content-text">
+                            Заполните обязательные поля, чтобы начать использование интеграции.
+                        </div>
+                    </div>
+                    <span class="close-button"></span>
+                </div>
+                <span class="help-icon"></span>
+                <h2 class="h1">Настройки интеграции</h2>
+
+
+            </div>
 
             @if(Session::has('message'))
             <div class="alertheight">
@@ -33,14 +52,20 @@
                            ?>">
                 </div>
 
+
+                <hr class="href_padding">
+
+                <div>
+                    <P> Сопоставьте статусы платежей и заказов покупателя в МойСклад: </P>
+
+
+
+                </div>
+
                 <button type="submit" class="btn btn-primary"> Сохранить </button>
-
-
-
-
-                @include('sweetalert::alert')
-
             </form>
+
+
 
         </div>
     </div>
@@ -54,6 +79,13 @@
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 40px;
+    }
+
+    .href_padding{
+    color: black;
+        margin-right: 10px;
+        margin-left: 10px;
+
     }
 
     .form_support button{
