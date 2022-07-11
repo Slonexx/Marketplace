@@ -11,6 +11,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body style="background-color:#dcdcdc;">
 
@@ -34,11 +35,11 @@
                     <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-container">
                         <a href={{  route('support') }}>
-
+                            <i class="fa-solid fa-at"></i>
                             Написать на почту</a>
 
-                        <a href={{  route('whatsapp') }}>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/2048px-WhatsApp_logo-color-vertical.svg.png" width="20" height="20" alt="">
+                        <a  href={{  route('whatsapp') }} >
+                            <i class="fa-brands fa-whatsapp"></i>
                             Написать в WhatsApp </a>
                     </div>
             </div>
@@ -72,7 +73,7 @@
     /* Фиксированный боковых навигационных ссылок, полной высоты */
     .sidenav {
         height: 100%;
-        width: 200px;
+        width: 15%;
         position: fixed;
         z-index: 1;
         top: 0;
@@ -101,21 +102,21 @@
     .sidenav a:hover, .dropdown-btn:hover {
         background-color: #ffffff;
         border-radius: 20px;
-        color: #EEA200;
+        color: orange;
     }
 
     /* Основное содержание */
     .main {
-        margin-left: 200px; /* То же, что и ширина боковой навигации */
-        font-size: 20px; /* Увеличенный текст для включения прокрутки */
-        padding: 0px 10px;
+        margin-left: 15%; /* То же, что и ширина боковой навигации */
+        font-size: 18px; /* Увеличенный текст для включения прокрутки */
+        padding: 0 10px;
     }
     /* Добавить активный класс для кнопки активного выпадающего списка */
     .active {
-        background-color: #eeeeee;
-        padding-right: -20px;
-        padding-left: -20px;
-        border-radius: 5px;
+        background-color: #5d5d5d;
+
+        margin-right: 50px;
+        border-radius: 8px;
         color: #e59300;
     }
 
@@ -123,7 +124,8 @@
     .dropdown-container {
         display: none;
         background-color: #262626;
-        padding-left: 8px;
+
+        padding: 5px;
     }
 
     /* Необязательно: стиль курсора вниз значок */

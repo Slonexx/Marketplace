@@ -5,7 +5,7 @@
 
     <div class="content">
         <h2 align="center">Написать в WhatsApp
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/2048px-WhatsApp_logo-color-vertical.svg.png" width="30" height="30" alt="">
+            <i class="fa-brands fa-whatsapp"></i>
         </h2>
 
 
@@ -25,7 +25,9 @@
                               required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary"> Отправить </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Отправить </button>
 
             </form>
 
