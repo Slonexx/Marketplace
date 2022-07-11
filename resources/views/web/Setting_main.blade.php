@@ -5,32 +5,14 @@
 
     <div class="content">
         <h2 align="center">Основные настройки</h2>
-
         <div class="form_support">
 
             <p>Настройки интеграции</p>
 
-            <div class="settings-title row">
-                <div id="settings-help" class="help-popup" style="left: 22px; top: 34.9px; display: none;">
-                    <span class="quotation-icon-down"></span>
-                    <div class="popupContent">
-                        <div class="popup-content-text">
-                            Заполните обязательные поля, чтобы начать использование интеграции.
-                        </div>
-                    </div>
-                    <span class="close-button"></span>
-                </div>
-                <span class="help-icon"></span>
-                <h2 class="h1">Настройки интеграции</h2>
-
-
-            </div>
 
             @if(Session::has('message'))
             <div class="alertheight">
-                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
-                    {{ Session::get('message') }}
-                </div>
+                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">{{ Session::get('message') }}</div>
             </div>
             @endif
 
@@ -42,14 +24,8 @@
                     <input type="text" name="API_KEY" placeholder="API ключ от Kaspi" id="API_KEY" class="form-control"
                            required maxlength="255"
                            value="<?php
-                           if(isset($_SESSION['API_KEY'])) {
-                               echo ($_SESSION["API_KEY"]);
-                           }
-                           else {
-                               session_destroy();
-                               echo "";
-                           }
-                           ?>">
+                           if(isset($_SESSION['API_KEY'])) {echo ($_SESSION["API_KEY"]);
+                           } else { echo "";} ?>">
                 </div>
 
 
