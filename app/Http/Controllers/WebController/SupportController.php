@@ -5,6 +5,7 @@ namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SupportController extends Controller
@@ -37,8 +38,9 @@ class SupportController extends Controller
 
         mail($to, $subject, $message, $headers);
 
-        Alert::success('Сообщение отправлено', 'мы ответим вам в ближайшее время');
-        return back();
+        Session::flash('message', "Сообщение отправлено");
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->back();
     }
 
 

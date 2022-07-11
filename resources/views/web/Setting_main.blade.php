@@ -6,6 +6,16 @@
     <div class="content">
         <h2 align="center">Основные настройки</h2>
         <div class="form_support">
+
+            @if(Session::has('message'))
+            <div class="alertheight">
+                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
+                    {{ Session::get('message') }}
+                </div>
+            </div>
+            @endif
+
+
             <form action=" {{  route('Setting_Send') }} " method="post">
             @csrf <!-- {{ csrf_field() }} -->
 
@@ -25,6 +35,9 @@
 
                 <button type="submit" class="btn btn-primary"> Сохранить </button>
 
+
+
+
                 @include('sweetalert::alert')
 
             </form>
@@ -34,8 +47,8 @@
 
 @endsection
 
-<style>
 
+<style>
     .form_support{
         padding-top: 10px;
         padding-left: 40px;
@@ -72,4 +85,6 @@
 
 
 </style>
+
+
 

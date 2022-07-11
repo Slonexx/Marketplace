@@ -60,16 +60,16 @@ class KaspiApiClient {
         $responsecode = $res->getStatusCode();
 
         if ($responsecode == 200) {
-            $message = "API-ключ верный!";
+            $message["API"] = "API-ключ верный!";
             //МИРАС ЗАНЕСИ ЭТО В КУКИ
             session_start();
             $_SESSION["API_KEY"] = $this->apiKey;
         } else if ($responsecode == 401){
-            $message = "Hе верный API-ключ";
+            $message["API"] = "Hе верный API-ключ";
         } else {
-            $message = "Ошибка: $responsecode";
+            $message["API"] = "Ошибка: $responsecode";
         }
-
+        $message["StatusCode"] = $responsecode;
 
         return $message;
     }

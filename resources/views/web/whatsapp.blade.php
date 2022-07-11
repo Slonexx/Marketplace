@@ -2,17 +2,11 @@
 
 @section('content')
 
+
     <div class="content">
-        <h2 align="center">Написать нам на почту</h2>
-
-
-            @if(Session::has('message'))
-                <div class="alertheight">
-                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
-                        {{ Session::get('message') }}
-                    </div>
-                </div>
-            @endif
+        <h2 align="center">Написать в WhatsApp
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/2048px-WhatsApp_logo-color-vertical.svg.png" width="30" height="30" alt="">
+        </h2>
 
 
         <div class="form_support">
@@ -27,11 +21,6 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="Адрес почты" id="email" class="form-control"
-                           required maxlength="100" value="{{ old('email') ?? '' }}">
-                </div>
-
-                <div class="form-group">
                     <textarea class="form-control" name="message" placeholder="Ваше сообщение"
                               required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                 </div>
@@ -43,8 +32,8 @@
         </div>
     </div>
 
-@endsection
 
+@endsection
 
 
 <style>
@@ -83,4 +72,3 @@
 
 
 </style>
-

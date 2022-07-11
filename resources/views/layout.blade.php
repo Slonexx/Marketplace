@@ -11,7 +11,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body style="background-color:#dcdcdc;">
 
@@ -34,7 +33,13 @@
                 <button class="dropdown-btn">Помощь
                     <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-container">
-                        <a href={{  route('support') }}>Написать нам</a>
+                        <a href={{  route('support') }}>
+
+                            Написать на почту</a>
+
+                        <a href={{  route('whatsapp') }}>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/2048px-WhatsApp_logo-color-vertical.svg.png" width="20" height="20" alt="">
+                            Написать в WhatsApp </a>
                     </div>
             </div>
 
@@ -52,8 +57,16 @@
     body {
         font-family: 'Helvetica', 'Arial', sans-serif;
         color: #444444;
-        font-size: 9pt;
+        font-size: 8pt;
         background-color: #FAFAFA;
+    }
+
+    .alertheight{
+        text-align: center;
+        float: right;
+        position: relative;
+        margin-right: auto;
+        width: 25%;
     }
 
     /* Фиксированный боковых навигационных ссылок, полной высоты */
@@ -73,7 +86,7 @@
     .sidenav a, .dropdown-btn {
         padding: 6px 8px 6px 16px;
         text-decoration: none;
-        font-size: 20px;
+        font-size: 16px;
         color: #bebebe;
         display: block;
         border: none;
@@ -87,6 +100,7 @@
     /* При наведении курсора мыши */
     .sidenav a:hover, .dropdown-btn:hover {
         background-color: #ffffff;
+        border-radius: 20px;
         color: #EEA200;
     }
 
@@ -98,8 +112,11 @@
     }
     /* Добавить активный класс для кнопки активного выпадающего списка */
     .active {
-        background-color: green;
-        color: white;
+        background-color: #eeeeee;
+        padding-right: -20px;
+        padding-left: -20px;
+        border-radius: 5px;
+        color: #e59300;
     }
 
     /* Выпадающий контейнер (по умолчанию скрыт). Необязательно: добавьте более светлый цвет фона и некоторые левые отступы, чтобы изменить дизайн выпадающего содержимого */
