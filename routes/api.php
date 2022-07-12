@@ -1,14 +1,14 @@
 <?php
 
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Config\user_context_loader_inc_Controller;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\TestController2;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +35,14 @@ Route::get('values', [ProductPropertyController::class,'getValuesByPropertyCateg
 Route::get('excelProducts', [ExcelController::class,'getProductsExcel']);
 
 
+Route::get('getTest', [TestController::class,'init']);
+//Route::get('getTest2', [TestController2::class,'getTest'])->name('Test');
+
+
 
 
 
 Route::get('Check', [user_context_loader_inc_Controller::class,'userContextLoader'])->name('Check');
+
 
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PositionController;
 use NunoMaduro\Collision\Adapters\Phpunit\State;
 
@@ -116,6 +117,7 @@ class OrderController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
+            'payment' => 'required|boolean',
         ]);
 
         $orders = $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi);
@@ -125,8 +127,14 @@ class OrderController extends Controller
 
         $count = 0;
         foreach ($orders as $order) {
-            $createdOrderId = $client->requestPost($this->mapOrderToAdd($order,$request->tokenMs))->id;
-            $this->setPositions($createdOrderId,$order['entries'],$request->tokenMs);
+            $formattedOrder = $this->mapOrderToAdd($order,$request->tokenMs);
+            $createdOrder = $client->requestPost($formattedOrder);
+            $this->setPositions($createdOrder->id,$order['entries'],$request->tokenMs);
+            $sum = 0;
+            foreach($order['entries'] as $entry){
+                $sum+=$entry['totalPrice'];
+            }
+            app(DocumentController::class)->createDocument($createdOrder->meta,$sum,$request->payment,$formattedOrder,$request->tokenMs);
             $count++;
         }
 
