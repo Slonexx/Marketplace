@@ -3,7 +3,9 @@
 @section('content')
 
     <div class="content">
-        <h2 align="center">Написать нам на почту</h2>
+        <h2 align="center">
+            <i class="fa-solid fa-envelope"></i>
+            Написать нам на почту </h2>
 
 
             @if(Session::has('message'))
@@ -13,6 +15,7 @@
                     </div>
                 </div>
             @endif
+
 
 
         <div class="form_support">
@@ -35,9 +38,9 @@
                     <textarea class="form-control" name="message" placeholder="Ваше сообщение"
                               required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                 </div>
-
-                <button type="submit" class="btn btn-primary"> Отправить </button>
-
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa-solid fa-envelope"></i>
+                    Отправить  </button>
             </form>
 
         </div>

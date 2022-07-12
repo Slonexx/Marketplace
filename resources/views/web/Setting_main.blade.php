@@ -7,11 +7,12 @@
         <h2 align="center">Основные настройки</h2>
         <div class="form_support">
 
+            <p>Настройки интеграции</p>
+
+
             @if(Session::has('message'))
             <div class="alertheight">
-                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
-                    {{ Session::get('message') }}
-                </div>
+                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">{{ Session::get('message') }}</div>
             </div>
             @endif
 
@@ -23,24 +24,24 @@
                     <input type="text" name="API_KEY" placeholder="API ключ от Kaspi" id="API_KEY" class="form-control"
                            required maxlength="255"
                            value="<?php
-                           if(isset($_SESSION['API_KEY'])) {
-                               echo ($_SESSION["API_KEY"]);
-                           }
-                           else {
-                               session_destroy();
-                               echo "";
-                           }
-                           ?>">
+                           if(isset($_SESSION['API_KEY'])) {echo ($_SESSION["API_KEY"]);
+                           } else { echo "";} ?>">
+                </div>
+
+
+                <hr class="href_padding">
+
+                <div>
+                    <P> Сопоставьте статусы платежей и заказов покупателя в МойСклад: </P>
+
+
+
                 </div>
 
                 <button type="submit" class="btn btn-primary"> Сохранить </button>
-
-
-
-
-                @include('sweetalert::alert')
-
             </form>
+
+
 
         </div>
     </div>
@@ -54,6 +55,13 @@
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 40px;
+    }
+
+    .href_padding{
+    color: black;
+        margin-right: 10px;
+        margin-left: 10px;
+
     }
 
     .form_support button{

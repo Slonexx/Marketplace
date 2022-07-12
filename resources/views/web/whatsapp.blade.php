@@ -5,12 +5,28 @@
 
     <div class="content">
         <h2 align="center">Написать в WhatsApp
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/WhatsApp_logo-color-vertical.svg/2048px-WhatsApp_logo-color-vertical.svg.png" width="30" height="30" alt="">
+            <i class="fa-brands fa-whatsapp"></i>
         </h2>
+
+        @if(Session::has('whatsapp'))
+            <div class="alertheight">
+                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
+                    {{ Session::get('whatsapp') }}
+                </div>
+                <?php
+                $url = Session::get('whatsapp_url');
+
+                echo "<script>window.open('".$url."', '_blank')</script>";
+
+                ?>
+
+            </div>
+        @endif
+
 
 
         <div class="form_support">
-            <form action=" {{  route('Send') }} " method="post">
+            <form action=" {{  route('whatsapp_Send') }} " method="post">
 
 
             @csrf <!-- {{ csrf_field() }} -->
@@ -25,8 +41,9 @@
                               required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary"> Отправить </button>
-
+                <button type="submit" class="btn btn-primary ">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Отправить </button>
             </form>
 
         </div>
