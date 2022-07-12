@@ -25,25 +25,39 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Информация</h5>
+                    <h5 class="modal-title">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="img-fluid" src="/examples/images/admin-dashboard.jpg" alt="">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt vero illo error eveniet cum.</p>
+                    <p>Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Да, хочу</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет, спасибо</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 
+
+
+    <button type="button"
+            class="btn btn-warning myPopover"
+            data-toggle="popover"
+            data-placement="right" title="Dismissiabe Popover"
+            data-trigger="focus"
+            data-content="I display when the button is focused!">Focus Me</button>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $('.myPopover').popover();
+    </script>
+
+
 @endsection
-
-<script>
-
-
-</script>
 

@@ -6,8 +6,9 @@
     <div class="content p-4 mt-2 bg-white text-Black rounded">
         <h2 align="center">Основные настройки <i class="fa-solid fa-gears text-orange"></i> </h2>
         <div class="">
+            <p> Настройки интеграции <button type="button" data-bs-toggle="modal" data-bs-target="#modal"
+                                             class="btn btn-new fa-solid fa-circle-info"> </button></p>
 
-            <p> Настройки интеграции <button class="btn btn-new fa-solid fa-circle-info"></button></p>
 
 
             <div class="row g-3 align-items-center">
@@ -52,6 +53,9 @@
 
         </div>
     </div>
+
+
+
 
 @endsection
 
