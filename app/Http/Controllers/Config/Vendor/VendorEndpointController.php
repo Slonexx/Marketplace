@@ -24,7 +24,7 @@ class VendorEndpointController extends Controller
 
         $log = new loginfoController("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
-        dd($method);
+        dd($path);
 
 
 
