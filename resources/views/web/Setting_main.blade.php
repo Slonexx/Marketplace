@@ -3,30 +3,36 @@
 
 @section('content')
 
-    <div class="content">
-        <h2 align="center">Основные настройки</h2>
-        <div class="form_support">
+    <div class="content p-4 mt-2 bg-white text-Black rounded">
+        <h2 align="center">Основные настройки <i class="fa-solid fa-gears text-orange"></i> </h2>
+        <div class="">
 
-            <p>Настройки интеграции</p>
-
-
-            @if(Session::has('message'))
-            <div class="alertheight">
-                <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">{{ Session::get('message') }}</div>
-            </div>
-            @endif
+            <p> Настройки интеграции <button class="btn btn-new fa-solid fa-circle-info"></button></p>
 
 
+            <div class="row g-3 align-items-center">
+                @if(Session::has('message'))
+                <div class="alertheight">
+                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
+                        {{ Session::get('message') }}
+                    </div>
+                </div>
+                @endif
             <form action=" {{  route('Setting_Send') }} " method="post">
             @csrf <!-- {{ csrf_field() }} -->
+                <div class="mb-3 row">
+                    <label for="TokenKaspi" class="col-sm-2 col-form-label" >Токен Kaspi-Api</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="API_KEY" placeholder="Token-API ключ от Kaspi" id="TokenKaspi"
+                               class="form-control" required maxlength="255"
+                               value="<?php if(isset($_SESSION['API_KEY'])) {echo ($_SESSION["API_KEY"]); } else { echo "";} ?>">
 
-                <div class="form-group">
-                    <input type="text" name="API_KEY" placeholder="API ключ от Kaspi" id="API_KEY" class="form-control"
-                           required maxlength="255"
-                           value="<?php
-                           if(isset($_SESSION['API_KEY'])) {echo ($_SESSION["API_KEY"]);
-                           } else { echo "";} ?>">
-                </div>
+                    </div>
+                     </div>
+
+
+            </form>
+            </div>
 
 
                 <hr class="href_padding">
@@ -37,9 +43,10 @@
 
 
                 </div>
+                <div class='d-flex justify-content-end text-black'>
+                    <button type="submit" class="btn btn-outline-dark"> Сохранить </button>
+                </div>
 
-                <button type="submit" class="btn btn-primary"> Сохранить </button>
-            </form>
 
 
 
@@ -50,49 +57,18 @@
 
 
 <style>
-    .form_support{
-        padding-top: 10px;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 40px;
+    .text-orange{
+        color: orange;
     }
 
-    .href_padding{
-    color: black;
-        margin-right: 10px;
-        margin-left: 10px;
-
+    .content button:hover{
+        color: orange;
     }
 
-    .form_support button{
-        margin-top: 10px;
-        margin-right: 10px;
-        background: green;
-        float: right;
-    }
-    .form_support button:hover{
-        background: black;
-        float: right;
-    }
-
-    .content{
-        padding-top: 0;
-        margin: 5px;
-        background: white;
-        border-radius: 10px;
-    }
-    .content h2{
-        padding-top: 10px;
-    }
-
-    .content div{
-        padding-top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
+    .btn-new:hover{
+       /* border:  1px double #ffffff;*/
+        border-color: white !important
     }
 
 
 </style>
-
-
-

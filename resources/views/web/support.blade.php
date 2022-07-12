@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="content">
+    <div class="content content p-4 mt-2 bg-white text-Black rounded">
         <h2 align="center">
             <i class="fa-solid fa-envelope"></i>
             Написать нам на почту </h2>
@@ -18,7 +18,7 @@
 
 
 
-        <div class="form_support">
+        <div class="">
             <form action=" {{  route('Send') }} " method="post">
 
 
@@ -51,22 +51,6 @@
 
 
 <style>
-    .form_support{
-        padding-top: 10px;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 40px;
-    }
-
-    .form_support button{
-        margin-top: 10px;
-        background: green;
-        float: right;
-    }
-    .form_support button:hover{
-        background: black;
-        float: right;
-    }
 
     .content{
         padding-top: 0;
@@ -74,14 +58,9 @@
         background: white;
         border-radius: 10px;
     }
-    .content h2{
-        padding-top: 10px;
-    }
 
     .content div{
         padding-top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
     }
 
 
