@@ -15,7 +15,13 @@ class SalesChannelController extends Controller
         foreach($json->rows as $row){
             if ($row->name == 'Kaspi Shop'){
                  $foundedMeta = [
-                    "meta" => $row->meta,
+                    "meta" => [
+                        "href" => $row->meta->href,
+                        "metadataHref" =>$row->meta->metadataHref,
+                        "type" => $row->meta->type,
+                        "mediaType" => $row->meta->mediaType,
+                        "uuidHref" => $row->meta->uuidHref,
+                    ],
                 ];
                 break;
             }
@@ -37,7 +43,13 @@ class SalesChannelController extends Controller
         $createdMeta = $client->requestPost($saleChannel)->meta;
 
         return [
-            "meta" => $createdMeta,
+            "meta" => [
+                "href" => $createdMeta->href,
+                "metadataHref" =>$createdMeta->metadataHref,
+                "type" => $createdMeta->type,
+                "mediaType" => $createdMeta->mediaType,
+                "uuidHref" => $createdMeta->uuidHref,
+            ],
         ];
     }
 
