@@ -8,10 +8,6 @@
         </button>
     </form>
 
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
-
     <br>
 
 
@@ -38,26 +34,6 @@
             </div>
         </div>
     </div>
-
-
-
-    <button type="button"
-            class="btn btn-warning myPopover"
-            data-toggle="popover"
-            data-placement="right" title="Dismissiabe Popover"
-            data-trigger="focus"
-            data-content="I display when the button is focused!">Focus Me</button>
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
-    <script>
-        $('.myPopover').popover();
-    </script>
-
 
 @endsection
 
