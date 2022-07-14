@@ -8,8 +8,17 @@ use Illuminate\Http\Request;
 
 class VendorEndpointController extends Controller
 {
+    public $path;
+
+    /**
+     * @param $path
+     */
+    public function __construct($path)
+    {
+        $this->path = $path;
+    }
+
     public function Activate(){
-        session_start();
-        dd( $_SESSION["path"]);
+        dd($this->path);
     }
 }
