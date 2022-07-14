@@ -16,9 +16,11 @@
 
             <div class="row g-3 align-items-center">
                 @if(Session::has('message'))
-                <div class="alertheight">
-                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
-                        {{ Session::get('message') }}
+                <div class="alert text-center">
+                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}  alert-dismissible fade show "
+                         role="alert"> {{ Session::get('message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <br>
                     </div>
                 </div>
                 @endif
@@ -40,21 +42,19 @@
                     <div class="mb-3 row">
                         <P class="col-sm-4 col-form-label"> Статус на принятие продавцом: </P>
                         <div class="col-sm-auto dropdown">
-                            <select class="form-select" data-show-content="true" name="value" aria-label="Статус">
+                            <select class="selectpicker text-black">
                                 <?php
                                 $i = 0;
                                 ?>
-
                                 <option selected>Статус</option>
                                 @foreach($Body as $bodyItem)
-                                        <option style="background-color: {{ $setBackground[$i] }} "
-                                                value="<?php $i++?>"> {{ ($bodyItem->name) }} </option>
+                                        <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" value="<?php $i++?>">
+                                            <div style="color: #111111"> {{ ($bodyItem->name) }} </div>
+                                        </option>
                                 @endforeach
                             </select>
-
                         </div>
                     </div>
-
 
                 </div>
 
@@ -100,8 +100,16 @@
 
 
 <style>
- .new{
-     color: blue;
-     background-color: ;
- }
+
+     .selected {
+         margin-right: 0px !important;
+         background-color: rgba(17, 17, 17, 0.14) !important;
+         border-radius: 3px !important;
+    }
+
+     .dropdown-item:active {
+         background-color: rgba(123, 123, 123, 0.14) !important;
+     }
+
+
 </style>

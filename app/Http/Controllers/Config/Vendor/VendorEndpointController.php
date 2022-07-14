@@ -10,7 +10,7 @@ class VendorEndpointController extends Controller
 {
     public function Activate(){
 
-        //require_once 'lib.php';
+        /*require_once 'lib.php';
 
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
@@ -24,10 +24,9 @@ class VendorEndpointController extends Controller
 
         $log = new loginfoController("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
-        dd($path);
+        dd($path);*/
 
-
-
+        return view('Config.Vendor');
 
     }
 }

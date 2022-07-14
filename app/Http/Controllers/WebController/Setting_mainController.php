@@ -61,11 +61,7 @@ class Setting_mainController extends Controller
 
     public function saveApiKey(Request $request){
 
-        $temp = $request;
-
-        dd($temp);
-
-       /* $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
+        $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
         $API_KEY = $request->API_KEY;
         $status = new KaspiApiClient($url,$API_KEY);
         $message = $status->CheckAndSaveApiKey();
@@ -76,7 +72,7 @@ class Setting_mainController extends Controller
         else {
             Session::flash('alert-class', 'alert-danger');
         }
-        return Redirect::back();*/
+        return Redirect::back();
            // return view('web.support');
 
 
