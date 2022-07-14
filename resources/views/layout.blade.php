@@ -159,7 +159,12 @@
         box-shadow: 0 0 0 0.25rem rgba(255, 77, 0, 0.16);
     }
 
-
+    .btnP p:hover {
+        color: orange;
+    }
+    .btnP button:hover {
+        color: orange;
+    }
 
 </style>
 

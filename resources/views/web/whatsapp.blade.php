@@ -3,9 +3,9 @@
 @section('content')
 
 
-    <div class="content">
+    <div class="content p-4 mt-2 bg-white text-black rounded">
         <h2 align="center">Написать в WhatsApp
-            <i class="fa-brands fa-whatsapp"></i>
+            <i class="fa-brands fa-whatsapp text-success"></i>
         </h2>
 
         @if(Session::has('whatsapp'))
@@ -15,9 +15,7 @@
                 </div>
                 <?php
                 $url = Session::get('whatsapp_url');
-
                 echo "<script>window.open('".$url."', '_blank')</script>";
-
                 ?>
 
             </div>
@@ -25,25 +23,31 @@
 
 
 
-        <div class="form_support">
+        <div class="mt-3">
             <form action=" {{  route('whatsapp_Send') }} " method="post">
 
-
             @csrf <!-- {{ csrf_field() }} -->
-
-                <div class="form-group">
-                    <input type="text" name="name" placeholder="Введите Имя, фамилия" id="name" class="form-control"
-                           required maxlength="100" value="{{ old('name') ?? '' }}">
+                <div class="form-group mb-3 row ">
+                    <label for="TokenKaspi" class="col-sm-2 col-form-label mt-2">Введите Имя</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="name" placeholder="Введите Имя, фамилия" id="name" class="form-control form-control-orange"
+                               required maxlength="100" value="{{ old('name') ?? '' }}">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <textarea class="form-control" name="message" placeholder="Ваше сообщение"
-                              required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
+                <div class="form-group row">
+                    <label for="TokenKaspi" class="col-sm-2 col-form-label mt-2"></label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control form-control-orange" name="message" placeholder="Ваше сообщение"
+                                  required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary ">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    Отправить </button>
+                <div class='d-flex justify-content-end text-black btnP' >
+                    <button type="submit" class="mt-3 btn btn-outline-dark "> <i class="fa-brands fa-whatsapp"></i> Отправить </button>
+                </div>
+
+
             </form>
 
         </div>
@@ -53,39 +57,4 @@
 @endsection
 
 
-<style>
-    .form_support{
-        padding-top: 10px;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-bottom: 40px;
-    }
 
-    .form_support button{
-        margin-top: 10px;
-        background: green;
-        float: right;
-    }
-    .form_support button:hover{
-        background: black;
-        float: right;
-    }
-
-    .content{
-        padding-top: 0;
-        margin: 5px;
-        background: white;
-        border-radius: 10px;
-    }
-    .content h2{
-        padding-top: 10px;
-    }
-
-    .content div{
-        padding-top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-
-</style>
