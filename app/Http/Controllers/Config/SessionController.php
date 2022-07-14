@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 class SessionController extends Controller
 {
 
+    private $ApiKey;
+
     public function SessionInitialization($ApiKey){
         session_start();
         
@@ -30,6 +32,7 @@ class SessionController extends Controller
         $_SESSION["brand"] = app(ProductAttributesController::class)->getAttribute('brand (KASPI)',$ApiKey);
         $_SESSION["export"] = app(ProductAttributesController::class)->getAttribute('Добавлять товар на Kaspi',$ApiKey);
 
+        $this->ApiKey = $ApiKey;
         /*$Organization = app(OrganizationController::class)->getKaspiOrganization($ApiKey);
         $result = session(["Store" => $store, "Organization" => $Organization, ]);
         session()->save();*/
@@ -43,9 +46,43 @@ class SessionController extends Controller
         if(isset($_SESSION[$name_cookie])) {
            return $_SESSION[$name_cookie];
         } else {
-
+            $createdMeta = $this->createMetaByName($name_cookie);
+            $_SESSION[$name_cookie] = $createdMeta;
+            return $createdMeta;
         }
+    }
 
+    private function createMetaByName($metaName)
+    {
+        switch ($metaName) {
+            case 'store':
+                return  app(StoreController::class)->getKaspiStore($this->ApiKey);
+            break;
+            case 'pricetype':
+                return app(PriceTypeController::class)->getPriceType($this->ApiKey);
+            break;
+            case 'uom':
+                return app(UomController::class)->getUom($this->ApiKey);
+            break;
+            case 'salechannel':
+                return app(SalesChannelController::class)->getSaleChannel($this->ApiKey);
+            break;
+            case 'organization':
+                return app(OrganizationController::class)->getKaspiOrganization($this->ApiKey);
+            break;
+            case 'currency':
+                return app(CurrencyController::class)->getKzCurrency($this->ApiKey);
+            break;
+            case 'gos_attribute':
+                return app(AgentAttributesController::class)->getAttributeGos($this->ApiKey);
+            break;
+            case 'brand':
+                return app(ProductAttributesController::class)->getAttribute('brand (KASPI)',$this->ApiKey);
+            break;
+            case 'export':
+                return app(ProductAttributesController::class)->getAttribute('Добавлять товар на Kaspi',$this->ApiKey);
+            break;
+        }
     }
 
 

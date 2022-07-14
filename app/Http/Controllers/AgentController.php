@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Config\SessionController;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -26,6 +27,7 @@ class AgentController extends Controller
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty";
         $client = new ApiClientMC($uri,$apiKey);
         $attributes = app(AgentAttributesController::class)->getAttributeGos($apiKey);
+        //$attributes = app(SessionController::class)->getCookie('gos_attribute');
         $agent = [
             'name' => 'Kaspi client '.$customer->name,
             "legalLastName" => $customer->lastName,
