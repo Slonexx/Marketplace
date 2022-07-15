@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Config\Vendor;
 
 use App\Http\Controllers\Controller;
+use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Firebase\JWT\JWT;
+use JetBrains\PhpStorm\Pure;
 
 class VendorEndpointController extends Controller
 {
@@ -40,31 +42,6 @@ class AppConfig {
     }
 }
 
-class JsonApi {
-
-    private $accessToken;
-
-    function __construct(string $accessToken) {
-        $this->accessToken = $accessToken;
-    }
-
-    function stores() {
-        return makeHttpRequest(
-            'GET',
-            cfg()->moyskladJsonApiEndpointUrl . '/entity/store',
-            $this->accessToken);
-    }
-
-    function getObject($entity, $objectId) {
-        return makeHttpRequest(
-            'GET',
-            cfg()->moyskladJsonApiEndpointUrl . "/entity/$entity/$objectId",
-            $this->accessToken);
-    }
-
-}
-
-
 class AppInstance {
 
     const UNKNOWN = 0;
@@ -94,6 +71,13 @@ class AppInstance {
         $this->accountId = $accountId;
     }
 
+    private static function cfg()
+    {
+        $cfg = new VendorEndpointController();
+        $cfg = $cfg->cfg();
+        return $cfg;
+    }
+
     function getStatusName() {
         switch ($this->status) {
             case self::SETTINGS_REQUIRED:
@@ -113,16 +97,17 @@ class AppInstance {
         @unlink($this->filename());
     }
 
-    private function filename() {
+    #[Pure] private function filename() {
         return self::buildFilename($this->appId, $this->accountId);
     }
 
-    private static function buildFilename($appId, $accountId) {
+    private static function buildFilename($appId, $accountId): string
+    {
         return $GLOBALS['dirRoot'] . "data/$appId.$accountId.app";
     }
 
     static function loadApp($accountId): AppInstance {
-        return self::load(cfg()->appId, $accountId);
+        return self::load(self::cfg()->appId, $accountId);
     }
 
     static function load($appId, $accountId): AppInstance {
@@ -136,15 +121,4 @@ class AppInstance {
         return $app;
     }
 
-}
-
-
-class log{
-
-    function loginfo($name, $msg) {
-        global $dirRoot;
-        $logDir = $dirRoot . 'logs';
-        @mkdir($logDir);
-        file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
-    }
 }

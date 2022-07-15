@@ -1,6 +1,8 @@
 <?php
 
 //require_once 'lib.php';
+use App\Http\Controllers\Config\Vendor\AppInstance;
+
 require_once "App\Http\Controllers\Config\Vendor\VendorEndpointController.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
