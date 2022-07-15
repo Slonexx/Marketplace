@@ -11,7 +11,10 @@ class VendorEndpointController extends Controller
 {
     public function Activate(){
 
-        $cfg = $this->cfg();
+        require(public_path().'/Config/'.'vendor-endpoint.php');
+
+        $tmp = new \getInfo();
+        $tmp->Check();
 
     }
 
