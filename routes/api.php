@@ -38,7 +38,7 @@ Route::get('excelProducts', [ExcelController::class,'getProductsExcel']);
 Route::get('getTest', [TestController::class,'init']);
 //Route::get('getTest2', [TestController2::class,'getTest'])->name('Test');
 
-
+Route::put('/Vendor', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
 
 
