@@ -14,8 +14,8 @@ class VendorEndpointController extends Controller
         require(public_path().'/Config/'.'vendor-endpoint.php');
 
         $tmp = new \getInfo();
-        $tmp->Check();
-
+        $id = $tmp->getAccess_token();
+        dd($id);
     }
 
     public function cfg(){
