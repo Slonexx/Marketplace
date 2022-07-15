@@ -31,7 +31,7 @@ class AppConfig {
     }
 }
 
-
+$cfg = new AppConfig(require('config.php'));
 
 function cfg(): AppConfig {
     return $cfg = new AppConfig(require('config.php'));
