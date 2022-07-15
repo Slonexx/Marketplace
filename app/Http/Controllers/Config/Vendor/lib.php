@@ -64,6 +64,7 @@ class VendorApi {
 }
 
 function makeHttpRequest(string $method, string $url, string $bearerToken, $body = null) {
+    loginfo("APP => MOYSKLAD", "Send: $method $url\n$body");
 
     $opts = $body
         ? array('http' =>
@@ -140,7 +141,12 @@ function jsonApi(): JsonApi {
 //  Logging
 //
 
-
+function loginfo($name, $msg) {
+    global $dirRoot;
+    $logDir = $dirRoot . 'logs';
+    @mkdir($logDir);
+    file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
+}
 
 //
 //  AppInstance state
