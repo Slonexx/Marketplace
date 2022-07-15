@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 class VendorEndpointController extends Controller
 {
     public function Activate(){
-        return view('vendor-endpoint');
+
+        dd($_SESSION['PATH_INFO']);
+
+
     }
 
 }
