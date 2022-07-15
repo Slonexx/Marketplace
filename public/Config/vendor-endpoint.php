@@ -2,6 +2,8 @@
 
 //require_once 'lib.php';
 
+use App\Http\Controllers\Config\Vendor\AppInstance;
+
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'];
 
