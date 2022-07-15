@@ -12,77 +12,28 @@ class VendorEndpointController extends Controller
 {
     public function Activate(){
 
-
-
         require(public_path().'/Config/'.'lib.php');
+        $contextName = 'IFRAME';
+        require(public_path().'/Config/'.'user-context-loader.inc.php');
+        $app = AppInstance::loadApp($accountId);
+        dd($accountId);
 
-        $method = $_SERVER['REQUEST_METHOD'];
-        $path = $_SERVER['PATH_INFO'];
-        dd($path);
+        /* require(public_path().'/Config/'.'vendor-endpoint.php');
 
-
-
-
-
-
-
-
+         $tmp = new \getInfo();
+         $id = $tmp->getAccess_token();
+         dd($id);
 
 
 
+       /*  require(public_path().'/Config/'.'lib.php');
+         $contextKey = $_GET['contextKey'];
+
+         //$employee = vendorApi()->context($contextKey);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*require(public_path().'/Config/'.'lib.php');
-        $contextKey = $_GET['contextKey'];
-
-        //$employee = vendorApi()->context($contextKey);
-
-
-
-        dd($contextKey);*/
+         dd($contextKey);*/
 
 
         /*require(public_path().'/Config/'.'lib.php');
