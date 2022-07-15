@@ -6,9 +6,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'];
 
 loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
-
-session_start();
-$_SESSION['PATH_INFO'] = $path;
+loginfo("MOYSKLAD => SERVER", "$_SERVER");
 
 $pp = explode('/', $path);
 $n = count($pp);
