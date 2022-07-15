@@ -11,11 +11,13 @@ class VendorEndpointController extends Controller
 {
     public function Activate(){
 
-        require(public_path().'/Config/'.'vendor-endpoint.php');
+        require(public_path().'/Config/'.'lib.php');
 
-        $tmp = new \getInfo();
-        $id = $tmp->getAccess_token();
-        dd($id);
+        $infoMessage = $_POST['infoMessage'];
+        $store = $_POST['store'];
+
+        dd($store);
+
     }
 
     public function cfg(){

@@ -28,7 +28,6 @@ switch ($method) {
         $appUid = $data->appUid;
         $accessToken = $data->access[0]->access_token;
 
-        $setDate = new getInfo($appUid, $accessToken);
 
         loginfo("MOYSKLAD => APP", "Received access_token: appUid=$appUid, access_token=$accessToken)");
 
@@ -52,33 +51,4 @@ if (!$app->getStatusName()) {
     header("Content-Type: application/json");
     echo '{"status": "' . $app->getStatusName() . '"}';
 }
-
-
-class getInfo{
-
-    var $appUid;
-    var $accessToken;
-
-    /**
-     * @param $appUid
-     * @param $accessToken
-     */
-    public function __construct($appUid, $accessToken)
-    {
-        $this->appUid = $appUid;
-        $this->accessToken = $accessToken;
-    }
-
-    public function Check(){
-        loginfo("MOYSKLAD => APP", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    }
-
-
-
-    public function getAccess_token(){
-        return  $this->accessToken;
-    }
-
-}
-
 
