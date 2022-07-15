@@ -9,12 +9,13 @@ class VendorEndpointController extends Controller
 {
     public function Activate(){
 
-        $this->cfg();
+        $cfg = $this->cfg();
 
     }
 
     public function cfg(){
         $cfg = new AppConfig(require(public_path().'/Config/'.'config.php'));
+        return $cfg;
     }
 
 

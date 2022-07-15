@@ -1,9 +1,7 @@
 <?php
 
 //require_once 'lib.php';
-
-use App\Http\Controllers\Config\Vendor\AppInstance;
-use App\Http\Controllers\Config\Vendor\log;
+require_once "App\Http\Controllers\Config\Vendor\VendorEndpointController.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'];
