@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Log;
 
 class VendorEndpointController extends Controller
 {
-    public function Activate(string $path){
+    public function Activate(){
 
-        Log::info("Check log", ["Message" => $path]);
+        Log::info("Check log", ["Message" => "dwadwadwawd"]);
 
 
     }

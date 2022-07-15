@@ -7,7 +7,7 @@ $path = $_SERVER['PATH_INFO'];
 
 loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
  $controller = new \App\Http\Controllers\Config\Vendor\VendorEndpointController();
- $controller->Activate($path);
+ $controller->Activate();
 
 
 $pp = explode('/', $path);
