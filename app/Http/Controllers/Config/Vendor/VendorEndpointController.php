@@ -14,20 +14,14 @@ class VendorEndpointController extends Controller
         require(public_path().'/Config/'.'lib.php');
         $contextKey = $_GET['contextKey'];
 
-        $employee = vendorApi()->context($contextKey);
+        //$employee = vendorApi()->context($contextKey);
 
-
-        $uid = $employee->uid;
-        $fio = $employee->shortFio;
-        $accountId = $employee->accountId;
-
-        $isAdmin = $employee->permissions->admin->view;
 
 
         dd($contextKey);
 
 
-        /*require(public_path().'/Csonfig/'.'lib.php');
+        /*require(public_path().'/Config/'.'lib.php');
         $contextName = 'IFRAME';
         require(public_path().'/Config/'.'user-context-loader.inc.php');
         $app = AppInstance::loadApp($accountId);
