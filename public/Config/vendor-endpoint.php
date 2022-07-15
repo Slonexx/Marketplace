@@ -7,6 +7,8 @@ $path = $_SERVER['PATH_INFO'];
 
 loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
 
+ //  $clinet = new \App\Http\Controllers\Config\Vendor\VendorEndpointController($path);
+
 $pp = explode('/', $path);
 $n = count($pp);
 $appId = $pp[$n - 2];

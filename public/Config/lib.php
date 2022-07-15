@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Config\Vendor;
 use \Firebase\JWT\JWT;
-use InvalidArgumentException;
 
 require_once 'jwt.lib.php';
 
