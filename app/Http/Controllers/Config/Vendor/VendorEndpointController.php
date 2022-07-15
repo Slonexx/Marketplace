@@ -11,7 +11,7 @@ use JetBrains\PhpStorm\Pure;
 class VendorEndpointController extends Controller
 {
     public function Activate(){
-        require(public_path().'/Csonfig/'.'lib.php');
+        require(public_path().'/Config/'.'lib.php');
         $contextKey = $_GET['contextKey'];
 
         $employee = vendorApi()->context($contextKey);
