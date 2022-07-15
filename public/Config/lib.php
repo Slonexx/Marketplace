@@ -31,10 +31,10 @@ class AppConfig {
     }
 }
 
-$cfg = new AppConfig(require('config.php'));
+
 
 function cfg(): AppConfig {
-    return $GLOBALS['cfg'];
+    return $cfg = new AppConfig(require('config.php'));
 }
 
 //
