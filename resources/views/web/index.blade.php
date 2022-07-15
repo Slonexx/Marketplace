@@ -11,10 +11,6 @@
     <br>
 
 
-    <select class="selectpicker">
-        <option data-icon="fa-solid fa-droplet text-orange">Ketchup</option>
-    </select>
-
 
 @endsection
 
