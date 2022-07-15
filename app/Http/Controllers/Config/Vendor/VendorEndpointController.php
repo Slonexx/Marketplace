@@ -15,7 +15,7 @@ class VendorEndpointController extends Controller
 
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
-
+        dd($path);
         loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
 
         $pp = explode('/', $path);
