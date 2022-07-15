@@ -50,11 +50,11 @@
                         </script>
 
                         <div class="col-sm-8 ">
-                            <select class="form-select text-black">
+                            <select name="Select" class="form-select text-black">
                                 <?php $i = 0; ?> <option selected>Статус</option>
-                                @foreach($Body as $bodyItem)
-                                        <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}"
-                                                value="<?php $i++?>"> {{ ($bodyItem->name) }}
+                                @foreach($Body as $bodyItem => $dat)
+                                        <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
+                                                value="{{ $dat->id }}"> {{ ($dat->name) }}
                                         </option>
                                 @endforeach
                             </select>

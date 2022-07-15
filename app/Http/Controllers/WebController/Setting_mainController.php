@@ -46,7 +46,7 @@ class Setting_mainController extends Controller
             }
         }
 
-        // dd($setBackground);
+        //dd($setBackground);
         //dd($Body);
 
 
