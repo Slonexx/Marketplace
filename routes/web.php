@@ -8,11 +8,6 @@ use App\Http\Controllers\WebController\WhatsappController;
 use Illuminate\Support\Facades\Route;
 
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});*/
-
 //Setting Vendor
 Route::get('/Vendor', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
