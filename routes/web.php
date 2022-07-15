@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //Setting Vendor
-Route::get('/Vendor/', [VendorEndpointController::class, 'Activate'])->name('Vendor');
+Route::get('/', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
 
 Route::get('/', [WebController::class, 'index']);
