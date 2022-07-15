@@ -11,7 +11,7 @@ use JetBrains\PhpStorm\Pure;
 class VendorEndpointController extends Controller
 {
     public function Activate(){
-        require(public_path().'/Config/'.'lib.php');
+        require(public_path().'/Csonfig/'.'lib.php');
         $contextName = 'IFRAME';
         require(public_path().'/Config/'.'user-context-loader.inc.php');
         $app = AppInstance::loadApp($accountId);
