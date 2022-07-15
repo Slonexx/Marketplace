@@ -9,6 +9,7 @@ loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
  $controller = new \App\Http\Controllers\Config\Vendor\VendorEndpointController();
  $controller->Activate($path);
 
+
 $pp = explode('/', $path);
 $n = count($pp);
 $appId = $pp[$n - 2];
