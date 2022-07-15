@@ -10,11 +10,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 class WebController extends Controller
 {
     public function index(){
-
-        $contextName = 'IFRAME';
-
-
-
         return view('web.index');
     }
 

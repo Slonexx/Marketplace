@@ -88,7 +88,7 @@ function makeHttpRequest(string $method, string $url, string $bearerToken, $body
 $vendorApi = new VendorApi();
 
 function vendorApi(): VendorApi {
-    return $GLOBALS['vendorApi'];
+    return $vendorApi = new VendorApi();
 }
 
 function buildJWT() {
