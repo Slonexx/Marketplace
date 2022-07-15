@@ -16,6 +16,7 @@ class VendorEndpointController extends Controller
 
         $employee = vendorApi()->context($contextKey);
 
+
         $uid = $employee->uid;
         $fio = $employee->shortFio;
         $accountId = $employee->accountId;
