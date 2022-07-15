@@ -40,6 +40,30 @@ class AppConfig {
     }
 }
 
+class JsonApi {
+
+    private $accessToken;
+
+    function __construct(string $accessToken) {
+        $this->accessToken = $accessToken;
+    }
+
+    function stores() {
+        return makeHttpRequest(
+            'GET',
+            cfg()->moyskladJsonApiEndpointUrl . '/entity/store',
+            $this->accessToken);
+    }
+
+    function getObject($entity, $objectId) {
+        return makeHttpRequest(
+            'GET',
+            cfg()->moyskladJsonApiEndpointUrl . "/entity/$entity/$objectId",
+            $this->accessToken);
+    }
+
+}
+
 
 class AppInstance {
 
@@ -114,3 +138,13 @@ class AppInstance {
 
 }
 
+
+class log{
+
+    function loginfo($name, $msg) {
+        global $dirRoot;
+        $logDir = $dirRoot . 'logs';
+        @mkdir($logDir);
+        file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
+    }
+}
