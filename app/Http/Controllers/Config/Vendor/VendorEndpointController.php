@@ -12,7 +12,7 @@ class VendorEndpointController extends Controller
 {
     public function Activate(){
 
-        Log::info("Check log", ["Message" => "dwadwadwawd"]);
+
 
 
     }
