@@ -1,18 +1,18 @@
 <?php
 
-
 require_once 'lib.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'];
 
-
+loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
 
 $pp = explode('/', $path);
 $n = count($pp);
 $appId = $pp[$n - 2];
 $accountId = $pp[$n - 1];
 
+loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
 $app = AppInstance::load($appId, $accountId);
 $replyStatus = true;
@@ -21,6 +21,7 @@ switch ($method) {
     case 'PUT':
         $requestBody = file_get_contents('php://input');
 
+        loginfo("MOYSKLAD => APP", "Request body: " . print_r($requestBody, true));
 
         $data = json_decode($requestBody);
 
@@ -29,6 +30,7 @@ switch ($method) {
 
         $setDate = new getInfo($appUid, $accessToken);
 
+        loginfo("MOYSKLAD => APP", "Received access_token: appUid=$appUid, access_token=$accessToken)");
 
         if (!$app->getStatusName()) {
             $app->accessToken = $accessToken;
@@ -68,7 +70,7 @@ class getInfo{
     }
 
     public function Check(){
-
+        loginfo("MOYSKLAD => APP", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
 

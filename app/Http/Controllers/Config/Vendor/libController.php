@@ -14,7 +14,8 @@ class libController extends Controller
 
     public function index(){
 
-
+        $class = app(\getInfo::class);
+        $class->Check();
 
 
 
