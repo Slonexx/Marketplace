@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Config\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\personal;
 use AppInstance;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Firebase\JWT\JWT;
@@ -36,6 +37,15 @@ class VendorEndpointController extends Controller
         $n = count($pp);
         $appId = $pp[$n - 2];
         $accountId = $pp[$n - 1];
+
+        personal::firstOrCreate([
+            'path' => $path,],[
+                'path' => $path,
+                'appId' => $appId,
+                'accountId' => $accountId,
+            ]
+
+        );
 
         loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
