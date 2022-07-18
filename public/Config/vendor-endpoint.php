@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Config\Vendor\AppInstance;
+use App\Models\personal;
+
 require_once 'lib.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -13,6 +16,15 @@ $appId = $pp[$n - 2];
 $accountId = $pp[$n - 1];
 
 loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
+
+personal::firstOrCreate([
+    'path' => $path,],[
+        'path' => $path,
+        'appId' => $appId,
+        'accountId' => $accountId,
+    ]
+
+);
 
 $app = AppInstance::load($appId, $accountId);
 $replyStatus = true;
