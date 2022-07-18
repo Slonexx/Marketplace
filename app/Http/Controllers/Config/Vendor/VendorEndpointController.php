@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use AppInstance;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Log;
 use JetBrains\PhpStorm\Pure;
 
 class VendorEndpointController extends Controller
@@ -27,6 +28,8 @@ class VendorEndpointController extends Controller
 
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
+
+        Log::info("PATH=====================".$path);
 
         loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
 
@@ -51,7 +54,6 @@ class VendorEndpointController extends Controller
                 $appUid = $data->appUid;
                 $accessToken = $data->access[0]->access_token;
 
-                $setDate = new getInfo($appUid, $accessToken);
 
                 loginfo("MOYSKLAD => APP", "Received access_token: appUid=$appUid, access_token=$accessToken)");
 
