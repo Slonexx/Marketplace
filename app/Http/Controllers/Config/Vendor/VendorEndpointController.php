@@ -19,8 +19,6 @@ class VendorEndpointController extends Controller
         $contextName = 'IFRAME';
         require(public_path() . '/Config/' . 'user-context-loader.inc.php');
         $app = AppInstance::loadApp($accountId);
-
-
         dd($app);*/
 
 
@@ -30,8 +28,6 @@ class VendorEndpointController extends Controller
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
 
-
-        loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
 
         $pp = explode('/', $path);
         $n = count($pp);
@@ -47,8 +43,6 @@ class VendorEndpointController extends Controller
 
         );
 
-        loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
-
         $app = AppInstance::load($appId, $accountId);
         $replyStatus = true;
 
@@ -56,15 +50,12 @@ class VendorEndpointController extends Controller
             case 'PUT':
                 $requestBody = file_get_contents('php://input');
 
-                loginfo("MOYSKLAD => APP", "Request body: " . print_r($requestBody, true));
 
                 $data = json_decode($requestBody);
 
                 $appUid = $data->appUid;
                 $accessToken = $data->access[0]->access_token;
 
-
-                loginfo("MOYSKLAD => APP", "Received access_token: appUid=$appUid, access_token=$accessToken)");
 
                 if (!$app->getStatusName()) {
                     $app->accessToken = $accessToken;
