@@ -9,7 +9,7 @@ use \App\Http\Controllers\Config\Vendor\libController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [libController::class, 'index'])->name('check');
+Route::get('/check', [libController::class, 'index'])->name('check');
 
 
 
