@@ -60,7 +60,7 @@ class Setting_mainController extends Controller
     }
 
     public function saveApiKey(Request $request){
-            dd($request);
+           // dd($request);
         $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
         $API_KEY = $request->API_KEY;
         $status = new KaspiApiClient($url,$API_KEY);
