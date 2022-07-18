@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Config\Vendor;
 
 use App\Http\Controllers\Controller;
 use App\Models\personal;
-use AppInstance;
+use App\Http\Controllers\Config\Vendor\AppInstance;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +23,7 @@ class VendorEndpointController extends Controller
 
 
 
-        require(public_path() . '/Config/' . 'lib.php');
+       // require(public_path() . '/Config/' . 'lib.php');
 
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];

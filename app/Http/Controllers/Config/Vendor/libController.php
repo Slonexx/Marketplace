@@ -13,17 +13,24 @@ class libController extends Controller
 {
 
     public function index(){
-        $date = $this->cfg();
-        dd($date);
+
+
+
+
+
     }
 
     public function newCFG(){
         $cfg = new AppConfig(require(public_path() . '/Config/' . 'config.php'));
     }
 
-    function cfg(): AppConfig {
-        return $GLOBALS['cfg'];
+    public function newVendorApi(){
+        $vendorApi = new VendorApi();
     }
+
+
+
+
 
 }
 class AppConfig {
@@ -43,6 +50,28 @@ class AppConfig {
             $this->$k = $v;
         }
     }
+}
+
+class VendorApi {
+
+    function context(string $contextKey) {
+        return $this->request('POST', '/context/' . $contextKey);
+    }
+
+    function updateAppStatus(string $appId, string $accountId, string $status) {
+        return $this->request('PUT',
+            "/apps/$appId/$accountId/status",
+            "{\"status\": \"$status\"}");
+    }
+
+    private function request(string $method, $path, $body = null) {
+        return makeHttpRequest(
+            $method,
+            cfg()->moyskladVendorApiEndpointUrl . $path,
+            buildJWT(),
+            $body);
+    }
+
 }
 
 
