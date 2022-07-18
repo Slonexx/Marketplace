@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\personal;
 
 require_once 'lib.php';
 
@@ -16,14 +15,6 @@ $accountId = $pp[$n - 1];
 
 loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
-personal::firstOrCreate([
-    'path' => $path,],[
-        'path' => $path,
-        'appId' => $appId,
-        'accountId' => $accountId,
-    ]
-
-);
 
 $app = AppInstance::load($appId, $accountId);
 $replyStatus = true;
