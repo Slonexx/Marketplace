@@ -7,26 +7,23 @@ use App\Http\Controllers\Controller;
 
 class GlobalVariables extends Controller
 {
-    public $cfg;
-    public $vendorApi;
+   public $path;
 
-    public function __construct($cfg, $vendorApi)
+    /**
+     * @param $path
+     */
+    public function __construct($path)
     {
-        $this->cfg = $cfg;
-        $this->vendorApi = $vendorApi;
+        $this->path = $path;
     }
 
-    public function getCfg()
+    /**
+     * @return mixed
+     */
+    public function getPath()
     {
-        return $this->cfg;
+        return $this->path;
     }
-
-    public function getVendorApi()
-    {
-        return $this->vendorApi;
-    }
-
-
 
 
 
