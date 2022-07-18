@@ -15,16 +15,16 @@ use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class OrderController extends Controller
 {
-    public function getOrdersFromKaspi($apiKey)
+    public function getOrdersFromKaspi($apiKey, $urlKaspi)
     {
         // $request->validate([
         //     'tokenKaspi' => 'required|string'
         // ]);
 
-        $uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1656688175000&filter[orders][creationDate][\$le]=1657111171000";
+        //$uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1657533973000&filter[orders][creationDate][\$le]=1658138773000";
         //$apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
 
-        $client = new KaspiApiClient($uri,$apiKey);
+        $client = new KaspiApiClient($urlKaspi,$apiKey);
         $jsonAllOrders = $client->requestGet(true);
         
         $ordersFromKaspi = [];
@@ -95,9 +95,9 @@ class OrderController extends Controller
     }
 
 
-    public function getOrdersNotInserted($tokenMs,$tokenKaspi)
+    public function getOrdersNotInserted($tokenMs,$tokenKaspi, $urlKaspi)
     {
-        $ordersFromKaspi = $this->getOrdersFromKaspi($tokenKaspi);
+        $ordersFromKaspi = $this->getOrdersFromKaspi($tokenKaspi, $urlKaspi);
         //app(ProductController::class)->insertProducts($tokenMs,$ordersFromKaspi);
         $ordersFromMs = $this->getOrdersFromMS($tokenMs);
         
@@ -118,9 +118,19 @@ class OrderController extends Controller
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
             'payment' => 'required|boolean',
+            'state' => 'required|string',
+            'fdate' => 'required|string',
+            'sdate' => 'required|string',
         ]);
 
-        $orders = $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi);
+        $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
+        $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
+
+        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
+        $request->state."&filter[orders][creationDate][\$ge]=".
+        $fdate."&filter[orders][creationDate][\$le]=".$sdate;
+
+        $orders = $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi,$urlKaspi);
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$request->tokenMs);
@@ -160,6 +170,9 @@ class OrderController extends Controller
             $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
             $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
+
+            $info = "https://kaspi.kz/merchantcabinet/#/orders/details/".$order['code'];
+            $formattedOrder['description'] = "Order code: ".$order['code'].". More info: ".$info;
 
             $attributes = app(OrderAttributesController::class)->getAttributeDelivery($order['state'],$apiKey);
             $formattedOrder['attributes'] = [

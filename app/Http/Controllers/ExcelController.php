@@ -44,13 +44,17 @@ class ExcelController extends Controller
 
             $isHaveBrand = false;
             $isHaveCheckToAdd = false;
+            $checkedMetaToAdd = null;
             foreach($row->attributes as $attribute){
                 //print_r($attribute);
                 if($attribute->name == "brand (KASPI)"){
                     $product['brand'] = $attribute->value;
                     $isHaveBrand = true;
                 } elseif($attribute->name == "Добавлять товар на Kaspi"){
-                    if($attribute->value == 1) $isHaveCheckToAdd = true;
+                    if($attribute->value == 1){
+                        $isHaveCheckToAdd = true;
+                        $checkedMetaToAdd = $attribute->meta;
+                    }
                 } else {
                     break;
                 }
@@ -76,6 +80,10 @@ class ExcelController extends Controller
                 $product['PP5'] = "no";
                 $product['preorder'] = "";
                 //dd($product);
+
+                if($checkedMetaToAdd != null)
+                $this->changeCheckedAttribute($apiKey,$checkedMetaToAdd,$row->id);
+
                 array_push($arrProduct,$product);
         }
 
@@ -92,4 +100,21 @@ class ExcelController extends Controller
         }
 
     }
+
+    public function changeCheckedAttribute($apiKey,$meta,$id)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product/".$id;
+        $client = new ApiClientMC($uri,$apiKey);
+        $body = [
+            'attributes' => [
+                0 => [
+                    'meta' => $meta,
+                    'name' => 'Добавлять товар на Kaspi',
+                    'value' => false,
+                ],
+            ],
+        ];
+        $client->requestPut($body);
+    }
+
 }
