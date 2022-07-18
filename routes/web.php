@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 
 //Setting Vendor
-Route::get('/', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
 
-Route::get('/{id}/*', [WebController::class, 'index']);
+
+Route::get('/{id}/', [WebController::class, 'index']);
 
 Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
 Route::post('/SettingSend', [Setting_mainController::class, 'saveApiKey'])->name("Setting_Send");
