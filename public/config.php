@@ -3,8 +3,8 @@
  * Скопируйте данный файл в файл с именем config.php и укажите ваши значения конфигурационных параметров.
  */
 return [
-    'appId' => 'ac217934-edaf-4975-91ae-a0ea408727de',
-    'appUid' => 'testov.smartinnovations',
-    'secretKey' => 'MfMotwWe278gFKnpspgxLeWyNkr8eAc4upnz9MJtCIyX9N41rOcKkuYJnIR8WHguSSh5kPUzkWbsFoVh62UzamYYIbJHHQGFuGUSTETgVw304VGvDHKB54TtxsRG6l0U',
-    'appBaseUrl' => 'https://smartkaspi.kz/',
+    'appId' => 'ffbbc292-f532-4794-ad03-c861067e8708',
+    'appUid' => 'vendortest.smartinnovations',
+    'secretKey' => 'oU0z1z714cEaOPdyfjEgiWuf4JLsF9AQJhwJbZQvTr2EckE60JhCxH8uC49JIo1pVwnOIdDbf8J0FD4yDut1tdsZx93sorLLdNFp4kqzloQPXGsUGqcPtnn0QPluF5Q9',
+    'appBaseUrl' => 'https://marketplace.vetmobile.kz/',
 ];
