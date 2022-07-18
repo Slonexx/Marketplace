@@ -11,6 +11,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
 
+//Vendor activate install app MoySklad
+Route::get('/', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
 Route::post('orders', [OrderController::class,'insertOrders']);
 Route::post('orderStatus',[OrderController::class,'changeOrderStatus']);
@@ -27,10 +29,8 @@ Route::get('getTest', [TestController::class,'init']);
 
 
 
-Route::get('/', [VendorEndpointController::class, 'Activate'])->name('Vendor');
 
 
-Route::get('Check', [user_context_loader_inc_Controller::class,'userContextLoader'])->name('Check');
 
 
 

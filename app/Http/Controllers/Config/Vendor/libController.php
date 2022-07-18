@@ -12,6 +12,19 @@ require_once 'jwt.lib.php';
 class libController extends Controller
 {
 
+    public function index(){
+        $date = $this->cfg();
+        dd($date);
+    }
+
+    public function newCFG(){
+        $cfg = new AppConfig(require(public_path() . '/Config/' . 'config.php'));
+    }
+
+    function cfg(): AppConfig {
+        return $GLOBALS['cfg'];
+    }
+
 }
 class AppConfig {
 
@@ -32,8 +45,4 @@ class AppConfig {
     }
 }
 
-$cfg = new AppConfig(require(public_path() . '/Config/' . 'config.php'));
 
-function cfg(): AppConfig {
-    return $GLOBALS['cfg'];
-}

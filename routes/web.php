@@ -5,10 +5,12 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\Setting_mainController;
 use App\Http\Controllers\WebController\WhatsappController;
+use \App\Http\Controllers\Config\Vendor\libController;
 use Illuminate\Support\Facades\Route;
 
 
-//Setting Vendor
+Route::get('/', [libController::class, 'index'])->name('check');
+
 
 
 
