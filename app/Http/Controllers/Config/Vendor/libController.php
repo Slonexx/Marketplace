@@ -12,9 +12,7 @@ class libController extends Controller
 
     public function index(){
 
-       $Class = app(GlobalVariables::class);
-        $path = $Class->getPath();
-        dd($path);
+
         dd("GOOOOD");
 
 

@@ -5,7 +5,6 @@ require_once 'lib.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'];
 
-   $date = new \App\Http\Controllers\Config\Vendor\GlobalVariables($path);
 
 loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
 
