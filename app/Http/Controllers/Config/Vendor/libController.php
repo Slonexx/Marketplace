@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Config\Vendor;
 
 use App\Http\Controllers\Controller;
 use \Firebase\JWT\JWT;
+use getInfo;
 use Illuminate\Http\Request;
 
 require_once 'jwt.lib.php';
@@ -14,7 +15,7 @@ class libController extends Controller
 
     public function index(){
 
-        $class = app(\getInfo::class);
+        $class = app(getInfo::class);
         $class->Check();
 
 
