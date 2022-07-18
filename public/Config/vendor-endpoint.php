@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Config\Vendor\AppInstance;
 use App\Models\personal;
 
 require_once 'lib.php';
