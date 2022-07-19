@@ -23,7 +23,7 @@ class PositionController extends Controller
         }
     }
 
-    private function searchProduct($product,$apiKey)
+    public function searchProduct($product,$apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?search=".$product->code;
         $client = new ApiClientMC($uri,$apiKey);

@@ -56,11 +56,11 @@ class OrderController extends Controller
                 $uri = $row2->relationships->product->links->related;
                 $client->setRequestUrl($uri);
                 $jsonProduct1 = $client->requestGet(true);
-
+                //dd($jsonProduct1);
                 $uri = $jsonProduct1->data->relationships->merchantProduct->links->related;
                 $client->setRequestUrl($uri);
                 $jsonProduct2 = $client->requestGet(true);
-
+                //dd($jsonProduct2);
                 $entry['product'] = $jsonProduct2->data->attributes;
 
                 $uri = $row2->relationships->deliveryPointOfService->links->related;
@@ -140,11 +140,9 @@ class OrderController extends Controller
             $formattedOrder = $this->mapOrderToAdd($order,$request->tokenMs);
             $createdOrder = $client->requestPost($formattedOrder);
             $this->setPositions($createdOrder->id,$order['entries'],$request->tokenMs);
-            $sum = 0;
-            foreach($order['entries'] as $entry){
-                $sum+=$entry['totalPrice'];
-            }
-            app(DocumentController::class)->createDocument($createdOrder->meta,$sum,$request->payment,$formattedOrder,$request->tokenMs);
+            $orderStatus = $order['status'];
+            app(DocumentController::class)->initDocuments($order['entries'],$orderStatus,$createdOrder->meta,
+            $request->payment,$formattedOrder,$request->tokenMs);
             $count++;
         }
 
@@ -220,39 +218,16 @@ class OrderController extends Controller
         app(PositionController::class)->setPositions($orderId,$entries,$apiKey);
     }
 
-    private function getOrdersKaspiWithStatus($apiKey)
+    private function getOrdersKaspiWithStatus($apiKey, $urlKaspi)
     {
-        $uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1656688175000&filter[orders][creationDate][\$le]=1657111171000";
-
-        $client = new KaspiApiClient($uri,$apiKey);
-        $jsonAllOrders = $client->requestGet(true);
-        
-        $ordersFromKaspi = [];
+        $ordersFromKaspi = $this->getOrdersFromKaspi($apiKey,$urlKaspi);
         //dd($jsonAllOrders);
-        foreach($jsonAllOrders->data as $key=>$row){
-            $order = null;
-            $order['id'] = $row->id;
-            $order['orderStatus'] = $row->attributes->status;
-            switch ($row->attributes->status) {
-                case 'APPROVED_BY_BANK':
-                  $order['status'] = "Новый";
-                break;
-                case 'ACCEPTED_BY_MERCHANT':
-                  $order['status'] = "Подтвержден";
-                break;
-                case 'CANCELLED':
-                    case 'CANCELLING':
-                  $order['status'] = "Отменен";
-                break;
-                case 'COMPLETED':
-                  $order['status'] = "Доставлен";
-                break;
-                default:
-                  $order['status'] = "Новый";
-                break;
-            }
-            array_push($ordersFromKaspi, $order);
+       hzdcbskdhv foreach($ordersFromKaspi as $row => $k){
+            $st['statusOrder'] = app(StatusController::class)->getStatusName($k['status']);
+            array_push($ordersFromKaspi[$row],$st['statusOrder']);
         }
+
+        dd($ordersFromKaspi);
 
         return $ordersFromKaspi;
     }
@@ -265,16 +240,29 @@ class OrderController extends Controller
         //dd($jsonAllOrders);
         $ordersFromMs = [];
         foreach ($jsonAllOrders->rows as $key => $row) {
-            $status = $this->getStatusByMeta($row->state->meta->href,$apiKey);
+            $status = $this->getStatusNameByMeta($row->state->meta->href,$apiKey);
             $order['id'] = $row->id;
             $order["externalCode"] =  $row->externalCode;
+            $order['meta'] = $row->meta;
             $order["status"] = $status;
+            if(property_exists($row,'payments') == true){
+                $order['payments'] = $row->payments;
+            } else {
+                $order['payments'] = null;
+            }
+
+            if(property_exists($row,'demands') == true){
+                $order['demands'] = $row->demands;
+            } else {
+                $order['demands'] = null;
+            }
+
             array_push($ordersFromMs,$order);
         }
         return $ordersFromMs;
     }
 
-    private function getStatusByMeta($uri,$apiKey)
+    private function getStatusNameByMeta($uri,$apiKey)
     {
         $client = new ApiClientMC($uri,$apiKey);
         $jsonStatus = $client->requestGet();
@@ -286,18 +274,38 @@ class OrderController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
+            'payment' => 'required|boolean',
+            'state' => 'required|string',
+            'fdate' => 'required|string',
+            'sdate' => 'required|string',
         ]);
 
-        $ordersFromKaspi = $this->getOrdersKaspiWithStatus($request->tokenKaspi);
+        $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
+        $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
+
+        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
+        $request->state."&filter[orders][creationDate][\$ge]=".
+        $fdate."&filter[orders][creationDate][\$le]=".$sdate;
+
+        $ordersFromKaspi = $this->getOrdersKaspiWithStatus($request->tokenKaspi, $urlKaspi);
         $ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
+
+        //dd($ordersFromKaspi);
 
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
             foreach($ordersFromMs as $orderMs){
-                if($orderKaspi['id'] == $orderMs['externalCode']){
-                    if($orderKaspi['status'] != $orderMs['status']){
-                        $metaState = app(StateController::class)->getState($orderKaspi['orderStatus'],$request->tokenMs);
+                if($orderKaspi['id'] == $orderMs['externalCode']) {
+                    if($orderKaspi['statusOrder'] != $orderMs['status']){
+                        $metaState = app(StateController::class)->getState($orderKaspi['status'],$request->tokenMs);
                         $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
+                        $formattedOrder = $this->mapOrderToAdd($orderKaspi,$request->tokenMs);
+                        app(DocumentController::class)->createDocuments(
+                            $orderMs['payments'], $orderMs['demands'],
+                            $orderKaspi['entries'],$orderKaspi['status'],
+                            $orderMs['meta'],$request->payment,
+                            $formattedOrder,$request->tokenMs
+                        );
                         $count++;
                     }
                 }
