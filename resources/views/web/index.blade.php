@@ -51,28 +51,7 @@
     </script>
 
 
-    <p><strong>2. Из JavaScript в PHP (метод GET):</strong></p>
 
-    <script>
-
-        var userName2 = 'Дмитрий';
-
-    </script>
-
-    <?php
-    if (isset($_GET['organization']))
-    {
-        echo "Значение JavaScript-переменной: ". $_GET['organization'];
-    }
-
-    else
-    {
-        echo '<script type="text/javascript">';
-        echo 'document.location.href="' . $_SERVER['REQUEST_URI'] . '?organization=" + userName2';
-        echo '</script>';
-        exit();
-    }
-    ?>
 
 
 @endsection
