@@ -1,58 +1,26 @@
 @extends('layout')
 
 @section('content')
-    <form action=" {{  route('check') }} " method="get">
+
+    <div class="content p-4 mt-2 bg-white text-Black rounded">
+        <form action=" {{  route('check') }} " method="get">
+            <br>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Чекаю </button>
+        </form>
+
         <br>
-        <button type="submit" class="btn btn-primary">
-            <i class="fa-solid fa-envelope"></i> Чекаю
-        </button>
-    </form>
 
-    <br>
+        <div class="float-start">Float start on all viewport sizes</div><br>
+        <div class="float-end">Float end on all viewport sizes</div><br>
+        <div class="float-none">Don't float on all viewport sizes</div>
+        <br>
+        <div class="row col-sm-auto">
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">  dwadwawdawdaw
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
-    <select name="Selectmenu" class="evidence-select">
-        <option value="1">Один</option>
-        <option value="2">Два</option>
-    </select>
+            </div>
+        </div>
 
-    <div class="evidence-content">Один</div>
-    <div class="evidence-content">Два</div>
-
-    <script>
-
-        const selector = $('.evidence-select');
-
-        function update() {
-            const value = selector.val();
-            const theIndex = parseInt(value) - 1;
-
-            $('.evidence-content').each(function(index, el) {
-                $(el)[index === theIndex ? 'show' : 'hide']();
-            });
-
-        };
-
-        selector.on('click', update);
-        update();
-
-    </script>
-
-    <select name="price">
-        <option value="100">маленький</option>
-        <option value="500">большой</option>
-        <option value="100500">гигантский</option>
-    </select>
-    <div id="priceDisplay">100</div>
-
-    <script>
-        $('select[name="price"]').on('change', function(){
-            $('#priceDisplay').html(this.value)
-        })
-    </script>
-
-
-
-
-
+<div
 @endsection
 

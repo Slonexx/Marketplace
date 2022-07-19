@@ -62,15 +62,16 @@ class Setting_mainController extends Controller
         //return view('web.Setting_main');
     }
 
-    public function saveApiKey(Request $request){
+    public function postFormSetting(Request $request){
 
-        $date = $request->request;
-        dd($date);
+        /*$date = $request->document;
+        dd($date);*/
 
-        $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
+
         $API_KEY = $request->API_KEY;
-        $status = new KaspiApiClient($url,$API_KEY);
-        $message = $status->CheckAndSaveApiKey();
+        $message = $this->saveApiKey($API_KEY);
+
+
         Session::flash('message', $message["API"]);
         if ($message["StatusCode"] == 200 ) {
             Session::flash('alert-class', 'alert-success');
@@ -78,7 +79,17 @@ class Setting_mainController extends Controller
         else {
             Session::flash('alert-class', 'alert-danger');
         }
+        Session::flash('error', 'Error message here');
+
+
         return Redirect::back();
     }
 
+
+    public function saveApiKey(string $API_KEY){
+        $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
+        $status = new KaspiApiClient($url,$API_KEY);
+        $message = $status->CheckAndSaveApiKey();
+        return $message;
+    }
 }

@@ -20,16 +20,19 @@
 
 
         <div class="row g-3 align-items-center">
-        @if(Session::has('message'))
-            <div class="alert text-center">
-                <div class="alert {{ Session::get('alert-class', 'alert-info') }}  alert-dismissible fade show "
-                     role="alert"> {{ Session::get('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    <br>
-                </div>
-            </div>
+            @include('alerts')<br>
+
+               {{-- @if(Session::has('message'))
+                    <div class="alert text-center">
+                        <div class="alert {{ Session::get('alert-class', 'alert-info') }}  alert-dismissible fade show "
+                             role="alert"> {{ Session::get('message') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <br>
+                        </div>
+                    </div>
+                @endif--}}
         </div>
-        @endif
+
 
 
 
@@ -73,18 +76,11 @@
                         </div>
                     </div>
 
-
-
-
-
-
-
-
+                        {{--Выберите расчетный счет--}}
                         <div class="evidence-content"></div>
                         <div class="mb-3 row evidence-content" >
                             <P class="col-sm-5 col-form-label"> Выберите расчетный счет: </P>
                             <div class="col-sm-7">
-
                                 @foreach($Body_organization as $row)
                                     <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
                                         @php
@@ -96,23 +92,18 @@
                                             $Body_accounts = $clinet->requestGet()->rows;
 
                                             if (array_key_exists(0, $Body_accounts)) {
-                                                foreach ($Body_accounts as $item) {
-                                                     array_push($array_element, $item->accountNumber);
-                                                }
-
-                                            }
+                                                foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
                                             else { $array_element = [ 0 => "Нету Расчетного счета"];
                                             }
                                         @endphp
-                                        <select name="document" class="form-select text-black">
+                                        <select name="payment" class="form-select text-black">
                                             <option selected></option>
                                             @foreach ($array_element as $array_element_item)
-                                                <option value="$row->id"> {{ $array_element_item }}</option>
+                                                <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 @endforeach
-
                             </div>
                         </div>
 

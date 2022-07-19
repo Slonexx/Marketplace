@@ -17,7 +17,7 @@ Route::get('/check', [libController::class, 'index'])->name('check');
 Route::get('/', [WebController::class, 'index']);
 
 Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
-Route::post('/SettingSend', [Setting_mainController::class, 'saveApiKey'])->name("Setting_Send");
+Route::post('/SettingSend', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
 
 Route::get('/SupportHelp', [SupportController::class, 'support'])->name("support");
 Route::post('/PostSupport', [SupportController::class, 'supportSend'])->name("Send");
