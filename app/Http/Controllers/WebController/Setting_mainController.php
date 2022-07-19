@@ -13,6 +13,10 @@ class Setting_mainController extends Controller
 {
     public function index(){
 
+        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+        $apiKey = "8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f";
+
+
         $colorMC = [
             10066329 => "gray",
             15280409 => "red",
@@ -32,9 +36,6 @@ class Setting_mainController extends Controller
             0 => "black",
         ];
 
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $apiKey = "d0a0269f7b388846c9db1dbdc624bd51005efcff";
-
         $Client = new ApiClientMC($url, $apiKey);
         $Body = $Client->requestGet()->states;
         $setBackground = array();
@@ -46,13 +47,15 @@ class Setting_mainController extends Controller
             }
         }
 
-        //dd($setBackground);
-        //dd($Body);
-
-
+        $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
+            $Client = new ApiClientMC($url_organization, $apiKey);
+            $Body_organization = $Client->requestGet()->rows;
 
         return view('web.Setting_main',['Body' => $Body,
-            "setBackground" => $setBackground]);
+            "setBackground" => $setBackground,
+            "Body_organization" => $Body_organization,
+
+            ]);
 
 
 //        dd($Body);
@@ -60,7 +63,10 @@ class Setting_mainController extends Controller
     }
 
     public function saveApiKey(Request $request){
-           // dd($request);
+
+        $date = $request->request;
+        dd($date);
+
         $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
         $API_KEY = $request->API_KEY;
         $status = new KaspiApiClient($url,$API_KEY);
@@ -73,13 +79,6 @@ class Setting_mainController extends Controller
             Session::flash('alert-class', 'alert-danger');
         }
         return Redirect::back();
-           // return view('web.support');
-
-
-          //  return response($message);
-
-        //return back();
-       // dd( $_SESSION["API_KEY"]);
     }
 
 }

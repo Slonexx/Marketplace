@@ -31,14 +31,8 @@
 
 
             <div class="toc-list-h1">
-                <a href="/">Главное </a>
-                <button class="dropdown-btn">Настройки<i class="fa fa-caret-down"></i></button>
-                <div class="dropdown-container">
-                    <a href={{  route('Setting_Main') }}>Основная настройка</a>
-                    <a href="#">Ссылка 1</a>
-                    <a href="#">Ссылка 2</a>
-                </div>
-                <hr class="">
+                <a href="/">Главная </a>
+                <a href="{{  route('Setting_Main') }}">Настройки </a>
             </div>
             <div class="">
                 <button class="dropdown-btn">Помощь
