@@ -222,12 +222,13 @@ class OrderController extends Controller
     {
         $ordersFromKaspi = $this->getOrdersFromKaspi($apiKey,$urlKaspi);
         //dd($jsonAllOrders);
-       hzdcbskdhv foreach($ordersFromKaspi as $row => $k){
+        foreach($ordersFromKaspi as $row => $k){
             $st['statusOrder'] = app(StatusController::class)->getStatusName($k['status']);
-            array_push($ordersFromKaspi[$row],$st['statusOrder']);
+           // array_push($ordersFromKaspi[$row],$st['statusOrder']);
+           $ordersFromKaspi[$row] = $k+$st;
         }
 
-        dd($ordersFromKaspi);
+        //dd($ordersFromKaspi);
 
         return $ordersFromKaspi;
     }
@@ -290,7 +291,7 @@ class OrderController extends Controller
         $ordersFromKaspi = $this->getOrdersKaspiWithStatus($request->tokenKaspi, $urlKaspi);
         $ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
 
-        //dd($ordersFromKaspi);
+        dd($ordersFromKaspi);
 
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
