@@ -17,6 +17,9 @@ loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 $app = AppInstanceContoller::load($appId, $accountId);
 $replyStatus = true;
 
+$app->delete($appId, $accountId);
+$replyStatus = false;
+
 switch ($method) {
     case 'PUT':
         $requestBody = file_get_contents('php://input');
