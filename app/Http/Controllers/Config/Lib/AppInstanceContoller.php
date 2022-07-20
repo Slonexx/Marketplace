@@ -73,7 +73,7 @@ class AppInstanceContoller extends Controller
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
-            $app = json_decode($data);
+            $app = ($data);
         }
 
         $_SESSION['currentAppInstance'] = $data;
