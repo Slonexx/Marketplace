@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Config\Lib\AppConfigController;
+use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Config\SessionController;
 use Illuminate\Http\Request;
@@ -21,9 +22,12 @@ class WebController extends Controller
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
 
+        $appId = $cfg->appId;
         $accountId = $employee->accountId;
 
-        dd($employee);
+        $app = AppInstanceContoller::loadApp($accountId);
+
+        dd($app);
 
         return view('web.index');
     }
