@@ -14,8 +14,9 @@ class libController extends Controller
 
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
-        $srt = $method+$path;
-        dd($srt);
+        $arrayCheck = ["method" => $method,
+                        "path" => $path];
+        dd($arrayCheck);
 
 
     }
