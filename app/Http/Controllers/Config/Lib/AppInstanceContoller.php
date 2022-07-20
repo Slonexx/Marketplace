@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
 
-class AppInstanceContoller
+class AppInstanceContoller extends Controller
 {
     const UNKNOWN = 0;
     const SETTINGS_REQUIRED = 1;
@@ -75,8 +75,18 @@ class AppInstanceContoller
         } else {
             $app = unserialize($data);
         }
-        dd($app);
-        $_SESSION['currentAppInstance'] = $app;
+
+        $_SESSION['currentAppInstance'] = fixObject($app);
+
+        dd(fixObject($app));
         return $app;
     }
+
+    function fixObject (&$object)
+    {
+        if (!is_object ($object) && gettype ($object) == 'object')
+            return ($object = unserialize (serialize ($object)));
+        return $object;
+    }
+
 }
