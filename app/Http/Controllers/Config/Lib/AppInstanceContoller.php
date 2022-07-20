@@ -64,13 +64,11 @@ class AppInstanceContoller extends Controller
         return $dir . "data/$appId.$accountId.app";
     }
 
-    static function loadApp($appId, $accountId): string
-    {
+    static function loadApp($appId, $accountId): AppInstanceContoller {
         return self::load($appId, $accountId);
     }
 
-    static function load($appId, $accountId): string
-    {
+    static function load($appId, $accountId): AppInstanceContoller {
         $data = @file_get_contents(self::buildFilename($appId, $accountId));
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
@@ -81,7 +79,7 @@ class AppInstanceContoller extends Controller
 
        /* dd($app->accessToken);*/
         $_SESSION['currentAppInstance'] = $data;
-        return "";
+        return $app;
     }
 
 
