@@ -76,7 +76,6 @@ class AppInstanceContoller extends Controller
             $app = json_decode($data);
         }
 
-
         $_SESSION['currentAppInstance'] = $data;
 
         return $app;
