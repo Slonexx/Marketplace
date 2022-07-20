@@ -78,7 +78,7 @@ class AppInstanceContoller extends Controller
 
         $_SESSION['currentAppInstance'] = $data;
 
-
+        dd($app);
         return $app;
     }
 
