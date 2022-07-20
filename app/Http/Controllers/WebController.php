@@ -9,9 +9,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class WebController extends Controller
 {
-    public function index(){
-        $contextKey = $_SERVER['contextKey'];
-        dd($contextKey);
+    public function index(Request $request){
+        dd($request);
 
         return view('web.index');
     }

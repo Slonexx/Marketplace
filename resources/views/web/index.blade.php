@@ -15,11 +15,7 @@
         </form>
 
         <br>
-
-        <div class="float-start">Float start on all viewport sizes</div><br>
-        <div class="float-end">Float end on all viewport sizes</div><br>
-        <div class="float-none">Don't float on all viewport sizes</div>
-        <br>
+        
         <div class="row col-sm-auto">
             <div class="alert alert-danger alert-dismissible fade show " role="alert">  dwadwawdawdaw
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
