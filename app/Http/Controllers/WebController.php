@@ -26,8 +26,8 @@ class WebController extends Controller
         $accountId = $employee->accountId;
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-
-        dd($app);
+        $template = unserialize($_SESSION['currentAppInstance']);
+        dd($template);
 
         return view('web.index');
     }
