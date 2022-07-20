@@ -27,7 +27,7 @@ class WebController extends Controller
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
 
-        dd($app);
+        dd($app->accessToken);
 
         return view('web.index');
     }
