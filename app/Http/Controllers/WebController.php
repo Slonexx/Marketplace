@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class WebController extends Controller
 {
     public function index(Request $request){
-
+        $this->loginfo("Request", $request);
         dd($request);
 
         session_start();
@@ -39,6 +39,11 @@ class WebController extends Controller
     public function newCfg(){
         return new AppConfigController( require(public_path().'/Config'.'/config.php') );
     }
-
+    function loginfo($name, $msg) {
+        global $dirRoot;
+        $logDir =  public_path();
+        @mkdir($logDir);
+        file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
+    }
 }
 
