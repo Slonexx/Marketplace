@@ -71,7 +71,7 @@ class VendorEndpointController extends Controller
 
     function loginfo($name, $msg) {
         global $dirRoot;
-        $logDir =  public_path() . 'logs';
+        $logDir =  public_path().'/logs';
         @mkdir($logDir);
         file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
     }
