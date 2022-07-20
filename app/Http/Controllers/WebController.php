@@ -21,8 +21,9 @@ class WebController extends Controller
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
 
-        dd($_SESSION['token']);
+        $accountId = $employee->accountId;
 
+        dd($employee);
 
         return view('web.index');
     }
