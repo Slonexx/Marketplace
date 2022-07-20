@@ -79,6 +79,8 @@ class Setting_mainController extends Controller
         else {
             Session::flash('alert-class', 'alert-danger');
         }
+        $check = $request->request;
+        dd($check);
         Session::flash('error', 'Error message here');
 
 

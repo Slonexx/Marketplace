@@ -15,16 +15,6 @@ class VendorEndpointController extends Controller
     public function Activate()
     {
 
-        /*require(public_path() . '/Config/' . 'lib.php');
-        $contextName = 'IFRAME';
-        require(public_path() . '/Config/' . 'user-context-loader.inc.php');
-        $app = AppInstance::loadApp($accountId);
-        dd($app);*/
-
-
-
-       // require(public_path() . '/Config/' . 'lib.php');
-
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
 

@@ -19,18 +19,8 @@
 
 
 
-        <div class="row g-3 align-items-center">
-            @include('alerts')<br>
-
-               {{-- @if(Session::has('message'))
-                    <div class="alert text-center">
-                        <div class="alert {{ Session::get('alert-class', 'alert-info') }}  alert-dismissible fade show "
-                             role="alert"> {{ Session::get('message') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <br>
-                        </div>
-                    </div>
-                @endif--}}
+        <div class="row mb-3 g-3 align-items-center">
+            @include('alerts')
         </div>
 
 

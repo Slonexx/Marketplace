@@ -12,8 +12,10 @@ class libController extends Controller
 
     public function index(){
 
+        $method = $_SERVER['REQUEST_METHOD'];
+        $path = $_SERVER['PATH_INFO'];
 
-        dd("GOOOOD");
+        dd($method+$path);
 
 
     }

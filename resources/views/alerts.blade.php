@@ -6,11 +6,9 @@
     @endif
 
     @if (Session::has('success'))
-        <div class="alert alert-success alert-dismissible fade show in text-center ">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{ Session::get('success') }}
+        <div class="alert alert-success alert-dismissible fade show in text-center "> {{ Session::get('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
         </div>
     @endif
 
@@ -21,9 +19,9 @@
     @endif
 
     @if(Session::has('warning'))
-        <div class="alert alert-dismissible fade show in text-center ">
+        <div class="alert alert-dismissible fade show in text-center "> {{ Session::get('warning') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            {{ Session::get('warning') }}
+
         </div>
     @endif
 
