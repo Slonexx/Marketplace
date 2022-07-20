@@ -6,7 +6,7 @@ use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Controller;
 use App\Models\personal;
 use App\Http\Controllers\Config\Vendor\AppInstance;
-use http\Env\Request;
+use Illuminate\Support\Facades\Request;
 
 
 class VendorEndpointController extends Controller
