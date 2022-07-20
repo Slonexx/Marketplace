@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Config\Lib;
 use App\Http\Controllers\Controller;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\This;
 
 class AppInstanceContoller extends Controller
 {
@@ -76,13 +77,15 @@ class AppInstanceContoller extends Controller
             $app = unserialize($data);
         }
 
-        $_SESSION['currentAppInstance'] = fixObject($app);
 
-        dd(fixObject($app));
+
+        $_SESSION['currentAppInstance'] = self::fixObject($app);;
+
+        dd(self::fixObject($app));
         return $app;
     }
 
-    function fixObject (&$object)
+    public function fixObject (&$object)
     {
         if (!is_object ($object) && gettype ($object) == 'object')
             return ($object = unserialize (serialize ($object)));
