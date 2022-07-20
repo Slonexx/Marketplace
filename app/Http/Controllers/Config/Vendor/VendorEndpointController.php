@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Config\Vendor;
 
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Controller;
-use App\Models\personal;
 use App\Http\Controllers\Config\Vendor\AppInstance;
 use Illuminate\Support\Facades\Request;
 
@@ -16,7 +15,7 @@ class VendorEndpointController extends Controller
         $this->loginfo("request", $request);
 
         $method = "PUT";
-        $path = $request->PATH_INFO;
+        $path = $_SERVER['PATH_INFO'];
 
 
         $pp = explode('/', $path);
