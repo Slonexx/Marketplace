@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Config\Lib\AppConfigController;
+use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Config\SessionController;
-use App\Http\Controllers\Config\Vendor\VendorEndpointController;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
+
 
 class WebController extends Controller
 {
     public function index(Request $request){
+        session_start();
+        $cfg = $this->newCfg();
+        $_SESSION['cfg'] = $cfg;
+
 
         $contextKey = $request->contextKey;
         //dd($request->contextKey);
-        $employee = new VendorApi();
+        $employee = new VendorApiController();
         dd($employee->context($contextKey));
 
 
@@ -21,25 +26,9 @@ class WebController extends Controller
     }
 
 
-}
-class VendorApi {
-
-    function context(string $contextKey) {
-        return $this->request('POST', '/context/' . $contextKey);
-    }
-
-    function updateAppStatus(string $appId, string $accountId, string $status) {
-        return $this->request('PUT',
-            "/apps/$appId/$accountId/status",
-            "{\"status\": \"$status\"}");
-    }
-
-    private function request(string $method, $path, $body = null) {
-        return makeHttpRequest(
-            $method,
-            cfg()->moyskladVendorApiEndpointUrl . $path,
-            buildJWT(),
-            $body);
+    public function newCfg(){
+        return new AppConfigController( require(public_path().'/Config'.'/config.php') );
     }
 
 }
+
