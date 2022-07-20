@@ -79,7 +79,8 @@ class AppInstanceContoller extends Controller
 
        /* dd($app->accessToken);*/
         $_SESSION['currentAppInstance'] = $data;
-        return $app;
+        $class = ['app'=> $app];
+        return $class;
     }
 
 
