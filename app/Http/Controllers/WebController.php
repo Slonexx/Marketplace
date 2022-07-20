@@ -25,7 +25,7 @@ class WebController extends Controller
         $appId = $cfg->appId;
         $accountId = $employee->accountId;
 
-        $app = AppInstanceContoller::loadApp($accountId);
+        $app = AppInstanceContoller::loadApp($appId, $accountId);
 
         dd($app);
 
