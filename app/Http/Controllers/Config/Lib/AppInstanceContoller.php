@@ -80,7 +80,7 @@ class AppInstanceContoller extends Controller
        /* dd($app->accessToken);*/
         $_SESSION['currentAppInstance'] = $data;
 
-        return "";
+        return $data;
     }
 
 
