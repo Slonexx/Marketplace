@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
 
-class AppInstanceContoller extends Controller
+class AppInstanceContoller
 {
     const UNKNOWN = 0;
     const SETTINGS_REQUIRED = 1;
