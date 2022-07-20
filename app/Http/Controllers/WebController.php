@@ -10,8 +10,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 class WebController extends Controller
 {
     public function index(){
-        $path = $_SERVER['PATH_INFO'];
-        dd($path);
+        $contextKey = $_SERVER['contextKey'];
+        dd($contextKey);
 
         return view('web.index');
     }
