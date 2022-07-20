@@ -11,9 +11,9 @@ use App\Http\Controllers\ProductAttributesController;
 
 class ProductController extends Controller
 {
-    public function getKaspiProducts($apiKeyKaspi,$apiKeyMs)
+    public function getKaspiProducts($apiKeyKaspi,$apiKeyMs, $urlKaspi)
     {
-        $ordersFromKaspi =app(OrderController::class)->getOrdersFromKaspi($apiKeyKaspi);
+        $ordersFromKaspi =app(OrderController::class)->getOrdersFromKaspi($apiKeyKaspi,$urlKaspi);
         $productsFromKaspi = [];
         $count = 0;
         $productIds = [];
@@ -70,9 +70,9 @@ class ProductController extends Controller
         return $productsFromMs;
     }
 
-    public function getNotAddedProducts($tokenMs,$tokenKaspi) 
+    public function getNotAddedProducts($tokenMs,$tokenKaspi, $urlKaspi) 
     {
-       $productsFromKaspi = $this->getKaspiProducts($tokenKaspi,$tokenMs);
+       $productsFromKaspi = $this->getKaspiProducts($tokenKaspi,$tokenMs, $urlKaspi);
        $productsFromMs = $this->getMsProducts($tokenMs);
        $notAddedProducts = [];
        foreach($productsFromKaspi as $product){
@@ -87,9 +87,19 @@ class ProductController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
+            'state' => 'required|string',
+            'fdate' => 'required|string',
+            'sdate' => 'required|string',
         ]);
+
+        $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
+        $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
+
+        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
+        $request->state."&filter[orders][creationDate][\$ge]=".
+        $fdate."&filter[orders][creationDate][\$le]=".$sdate;
         
-        $products = $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi);
+        $products = $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi,$urlKaspi);
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$request->tokenMs);
