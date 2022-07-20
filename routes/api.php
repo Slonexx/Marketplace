@@ -11,7 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
 
 //Vendor activate install app MoySklad
-
+Route::put('/', [VendorEndpointController::class, 'Activate']);
 
 Route::post('orders', [OrderController::class,'insertOrders']);
 Route::post('orderStatus',[OrderController::class,'changeOrderStatus']);

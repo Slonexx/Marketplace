@@ -12,7 +12,7 @@ class VendorEndpointController extends Controller
 {
     public function Activate(Request $request)
     {
-
+        $this->loginfo("Request", $request);
 
         $method = "PUT";
         $path = $_SERVER['PATH_INFO'];
@@ -49,12 +49,12 @@ class VendorEndpointController extends Controller
     }
 
 
-   /* function loginfo($name, $msg) {
+    function loginfo($name, $msg) {
         global $dirRoot;
         $logDir =  public_path();
         @mkdir($logDir);
         file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
-    }*/
+    }
 
     public function delete(Request $request){
 
