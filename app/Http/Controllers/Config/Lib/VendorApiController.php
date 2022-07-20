@@ -53,7 +53,8 @@ function makeHttpRequest(string $method, string $url, string $bearerToken, $body
     return json_decode($result);
 }
 
-function buildJWT() {
+function buildJWT(): string
+{
 
     $cfg = $_SESSION['cfg'];
 
