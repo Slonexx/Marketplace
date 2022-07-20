@@ -75,7 +75,7 @@ class AppInstanceContoller
         } else {
             $app = unserialize($data);
         }
-        dd($app);
+        //dd($app);
         $_SESSION['currentAppInstance'] = $app;
         return $app;
     }
