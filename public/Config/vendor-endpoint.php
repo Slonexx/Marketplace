@@ -51,4 +51,3 @@ if (!$app->getStatusName()) {
     echo '{"status": "' . $app->getStatusName() . '"}';
 }
 
-redirect()->route('Setting_Main');
