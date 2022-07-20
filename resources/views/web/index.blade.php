@@ -5,7 +5,7 @@
     <div class="content p-4 mt-2 bg-white text-Black rounded">
         <form action=" {{  route('check') }} " method="get">
             <br>
-            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> Чекаю </button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-envelope"></i> SERGEI CHECK </button>
         </form>
 
         <br>
