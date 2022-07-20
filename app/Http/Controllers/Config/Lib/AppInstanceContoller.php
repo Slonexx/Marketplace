@@ -76,11 +76,10 @@ class AppInstanceContoller extends Controller
             $app = unserialize($data);
         }
 
-
        /* dd($app->accessToken);*/
         $_SESSION['currentAppInstance'] = $data;
-        $class = ['app'=> $app];
-        return $class;
+
+        return $app;
     }
 
 
