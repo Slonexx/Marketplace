@@ -50,4 +50,3 @@ if (!$app->getStatusName()) {
     header("Content-Type: application/json");
     echo '{"status": "' . $app->getStatusName() . '"}';
 }
-
