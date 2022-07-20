@@ -70,13 +70,12 @@ class AppInstanceContoller extends Controller
 
     static function load($appId, $accountId): AppInstanceContoller {
         $data = @file_get_contents(self::buildFilename($appId, $accountId));
-
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
             $app = unserialize($data);
         }
-        dd($data);
+        dd(serialize($data));
         //$_SESSION['currentAppInstance'] = $app;
 
         return $app;
