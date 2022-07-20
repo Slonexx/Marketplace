@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 class WebController extends Controller
 {
     public function index(Request $request){
+
+        dd($request);
+
         session_start();
         $cfg = $this->newCfg();
         $_SESSION['cfg'] = $cfg;
