@@ -78,6 +78,7 @@ class AppInstanceContoller extends Controller
 
         $_SESSION['currentAppInstance'] = $data;
 
+
         return $app;
     }
 
