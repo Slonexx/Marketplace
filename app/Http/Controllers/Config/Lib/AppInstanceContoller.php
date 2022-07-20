@@ -77,19 +77,10 @@ class AppInstanceContoller extends Controller
             $app = unserialize($data);
         }
 
+        //$_SESSION['currentAppInstance'] = $app;
 
-
-        $_SESSION['currentAppInstance'] = self::fixObject($app);;
-
-        dd(self::fixObject($app));
-        return $app;
+        return json_encode($app);
     }
 
-    static function fixObject (&$object)
-    {
-        if (!is_object ($object) && gettype ($object) == 'object')
-            return ($object = unserialize (serialize ($object)));
-        return $object;
-    }
 
 }
