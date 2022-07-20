@@ -5,17 +5,19 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\Setting_mainController;
 use App\Http\Controllers\WebController\WhatsappController;
+use \App\Http\Controllers\Config\Vendor\libController;
 use Illuminate\Support\Facades\Route;
 
 
-//Setting Vendor
-Route::get('/', [VendorEndpointController::class, 'Activate'])->name('Vendor');
+Route::get('/check', [libController::class, 'index'])->name('check');
 
 
-//Route::get('/', [WebController::class, 'index']);
+
+
+Route::get('/', [WebController::class, 'index']);
 
 Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
-Route::post('/SettingSend', [Setting_mainController::class, 'saveApiKey'])->name("Setting_Send");
+Route::post('/SettingSend', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
 
 Route::get('/SupportHelp', [SupportController::class, 'support'])->name("support");
 Route::post('/PostSupport', [SupportController::class, 'supportSend'])->name("Send");

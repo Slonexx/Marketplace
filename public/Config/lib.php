@@ -34,7 +34,7 @@ class AppConfig {
 $cfg = new AppConfig(require('config.php'));
 
 function cfg(): AppConfig {
-    return $cfg = new AppConfig(require('config.php'));
+    return $GLOBALS['cfg'];
 }
 
 //
@@ -88,7 +88,7 @@ function makeHttpRequest(string $method, string $url, string $bearerToken, $body
 $vendorApi = new VendorApi();
 
 function vendorApi(): VendorApi {
-    return $vendorApi = new VendorApi();
+    return $GLOBALS['vendorApi'];
 }
 
 function buildJWT() {

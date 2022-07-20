@@ -1,29 +1,17 @@
 <?php
 
 
+use App\Http\Controllers\Config\Vendor\VendorEndpointController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\Config\user_context_loader_inc_Controller;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+//Vendor activate install app MoySklad
+Route::get('/', [VendorEndpointController::class, 'Activate']);
 
 Route::post('orders', [OrderController::class,'insertOrders']);
 Route::post('orderStatus',[OrderController::class,'changeOrderStatus']);
@@ -42,7 +30,6 @@ Route::get('getTest', [TestController::class,'init']);
 
 
 
-Route::get('Check', [user_context_loader_inc_Controller::class,'userContextLoader'])->name('Check');
 
 
 
