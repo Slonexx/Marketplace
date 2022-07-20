@@ -14,7 +14,7 @@ Route::delete('/', [VendorEndpointController::class, 'Delete'])->name('Delete_ap
 
 
 
-Route::get('/', [WebController::class, 'index']);
+//Route::get('/', [WebController::class, 'index']);
 
 Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
 Route::post('/SettingSend', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
