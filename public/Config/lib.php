@@ -198,8 +198,8 @@ class AppInstanceContoller {
         file_put_contents($this->filename(), json_encode($this));
     }
 
-    function delete() {
-        @unlink($this->filename());
+    function delete($appId, $accountId) {
+        @unlink(self::buildFilename($appId,$accountId));
     }
 
     private function filename() {
