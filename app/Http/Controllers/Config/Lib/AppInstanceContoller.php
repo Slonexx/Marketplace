@@ -76,10 +76,10 @@ class AppInstanceContoller extends Controller
         } else {
             $app = unserialize($data);
         }
-
+        dd($data);
         //$_SESSION['currentAppInstance'] = $app;
 
-        return json_encode($app);
+        return $app;
     }
 
 
