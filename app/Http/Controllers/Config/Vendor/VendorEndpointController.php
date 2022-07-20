@@ -6,14 +6,15 @@ use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Controller;
 use App\Models\personal;
 use App\Http\Controllers\Config\Vendor\AppInstance;
+use http\Env\Request;
 
 
 class VendorEndpointController extends Controller
 {
-    public function Activate()
+    public function Activate(Request $request)
     {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $path = $_SERVER['PATH_INFO'];
+        $method = $request->REQUEST_METHOD;
+        $path = $request->PATH_INFO;
         $this->downloadJSONFile($path);
 
 
