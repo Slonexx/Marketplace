@@ -85,7 +85,7 @@ class AppInstanceContoller extends Controller
         return $app;
     }
 
-    public function fixObject (&$object)
+    static function fixObject (&$object)
     {
         if (!is_object ($object) && gettype ($object) == 'object')
             return ($object = unserialize (serialize ($object)));
