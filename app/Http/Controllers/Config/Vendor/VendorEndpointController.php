@@ -12,11 +12,11 @@ class VendorEndpointController extends Controller
 {
     public function Activate(Request $request)
     {
-        $this->loginfo("request", $request);
+
 
         $method = "PUT";
         $path = $_SERVER['PATH_INFO'];
-
+        $this->loginfo("path", $path);
 
         $pp = explode('/', $path);
         $n = count($pp);
