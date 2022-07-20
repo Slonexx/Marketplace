@@ -13,6 +13,8 @@ class VendorEndpointController extends Controller
 {
     public function Activate(Request $request)
     {
+        $this->loginfo("request", $request);
+
         $method = $request->REQUEST_METHOD;
         $path = $request->PATH_INFO;
         $this->downloadJSONFile($path);
@@ -65,5 +67,12 @@ class VendorEndpointController extends Controller
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
         File::put($destinationPath.$file,$data);
         return response()->download($destinationPath.$file);
+    }
+
+    function loginfo($name, $msg) {
+        global $dirRoot;
+        $logDir =  public_path() . 'logs';
+        @mkdir($logDir);
+        file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
     }
 }
