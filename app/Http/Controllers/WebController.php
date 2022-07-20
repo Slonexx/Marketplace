@@ -18,8 +18,10 @@ class WebController extends Controller
 
         $contextKey = $request->contextKey;
         //dd($request->contextKey);
-        $employee = new VendorApiController();
-        dd($employee->context($contextKey));
+        $vendorAPI = new VendorApiController();
+        $employee = $vendorAPI->context($contextKey);
+
+        dd($_SESSION['token']);
 
 
         return view('web.index');

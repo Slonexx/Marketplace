@@ -63,5 +63,8 @@ function buildJWT() {
         "exp" => time() + 300,
         "jti" => bin2hex(random_bytes(32))
     );
+
+    $_SESSION['token'] = JWT::encode($token, $cfg->secretKey);
+
     return JWT::encode($token, $cfg->secretKey);
 }
