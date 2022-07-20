@@ -10,21 +10,24 @@ class ProductPropertyController extends Controller
 
     public function getAllCategories(Request $request)
     {
+        $request->validate([
+            'tokenKaspi' => 'required|string',
+        ]);
+
         $uri = "https://kaspi.kz/shop/api/products/classification/categories";
-        $apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
-        $client = new KaspiApiClient($uri,$apiKey);
+        $client = new KaspiApiClient($uri,$request->tokenKaspi);
         return $client->requestGet(false);
     }
 
     public function getPropertiesByCategory(Request $request)
     {
         $request->validate([
-            'category' => 'required|string'
+            'category' => 'required|string',
+            'tokenKaspi' => 'required|string',
         ]);
 
         $uri = "https://kaspi.kz/shop/api/products/classification/attributes?c=".$request->category;
-        $apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
-        $client = new KaspiApiClient($uri,$apiKey);
+        $client = new KaspiApiClient($uri,$request->tokenKaspi);
         return $client->requestGet(false);
     }
 
@@ -33,13 +36,13 @@ class ProductPropertyController extends Controller
         $request->validate([
             'category' => 'required|string',
             'property' => 'required|string',
+            'tokenKaspi' => 'required|string',
         ]);
 
         $uri = "https://kaspi.kz/shop/api/products/classification/attribute/values?c="
         .$request->category."&a=".$request->property;
 
-        $apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
-        $client = new KaspiApiClient($uri,$apiKey);
+        $client = new KaspiApiClient($uri,$request->tokenKaspi);
         return $client->requestGet(false);
     }
 

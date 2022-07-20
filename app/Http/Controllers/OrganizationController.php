@@ -25,11 +25,11 @@ class OrganizationController extends Controller
             break;
         }
         if (is_null($foundedMeta) == true){
-            return $this->createCurrency($apiKey);
+            return $this->createOrganization($apiKey);
         } else return $foundedMeta;
     }
 
-    public function createCurrency($apiKey)
+    public function createOrganization($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
         $client = new ApiClientMC($uri,$apiKey);
