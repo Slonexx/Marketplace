@@ -15,9 +15,8 @@ class VendorEndpointController extends Controller
     {
         $this->loginfo("request", $request);
 
-        $method = $request->REQUEST_METHOD;
+        $method = "PUT";
         $path = $request->PATH_INFO;
-        $this->downloadJSONFile($path);
 
 
         $pp = explode('/', $path);
@@ -28,27 +27,17 @@ class VendorEndpointController extends Controller
         $app = AppInstanceContoller::load($appId, $accountId);
         $replyStatus = true;
 
-        switch ($method) {
-            case 'PUT':
-                $requestBody = file_get_contents('php://input');
+        $requestBody = file_get_contents('php://input');
 
-                $data = json_decode($requestBody);
+        $data = json_decode($requestBody);
 
-                $appUid = $data->appUid;
-                $accessToken = $data->access[0]->access_token;
+        $appUid = $data->appUid;
+        $accessToken = $data->access[0]->access_token;
 
-                if (!$app->getStatusName()) {
-                    $app->accessToken = $accessToken;
-                    $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
-                    $app->persist();
-                }
-                break;
-            case 'GET':
-                break;
-            case 'DELETE':
-                $app->delete();
-                $replyStatus = false;
-                break;
+        if (!$app->getStatusName()) {
+            $app->accessToken = $accessToken;
+            $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
+            $app->persist();
         }
 
         if (!$app->getStatusName()) {
@@ -60,19 +49,38 @@ class VendorEndpointController extends Controller
 
     }
 
-    public function downloadJSONFile($message){
-        $data = json_encode([$message]);
-        $file = time() .rand(). '_file.json';
-        $destinationPath=public_path()."/upload/";
-        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
-        File::put($destinationPath.$file,$data);
-        return response()->download($destinationPath.$file);
-    }
 
     function loginfo($name, $msg) {
         global $dirRoot;
-        $logDir =  public_path().'/logs';
+        $logDir =  public_path();
         @mkdir($logDir);
         file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
+    }
+
+    public function delete(Request $request){
+
+        $this->loginfo("request", $request);
+
+        $method = "DELETE";
+        $path = $request->PATH_INFO;
+        $this->downloadJSONFile($path);
+
+
+        $pp = explode('/', $path);
+        $n = count($pp);
+        $appId = $pp[$n - 2];
+        $accountId = $pp[$n - 1];
+
+        $app = AppInstanceContoller::load($appId, $accountId);
+
+        $app->delete();
+        $replyStatus = false;
+
+        if (!$app->getStatusName()) {
+            http_response_code(404);
+        } else if ($replyStatus) {
+            header("Content-Type: application/json");
+            echo '{"status": "' . $app->getStatusName() . '"}';
+        }
     }
 }

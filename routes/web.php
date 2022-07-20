@@ -8,7 +8,11 @@ use App\Http\Controllers\WebController\WhatsappController;
 use Illuminate\Support\Facades\Route;
 
 
-//Route::get('/', [VendorEndpointController::class, 'Activate']);
+Route::put('/', [VendorEndpointController::class, 'Activate']);
+
+Route::delete('/', [VendorEndpointController::class, 'Delete'])->name('Delete_app');
+
+
 
 Route::get('/', [WebController::class, 'index']);
 
