@@ -2,6 +2,12 @@
 
 @section('content')
 
+    @php
+
+    echo  $path = $_SERVER['PATH_INFO'];
+
+    @endphp
+
     <div class="content p-4 mt-2 bg-white text-Black rounded">
         <form action=" {{  route('check') }} " method="get">
             <br>
