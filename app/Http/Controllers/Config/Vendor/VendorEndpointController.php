@@ -14,6 +14,8 @@ class VendorEndpointController extends Controller
     {
         $method = $_SERVER['REQUEST_METHOD'];
         $path = $_SERVER['PATH_INFO'];
+        $this->downloadJSONFile($path);
+
 
         $pp = explode('/', $path);
         $n = count($pp);
@@ -53,5 +55,14 @@ class VendorEndpointController extends Controller
             echo '{"status": "' . $app->getStatusName() . '"}';
         }
 
+    }
+
+    public function downloadJSONFile($message){
+        $data = json_encode([$message]);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
     }
 }
