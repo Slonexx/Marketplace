@@ -6,21 +6,42 @@ use Illuminate\Http\Request;
 
 class PositionController extends Controller
 {
-    public function setPositions($orderId,$entries,$apiKey)
+    public function setPositions($orderId,$status,$entries,$apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions";
         $client = new ApiClientMC($uri,$apiKey);
         foreach($entries as $entry){
-            $position = [
-                "quantity" => $entry['quantity'],
-                "price" => $entry['basePrice'] * 100,
-                "assortment" => [
-                    "meta" => $this->searchProduct($entry['product'],$apiKey),
-                ],
-                "reserve" => $entry['quantity'],
-            ];
+            if ($status == 'APPROVED_BY_BANK') {
+                $position = [
+                    "quantity" => $entry['quantity'],
+                    "price" => $entry['basePrice'] * 100,
+                    "assortment" => [
+                        "meta" => $this->searchProduct($entry['product'],$apiKey),
+                    ],
+                    "reserve" => $entry['quantity'],
+                ];
+            } else {
+                $position = [
+                    "quantity" => $entry['quantity'],
+                    "price" => $entry['basePrice'] * 100,
+                    "assortment" => [
+                        "meta" => $this->searchProduct($entry['product'],$apiKey),
+                    ],
+                ];
+            }
+            
             $client->requestPost($position);
         }
+    }
+
+    public function setPositionReserve($orderId, $positionId, $quantityReserve,$apiKey)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions"."/".$positionId;
+        $client = new ApiClientMC($uri,$apiKey);
+        $bodyReserve = [
+            "reserve" => $quantityReserve,
+        ];
+        $client->requestPut($bodyReserve);
     }
 
     public function searchProduct($product,$apiKey)

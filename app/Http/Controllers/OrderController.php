@@ -139,8 +139,8 @@ class OrderController extends Controller
         foreach ($orders as $order) {
             $formattedOrder = $this->mapOrderToAdd($order,$request->tokenMs);
             $createdOrder = $client->requestPost($formattedOrder);
-            $this->setPositions($createdOrder->id,$order['entries'],$request->tokenMs);
             $orderStatus = $order['status'];
+            $this->setPositions($createdOrder->id,$orderStatus,$order['entries'],$request->tokenMs);
             app(DocumentController::class)->initDocuments($order['entries'],$orderStatus,$createdOrder->meta,
             $request->payment,$formattedOrder,$request->tokenMs);
             $count++;
@@ -213,9 +213,9 @@ class OrderController extends Controller
         return $res;
     }
     
-    private function setPositions($orderId,$entries,$apiKey)
+    private function setPositions($orderId,$orderStatus,$entries,$apiKey)
     {
-        app(PositionController::class)->setPositions($orderId,$entries,$apiKey);
+        app(PositionController::class)->setPositions($orderId,$orderStatus,$entries,$apiKey);
     }
 
     private function getOrdersKaspiWithStatus($apiKey, $urlKaspi)
@@ -246,6 +246,12 @@ class OrderController extends Controller
             $order["externalCode"] =  $row->externalCode;
             $order['meta'] = $row->meta;
             $order["status"] = $status;
+            if (property_exists($row,'positions') == true) {
+                $order['positions'] = $row->positions;
+            } else {
+                $order['positions'] = null;
+            }
+            
             if(property_exists($row,'payments') == true){
                 $order['payments'] = $row->payments;
             } else {
@@ -291,7 +297,7 @@ class OrderController extends Controller
         $ordersFromKaspi = $this->getOrdersKaspiWithStatus($request->tokenKaspi, $urlKaspi);
         $ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
 
-        dd($ordersFromKaspi);
+        //dd($ordersFromKaspi);
 
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
@@ -307,6 +313,24 @@ class OrderController extends Controller
                             $orderMs['meta'],$request->payment,
                             $formattedOrder,$request->tokenMs
                         );
+                        if($orderMs['positions'] != null){
+                            $client = new ApiClientMC($orderMs['positions']->meta->href,$request->tokenMs);
+                            $jsonPosition = $client->requestGet();
+                            foreach($jsonPosition->rows as $row){
+                                $orderId = $orderMs['id'];
+                                $positionId = $row->id;
+                                $quantity = $row->quantity;
+                                if($orderKaspi['status'] == 'APPROVED_BY_BANK'){
+                                    app(PositionController::class)->setPositionReserve($orderId, $positionId,
+                                     $quantity,$request->tokenMs);
+                                } else {
+                                    if($row->reserve > 0){
+                                        app(PositionController::class)->setPositionReserve($orderId, $positionId, 0,
+                                        $request->tokenMs);
+                                    }
+                                }
+                            }
+                        }
                         $count++;
                     }
                 }
@@ -324,7 +348,9 @@ class OrderController extends Controller
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId;
         $client = new ApiClientMC($uri,$apiKey);
         $client->requestPut([
-            "state" => $metaState,
+            "state" => [
+                "meta" => $metaState,
+            ],
         ]);
     }
 
