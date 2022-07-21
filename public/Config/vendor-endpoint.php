@@ -32,7 +32,7 @@ switch ($method) {
 
         if (!$app->getStatusName()) {
             $app->accessToken = $accessToken;
-            $app->status = AppInstance::SETTINGS_REQUIRED;
+            $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
             $app->persist();
         }
         break;
