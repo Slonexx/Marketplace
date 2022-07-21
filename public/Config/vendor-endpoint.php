@@ -40,6 +40,7 @@ switch ($method) {
     case 'GET':
         break;
     case 'DELETE':
+        loginfo("MOYSKLAD => APP", "Метод делит");
         $app->delete($appId, $accountId);
         $replyStatus = false;
         break;
