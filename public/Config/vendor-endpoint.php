@@ -17,9 +17,8 @@ loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 $app = AppInstanceContoller::load($appId, $accountId);
 
 $replyStatus = true;
-$replyStatus = false;
-/*switch ($method) {
-    case 'PUT':
+
+    if ($method = 'PUT') {
         $requestBody = file_get_contents('php://input');
 
         loginfo("MOYSKLAD => APP", "Request body: " . print_r($requestBody, true));
@@ -36,17 +35,14 @@ $replyStatus = false;
             $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
             $app->persist();
         }
-        break;
-    case 'GET':
-        break;
-    case 'DELETE':
+    }
 
+    if ($method = 'DELETE') {
         $app->delete($appId, $accountId);
         $replyStatus = false;
-        break;
-}*/
+    }
 
-    if ($method == 'DELETE') {   loginfo("MOYSKLAD => APP", "Метод делит");   }
+
 
 if (!$app->getStatusName()) {
     http_response_code(404);
