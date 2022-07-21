@@ -199,7 +199,7 @@ class AppInstanceContoller {
     }
 
     function delete($appId, $accountId) {
-        $dirRoot = '';
+        $dirRoot = '/';
         @unlink( $dirRoot . "data/$appId.$accountId.json");
     }
 
