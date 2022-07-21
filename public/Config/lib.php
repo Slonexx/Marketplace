@@ -132,7 +132,7 @@ class JsonApi {
 
 function jsonApi(): JsonApi {
     if (!$GLOBALS['jsonApi']) {
-        $GLOBALS['jsonApi'] = new JsonApi(AppInsAppInstanceContollertance::get()->accessToken);
+        $GLOBALS['jsonApi'] = new JsonApi(AppInstance::get()->accessToken);
     }
     return $GLOBALS['jsonApi'];
 }
@@ -154,7 +154,7 @@ function loginfo($name, $msg) {
 
 $currentAppInstance = null;
 
-class AppInstanceContoller {
+class AppInstance {
 
     const UNKNOWN = 0;
     const SETTINGS_REQUIRED = 1;
@@ -167,9 +167,9 @@ class AppInstanceContoller {
 
     var $accessToken;
 
-    var $status = AppInstanceContoller::UNKNOWN;
+    var $status = AppInstance::UNKNOWN;
 
-    static function get(): AppInstanceContoller {
+    static function get(): AppInstance {
         $app = $GLOBALS['currentAppInstance'];
         if (!$app) {
             throw new InvalidArgumentException("There is no current app instance context");
@@ -210,14 +210,14 @@ class AppInstanceContoller {
         return $GLOBALS['dirRoot'] . "data/$appId.$accountId.json";
     }
 
-    static function loadApp($accountId): AppInstanceContoller {
+    static function loadApp($accountId): AppInstance {
         return self::load(cfg()->appId, $accountId);
     }
 
-    static function load($appId, $accountId): AppInstanceContoller {
+    static function load($appId, $accountId): AppInstance {
         $data = @file_get_contents(self::buildFilename($appId, $accountId));
         if ($data === false) {
-            $app = new AppInstanceContoller($appId, $accountId);
+            $app = new AppInstance($appId, $accountId);
         } else {
             $app = unserialize($data);
         }
