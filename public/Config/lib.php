@@ -207,7 +207,7 @@ class AppInstance {
     }
 
     private static function buildFilename($appId, $accountId) {
-        return $GLOBALS['dirRoot'] . "data/$appId.$accountId.app";
+        return $GLOBALS['dirRoot'] . "data/$appId.$accountId.json";
     }
 
     static function loadApp($accountId): AppInstance {
