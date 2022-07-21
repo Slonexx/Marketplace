@@ -31,13 +31,13 @@ class WebController extends Controller
         $app = AppInstanceContoller::loadApp($appId, $accountId);
         //dd($app);
 
-        return redirect()->route('Index', ['id' => $contextKey]);
+        //return redirect()->route('Index', ['id' => $contextKey] );
 
-        //return view('web.index');
+        return view('web.index', ['id'=> $contextKey] );
     }
 
     public function idIndex(Request $request, $id){
-        return  view('web.index');
+        return view('web.index');
     }
 
 
