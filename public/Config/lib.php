@@ -41,7 +41,7 @@ class AppInstanceContoller {
 
     function persist() {
         @mkdir('data');
-        file_put_contents($this->filename(), serialize(json_encode($this)));
+        file_put_contents($this->filename(), serialize($this));
     }
 
     function delete() {
@@ -65,7 +65,7 @@ class AppInstanceContoller {
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
-            $app = unserialize(json_decode($data));
+            $app = unserialize($data);
         }
         $GLOBALS['currentAppInstance'] = $app;
         return $app;
