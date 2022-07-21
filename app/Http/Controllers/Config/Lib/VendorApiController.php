@@ -23,7 +23,7 @@ class VendorApiController extends Controller
 
     private function request(string $method, $path, $body = null) {
 
-        $cfg = $_SESSION['cfg'];
+        $cfg = new cfg();
 
         return makeHttpRequest(
             $method,
@@ -56,7 +56,7 @@ function makeHttpRequest(string $method, string $url, string $bearerToken, $body
 function buildJWT(): string
 {
 
-    $cfg = $_SESSION['cfg'];
+    $cfg = new cfg();
 
     $token = array(
         "sub" => $cfg->appUid,
