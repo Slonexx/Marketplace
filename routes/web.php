@@ -10,8 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::delete('/', [VendorEndpointController::class, 'Delete'])->name('Delete_app');
-
 
 
 Route::get('/', [WebController::class, 'index']);
