@@ -48,7 +48,7 @@ class AppInstanceContoller extends Controller
 
     function persist() {
         @mkdir('data');
-        file_put_contents($this->filename(), serialize($this));
+        file_put_contents($this->filename(), json_encode($this));
     }
 
     function delete() {
@@ -61,7 +61,6 @@ class AppInstanceContoller extends Controller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-
         return $dir . "data/$appId.$accountId.app";
     }
 
@@ -74,7 +73,7 @@ class AppInstanceContoller extends Controller
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
-            $app = unserialize($data);
+            $app = json_decode($data);
         }
 
         $_SESSION['currentAppInstance'] = $data;
