@@ -202,7 +202,7 @@ class AppInstanceContoller {
 
        // $path = "/data/$appId.$accountId.json";
         loginfo("path", self::buildFilename($appId, $accountId));
-        @unlink($path);
+        @unlink($this->filename());
     }
 
     private function filename() {
