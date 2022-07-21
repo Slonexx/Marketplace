@@ -198,8 +198,9 @@ class AppInstanceContoller {
         file_put_contents($this->filename(), json_encode($this));
     }
 
-    function delete() {
-        @unlink($this->filename());
+    function delete($appId, $accountId) {
+        $dirRoot = '';
+        @unlink( $dirRoot . "data/$appId.$accountId.json");
     }
 
     private function filename() {
