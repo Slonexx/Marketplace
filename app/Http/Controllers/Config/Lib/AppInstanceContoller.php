@@ -75,10 +75,11 @@ class AppInstanceContoller extends Controller
         } else {
             $app = json_decode($data);
         }
-
+        dd($app);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
+
         $AppInstance->setAppToClassAppInstance($app);
 
         return $AppInstance;
