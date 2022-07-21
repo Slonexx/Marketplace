@@ -83,7 +83,7 @@ class Setting_mainController extends Controller
         //dd($check);
         Session::flash('error', 'Error message here');
 
-
+        dd($check);
         return Redirect::back();
     }
 
