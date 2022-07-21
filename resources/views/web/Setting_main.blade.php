@@ -16,7 +16,12 @@
         </div>
 
 
+        <div class="row col-sm-auto">
+            <div class="alert alert-danger alert-dismissible fade show " role="alert">  dwadwawdawdaw
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
+            </div>
+        </div>
 
 
         <div class="row mb-3 g-3 align-items-center">
