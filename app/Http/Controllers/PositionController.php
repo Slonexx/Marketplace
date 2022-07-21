@@ -49,6 +49,13 @@ class PositionController extends Controller
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?search=".$product->code;
         $client = new ApiClientMC($uri,$apiKey);
         $res = $client->requestGet();
+
+        if($res->meta->size == 0){
+            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?search=".$product->name;
+            $client->setRequestUrl($uri);
+            $res = $client->requestGet();
+        }
+
         $foundedMeta = null;
         foreach($res->rows as $row){
             $foundedMeta = $row->meta;

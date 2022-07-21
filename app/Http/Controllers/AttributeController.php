@@ -35,6 +35,12 @@ class AttributeController extends Controller
                 "required" => false,
                 "description" => "При отметки данного типа товар будет добавляться в excel файл",
             ],
+            2 => [
+                "name" => "Опубликован на Kaspi",
+                "type" => "boolean",
+                "required" => false,
+                "description" => "Является ли товар опубликованным на Kaspi",
+            ],
         ];
         $client->requestPost($body);
     }

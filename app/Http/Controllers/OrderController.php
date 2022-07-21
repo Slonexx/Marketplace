@@ -121,7 +121,16 @@ class OrderController extends Controller
             'state' => 'required|string',
             'fdate' => 'required|string',
             'sdate' => 'required|string',
+            'organization_name' => 'sometimes|required|string',
+            'project_name' => 'sometimes|required|string',
+            'sale_channel' => 'sometimes|required|string',
+            'organization_account' => 'sometimes|required|string',
         ]);
+
+        $organization_name = $request->organization_name;
+        $project_name = $request->project_name;
+        $sale_channel = $request->sale_channel;
+        $organization_account = $request->organization_account;
 
         $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
         $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
