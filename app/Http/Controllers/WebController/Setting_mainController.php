@@ -70,10 +70,11 @@ class Setting_mainController extends Controller
         /*$date = $request->document;
         dd($date);*/
 
+
+
         $check = $request->request;
         $API_KEY = $request->API_KEY;
-
-
+        dd($check);
 
         $message = $this->saveApiKey($API_KEY);
 
