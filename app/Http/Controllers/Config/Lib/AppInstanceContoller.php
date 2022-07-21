@@ -61,7 +61,7 @@ class AppInstanceContoller extends Controller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-        return $dir . "data/$appId.$accountId.json";
+        return $dir . "data/$appId.$accountId.app";
     }
 
     static function loadApp($appId, $accountId): AppInstanceContoller {
