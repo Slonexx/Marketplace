@@ -24,6 +24,7 @@ class WebController extends Controller
         $employee = $vendorAPI->context($contextKey);
 
         $appId = $cfg->appId;
+        dd($appId);
         $accountId = $employee->accountId;
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
