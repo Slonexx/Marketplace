@@ -29,15 +29,11 @@ class WebController extends Controller
         $app = AppInstanceContoller::loadApp($appId, $accountId);
         $_SESSION['cfg'] = $cfg;
 
-        dd($app);
+        //dd($app);
 
         return view('web.index');
     }
 
-
-    public function newCfg(){
-        return new AppConfigController( require(public_path().'/Config'.'/config.php') );
-    }
 
 }
 

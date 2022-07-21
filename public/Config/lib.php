@@ -199,6 +199,9 @@ class AppInstanceContoller {
     }
 
     function delete($appId, $accountId) {
+
+
+
         @unlink(self::buildFilename($appId,$accountId));
     }
 
