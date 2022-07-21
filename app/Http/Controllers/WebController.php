@@ -29,7 +29,7 @@ class WebController extends Controller
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
 
-        dd($app);
+        dd("Все прошло успешно");
 
         return view('web.index');
     }
