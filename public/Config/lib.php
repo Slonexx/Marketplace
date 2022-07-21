@@ -210,7 +210,7 @@ class AppInstanceContoller {
     }
 
     private static function buildFilename($appId, $accountId) {
-        $dirRoot = '/';
+        $dirRoot = '';
         return $dirRoot . "data/$appId.$accountId.json";
     }
 
