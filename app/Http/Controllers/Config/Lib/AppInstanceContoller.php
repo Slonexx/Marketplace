@@ -76,7 +76,7 @@ class AppInstanceContoller extends Controller
             $app = unserialize($data);
         }
 
-        $app = (object) $app;
+        dd($app);
 
         dd($app->accessToken);
         $_SESSION['currentAppInstance'] = $data;
