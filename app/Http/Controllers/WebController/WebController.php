@@ -17,9 +17,7 @@ class WebController extends Controller
 {
     public function index(Request $request){
 
-        session_start();
         $cfg = new cfg();
-        $_SESSION['cfg'] = $cfg;
 
         $contextKey = $request->contextKey;
         $vendorAPI = new VendorApiController();
