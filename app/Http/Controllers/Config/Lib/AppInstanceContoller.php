@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Config\Lib;
 
 use App\Http\Controllers\Controller;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
-use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\This;
 
-class AppInstanceContoller extends Controller
+
+class AppInstanceContoller
 {
     const UNKNOWN = 0;
     const SETTINGS_REQUIRED = 1;
@@ -76,7 +75,7 @@ class AppInstanceContoller extends Controller
             $app = unserialize($data);
         }
 
-        dd(unserialize($app));
+        dd($app);
 
         dd($app->accessToken);
         $_SESSION['currentAppInstance'] = $data;
