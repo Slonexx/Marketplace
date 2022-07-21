@@ -72,11 +72,10 @@ class AppInstanceContoller
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
-            $app = unserialize($data);
+            $unser = json_encode( unserialize($data) );
+            $app =  json_decode($unser);
         }
 
-        $temp = json_encode($app);
-        dd(($temp));
 
         //dd($app->accessToken);
         $_SESSION['currentAppInstance'] = $data;
