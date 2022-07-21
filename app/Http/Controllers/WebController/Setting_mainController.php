@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\ApiClientMC;
+use App\Http\Controllers\Config\Lib\AppInstanceContoller;
+use App\Http\Controllers\Config\Lib\cfg;
+use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\KaspiApiClient;
 use Illuminate\Http\Request;
@@ -67,8 +70,11 @@ class Setting_mainController extends Controller
         /*$date = $request->document;
         dd($date);*/
 
-
+        $check = $request->request;
         $API_KEY = $request->API_KEY;
+
+
+
         $message = $this->saveApiKey($API_KEY);
 
 
@@ -79,14 +85,33 @@ class Setting_mainController extends Controller
         else {
             Session::flash('alert-class', 'alert-danger');
         }
-        $check = $request->request;
+
         //dd($check);
         Session::flash('error', 'Error message here');
 
-        dd($check);
         return Redirect::back();
+
     }
 
+    public function updateSetting($contextKey){
+        $cfg = new cfg();
+        $vendorAPI = new VendorApiController();
+        $employee = $vendorAPI->context($contextKey);
+
+        $appId = $cfg->appId;
+        $accountId = $employee->accountId;
+
+        $app = AppInstanceContoller::loadApp($appId, $accountId);
+        $app->infoMessage = "Hello world";
+
+        $notify = $app->status != AppInstanceContoller::ACTIVATED;
+        $app->status = AppInstanceContoller::ACTIVATED;
+
+        $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
+
+        $app->persist();
+
+    }
 
     public function saveApiKey(string $API_KEY){
         $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";

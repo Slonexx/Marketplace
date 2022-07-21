@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebController::class, 'index']);
 
+Route::get('/Check/{id}', [\App\Http\Controllers\Config\CheckC::class, 'index'])->name('Check');
+
 Route::get('/{id}', [WebController::class, 'show'])->name("Index");
 
 Route::get('/Setting/{id}', [Setting_mainController::class, 'index'])->name("Setting_Main");
