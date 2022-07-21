@@ -76,9 +76,9 @@ class AppInstanceContoller
         }
 
         $temp = json_encode($app);
-        dd(json_decode($temp));
+        dd(($temp));
 
-        dd($app->accessToken);
+        //dd($app->accessToken);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
