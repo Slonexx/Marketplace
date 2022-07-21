@@ -132,7 +132,7 @@ class JsonApi {
 
 function jsonApi(): JsonApi {
     if (!$GLOBALS['jsonApi']) {
-        $GLOBALS['jsonApi'] = new JsonApi(AppInstance::get()->accessToken);
+        $GLOBALS['jsonApi'] = new JsonApi(AppInstanceContoller::get()->accessToken);
     }
     return $GLOBALS['jsonApi'];
 }
@@ -195,12 +195,11 @@ class AppInstanceContoller {
 
     function persist() {
         @mkdir('data');
-        file_put_contents($this->filename(), json_encode($this));
+        file_put_contents($this->filename(), serialize($this));
     }
 
-    function delete($appId, $accountId) {
-        $dirRoot = '/';
-        @unlink( $dirRoot . "data/$appId.$accountId.json");
+    function delete() {
+        @unlink($this->filename());
     }
 
     private function filename() {
@@ -208,8 +207,7 @@ class AppInstanceContoller {
     }
 
     private static function buildFilename($appId, $accountId) {
-        $dirRoot = '';
-        return $dirRoot . "data/$appId.$accountId.json";
+        return $GLOBALS['dirRoot'] . "data/$appId.$accountId.json";
     }
 
     static function loadApp($accountId): AppInstanceContoller {
@@ -219,13 +217,12 @@ class AppInstanceContoller {
     static function load($appId, $accountId): AppInstanceContoller {
         $data = @file_get_contents(self::buildFilename($appId, $accountId));
         if ($data === false) {
-            $app = new AppInstanceContoller($appId, $accountId);
+            $app = new AppInstance($appId, $accountId);
         } else {
-            $app = json_decode($data);
+            $app = unserialize($data);
         }
         $GLOBALS['currentAppInstance'] = $app;
         return $app;
     }
-
 
 }

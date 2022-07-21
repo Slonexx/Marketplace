@@ -210,14 +210,14 @@ class AppInstance {
         return $GLOBALS['dirRoot'] . "data/$appId.$accountId.json";
     }
 
-    static function loadApp($accountId): AppInstance {
+    static function loadApp($accountId): AppInstanceContoller {
         return self::load(cfg()->appId, $accountId);
     }
 
-    static function load($appId, $accountId): AppInstance {
+    static function load($appId, $accountId): AppInstanceContoller {
         $data = @file_get_contents(self::buildFilename($appId, $accountId));
         if ($data === false) {
-            $app = new AppInstance($appId, $accountId);
+            $app = new AppInstanceContoller($appId, $accountId);
         } else {
             $app = unserialize($data);
         }
