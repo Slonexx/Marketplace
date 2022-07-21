@@ -75,7 +75,7 @@ class AppInstanceContoller extends Controller
         } else {
             $app = unserialize($data);
         }
-        dd($data);
+        dd(json_decode($app));
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
