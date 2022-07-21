@@ -9,7 +9,7 @@
 
 
             <div class="toc-list-h1">
-                <a href="/">Главная </a>
+                <a href="{{  route('Index') }}">Главная </a>
                 <a href="{{  route('Setting_Main') }}">Настройки </a>
             </div>
             <div class="">

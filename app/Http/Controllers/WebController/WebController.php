@@ -16,9 +16,10 @@ use function view;
 class WebController extends Controller
 {
     public function index(Request $request){
-        $request->request->add(["Key"=>"Value"]);
-        dd($request);
+        /*$request->request->add(["Key"=>"Value"]);
+        dd($request);*/
         $cfg = new cfg();
+        $_SESSION['cfg'] = $cfg;
 
         $contextKey = $request->contextKey;
 
@@ -29,12 +30,15 @@ class WebController extends Controller
         $accountId = $employee->accountId;
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-        dd($app);
-        $_SESSION['cfg'] = $cfg;
-
         //dd($app);
 
-        return view('web.index');
+        return redirect()->route('Index', ['id' => $contextKey]);
+
+        //return view('web.index');
+    }
+
+    public function idIndex(Request $request, $id){
+        return  view('web.index', ['id' => $id]);
     }
 
 
