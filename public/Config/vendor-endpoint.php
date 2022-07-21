@@ -38,6 +38,7 @@ switch ($method) {
         }
         break;
     case 'GET':
+        loginfo("MOYSKLAD => APP", "был метод GET");
         break;
     case 'DELETE':
         $app->delete();
