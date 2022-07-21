@@ -33,7 +33,7 @@ class WebController extends Controller
 
         //return redirect()->route('Index', ['id' => $contextKey] );
 
-        return view('web.index', ['id'=> $contextKey] );
+        return view('web.index', ['id'=> $contextKey]  );
     }
 
     public function idIndex(Request $request, $id){
