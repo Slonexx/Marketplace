@@ -37,7 +37,7 @@ class WebController extends Controller
     }
 
     public function idIndex(Request $request, $id){
-        return  view('web.index', ['id' => $id]);
+        return  view('web.index');
     }
 
 
