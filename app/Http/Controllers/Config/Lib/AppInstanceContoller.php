@@ -82,7 +82,7 @@ class AppInstanceContoller extends Controller
 
         $AppInstance->setAppToClassAppInstance($app);
 
-        //dd($AppInstance);
+        dd($AppInstance);
 
         return $AppInstance;
     }
