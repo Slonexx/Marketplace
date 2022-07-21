@@ -78,7 +78,7 @@ class AppInstanceContoller extends Controller
 
         $app = (object) $app;
 
-        dd(($app));
+        dd($app->accessToken);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
