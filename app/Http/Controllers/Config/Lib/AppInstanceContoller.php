@@ -80,7 +80,9 @@ class AppInstanceContoller extends Controller
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
 
-        dd($AppInstance->setAppToClassAppInstance($app));
+        $AppInstance->setAppToClassAppInstance($app);
+
+        dd($AppInstance);
 
         return $app;
     }
