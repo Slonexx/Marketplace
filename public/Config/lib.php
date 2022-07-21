@@ -200,7 +200,7 @@ class AppInstanceContoller {
 
     function delete($appId, $accountId) {
 
-        $path = "/data/$appId.$accountId.json";
+       // $path = "/data/$appId.$accountId.json";
         loginfo("path", self::buildFilename($appId, $accountId));
         @unlink($path);
     }
