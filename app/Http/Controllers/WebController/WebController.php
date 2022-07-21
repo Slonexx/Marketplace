@@ -16,8 +16,7 @@ use function view;
 class WebController extends Controller
 {
     public function index(Request $request){
-        /*$request->request->add(["Key"=>"Value"]);
-        dd($request);*/
+
         $cfg = new cfg();
         $_SESSION['cfg'] = $cfg;
 
