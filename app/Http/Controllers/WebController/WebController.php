@@ -16,7 +16,8 @@ use function view;
 class WebController extends Controller
 {
     public function index(Request $request){
-        dd($request->add(["key" => "value"]));
+        $request->request->add(["Key"=>"Value"]);
+        dd($request);
         $cfg = new cfg();
 
         $contextKey = $request->contextKey;
