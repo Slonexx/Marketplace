@@ -16,11 +16,11 @@ use function view;
 class WebController extends Controller
 {
     public function index(Request $request){
-
+        dd($request);
         $cfg = new cfg();
 
         $contextKey = $request->contextKey;
-        dd($request);
+
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
 
