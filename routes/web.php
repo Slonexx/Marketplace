@@ -1,15 +1,10 @@
 <?php
 
-use App\Http\Controllers\Config\Vendor\VendorEndpointController;
-use App\Http\Controllers\WebController;
-use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\Setting_mainController;
+use App\Http\Controllers\WebController\SupportController;
+use App\Http\Controllers\WebController\WebController;
 use App\Http\Controllers\WebController\WhatsappController;
 use Illuminate\Support\Facades\Route;
-
-
-
-
 
 
 Route::get('/', [WebController::class, 'index']);

@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\Config\Lib\AppConfigController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
+use App\Http\Controllers\Config\Lib\cfg;
 use App\Http\Controllers\Config\Lib\VendorApiController;
-use App\Http\Controllers\Config\SessionController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use function dd;
+use function public_path;
+use function view;
 
 
 class WebController extends Controller
 {
     public function index(Request $request){
 
-
         session_start();
-        $cfg = $this->newCfg();
+        $cfg = new cfg();
         $_SESSION['cfg'] = $cfg;
 
-
         $contextKey = $request->contextKey;
-        //dd($request->contextKey);
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
 
@@ -28,8 +29,9 @@ class WebController extends Controller
         $accountId = $employee->accountId;
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
+        $_SESSION['cfg'] = $cfg;
 
-        dd("Все прошло успешно");
+        //dd("Все прошло успешно");
 
         return view('web.index');
     }
