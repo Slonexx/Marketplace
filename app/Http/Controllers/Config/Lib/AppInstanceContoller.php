@@ -82,9 +82,9 @@ class AppInstanceContoller extends Controller
 
         $AppInstance->setAppToClassAppInstance($app);
 
-        dd($AppInstance);
+        //dd($AppInstance);
 
-        return $app;
+        return $AppInstance;
     }
 
     public function setAppToClassAppInstance($json){
