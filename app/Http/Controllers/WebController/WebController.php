@@ -29,7 +29,7 @@ class WebController extends Controller
         $app = AppInstanceContoller::loadApp($appId, $accountId);
         $_SESSION['cfg'] = $cfg;
 
-        //dd("Все прошло успешно");
+        dd($app);
 
         return view('web.index');
     }
