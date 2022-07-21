@@ -29,7 +29,7 @@ class AgentController extends Controller
         $attributes = app(AgentAttributesController::class)->getAttributeGos($apiKey);
         //$attributes = app(SessionController::class)->getCookie('gos_attribute');
         $agent = [
-            'name' => 'Kaspi client '.$customer->name,
+            'name' => $customer->name,
             "legalLastName" => $customer->lastName,
             "legalFirstName" => $customer->firstName,
             "actualAddress" => $address,

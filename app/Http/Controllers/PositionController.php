@@ -11,7 +11,7 @@ class PositionController extends Controller
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions";
         $client = new ApiClientMC($uri,$apiKey);
         foreach($entries as $entry){
-            if ($status == 'APPROVED_BY_BANK') {
+            if ($status == 'ACCEPTED_BY_MERCHANT') {
                 $position = [
                     "quantity" => $entry['quantity'],
                     "price" => $entry['basePrice'] * 100,
