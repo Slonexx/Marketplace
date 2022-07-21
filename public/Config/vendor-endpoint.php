@@ -15,6 +15,9 @@ $accountId = $pp[$n - 1];
 loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
 $app = AppInstanceContoller::load($appId, $accountId);
+
+loginfo("AppInstanceContoller", "$app");
+
 $replyStatus = true;
 
 switch ($method) {
