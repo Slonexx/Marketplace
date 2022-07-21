@@ -40,7 +40,7 @@ switch ($method) {
     case 'GET':
         break;
     case 'DELETE':
-        $app->delete($appId, $accountId);
+        $app->delete();
         $replyStatus = false;
         break;
 }
