@@ -154,7 +154,7 @@ function loginfo($name, $msg) {
 
 $currentAppInstance = null;
 
-class AppInstance {
+class AppInstanceContoller {
 
     const UNKNOWN = 0;
     const SETTINGS_REQUIRED = 1;
@@ -167,9 +167,9 @@ class AppInstance {
 
     var $accessToken;
 
-    var $status = AppInstance::UNKNOWN;
+    var $status = AppInstanceContoller::UNKNOWN;
 
-    static function get(): AppInstance {
+    static function get(): AppInstanceContoller {
         $app = $GLOBALS['currentAppInstance'];
         if (!$app) {
             throw new InvalidArgumentException("There is no current app instance context");
@@ -198,10 +198,7 @@ class AppInstance {
         file_put_contents($this->filename(), json_encode($this));
     }
 
-    function delete($appId, $accountId) {
-
-       // $path = "/data/$appId.$accountId.json";
-        loginfo("path", self::buildFilename($appId, $accountId));
+    function delete() {
         @unlink($this->filename());
     }
 
@@ -214,31 +211,20 @@ class AppInstance {
         return $dirRoot . "data/$appId.$accountId.json";
     }
 
-    static function loadApp($accountId): AppInstance {
+    static function loadApp($accountId): AppInstanceContoller {
         return self::load(cfg()->appId, $accountId);
     }
 
-    static function load($appId, $accountId): AppInstance {
+    static function load($appId, $accountId): AppInstanceContoller {
         $data = @file_get_contents(self::buildFilename($appId, $accountId));
         if ($data === false) {
-            $app = new AppInstance($appId, $accountId);
+            $app = new AppInstanceContoller($appId, $accountId);
         } else {
             $app = json_decode($data);
         }
         $GLOBALS['currentAppInstance'] = $app;
-        $AppInstance = new AppInstance($app->appId, $app->accountId);
-        $AppInstance->setAppToClassAppInstance($app);
-
-        return $AppInstance;
+        return $app;
     }
 
-    public function setAppToClassAppInstance($json){
-        $this->appId = $json->appId;
-        $this->accountId = $json->accountId;
-        $this->infoMessage = $json->infoMessage;
-        $this->store = $json->store;
-        $this->accessToken = $json->accessToken;
-        $this->status = $json->status;
-    }
 
 }

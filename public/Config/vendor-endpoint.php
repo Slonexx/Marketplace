@@ -14,7 +14,8 @@ $accountId = $pp[$n - 1];
 
 loginfo("MOYSKLAD => APP", "Extracted: appId=$appId, accountId=$accountId");
 
-$app = AppInstance::load($appId, $accountId);
+$app = AppInstanceContoller::load($appId, $accountId);
+
 $replyStatus = true;
 
 switch ($method) {
@@ -32,14 +33,14 @@ switch ($method) {
 
         if (!$app->getStatusName()) {
             $app->accessToken = $accessToken;
-            $app->status = AppInstance::SETTINGS_REQUIRED;
+            $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
             $app->persist();
         }
         break;
     case 'GET':
         break;
     case 'DELETE':
-        $app->delete();
+        $app->delete($appId, $accountId);
         $replyStatus = false;
         break;
 }
@@ -50,5 +51,3 @@ if (!$app->getStatusName()) {
     header("Content-Type: application/json");
     echo '{"status": "' . $app->getStatusName() . '"}';
 }
-
-
