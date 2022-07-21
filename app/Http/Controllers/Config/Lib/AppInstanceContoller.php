@@ -62,7 +62,7 @@ class AppInstanceContoller extends Controller
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
 
-        return $dir . "data/$appId.$accountId.json";
+        return $dir . "data/$appId.$accountId.app";
     }
 
     static function loadApp($appId, $accountId): AppInstanceContoller {
@@ -74,7 +74,7 @@ class AppInstanceContoller extends Controller
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
-            $app = json_decode($data);
+            $app = unserialize($data);
         }
 
         $_SESSION['currentAppInstance'] = $data;
