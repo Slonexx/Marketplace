@@ -75,7 +75,9 @@ class AppInstanceContoller
             $app = unserialize($data);
         }
 
-        dd(json_encode($app));
+        $temp = json_encode($app);
+
+        dd(json_decode($temp));
 
         dd($app->accessToken);
         $_SESSION['currentAppInstance'] = $data;
