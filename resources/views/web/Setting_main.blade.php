@@ -26,7 +26,7 @@
 
 
 
-            <form action=" {{  route('Setting_Send') }} " method="post">
+            <form action=" {{  route('Setting_Send' , ['id' => $id] ) }} " method="post">
             @csrf <!-- {{ csrf_field() }} -->
                 <div class="mb-3 row">
                     <label for="TokenKaspi" class="col-sm-2 col-form-label"> <i class="text-danger">*</i> Токен Kaspi-Api</label>

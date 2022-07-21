@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Session;
 
 class Setting_mainController extends Controller
 {
-    public function index(){
+    public function index($id){
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $apiKey = "8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f";
@@ -54,15 +54,15 @@ class Setting_mainController extends Controller
         return view('web.Setting_main',['Body' => $Body,
             "setBackground" => $setBackground,
             "Body_organization" => $Body_organization,
-
-            ]);
+            'id' => $id,
+        ]);
 
 
 //        dd($Body);
         //return view('web.Setting_main');
     }
 
-    public function postFormSetting(Request $request){
+    public function postFormSetting(Request $request, $id){
 
         /*$date = $request->document;
         dd($date);*/
@@ -80,7 +80,7 @@ class Setting_mainController extends Controller
             Session::flash('alert-class', 'alert-danger');
         }
         $check = $request->request;
-        dd($check);
+        //dd($check);
         Session::flash('error', 'Error message here');
 
 

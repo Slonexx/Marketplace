@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Session;
 class WhatsappController extends Controller
 {
 
-    public function Index(){
-        return view('web.whatsapp');
+    public function Index($id){
+        return view('web.whatsapp', ['id' => $id] );
     }
 
     public function WhatsappSend(Request $request){
@@ -20,7 +20,6 @@ class WhatsappController extends Controller
         ]);
 
         $name = "Здравствуйте меня зовут ".$request->name.". ";
-        $message =
         $inputName = str_ireplace(" ", "%20", $name);
         $inputMessage = str_ireplace(" ", "%20", $request->message);
 

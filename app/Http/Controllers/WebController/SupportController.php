@@ -10,11 +10,11 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class SupportController extends Controller
 {
-    public function support(){
-        return view('web.support');
+    public function support($id){
+        return view('web.support', ['id' => $id] );
     }
 
-    public function supportSend(Request  $request){
+    public function supportSend(Request  $request, $id){
         $request->validate([
             'name' => 'required|max:100',
             'email' => 'required|email|max:100',

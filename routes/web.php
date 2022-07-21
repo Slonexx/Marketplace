@@ -11,12 +11,12 @@ Route::get('/', [WebController::class, 'index']);
 
 Route::get('/{id}', [WebController::class, 'show'])->name("Index");
 
-Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
-Route::post('/SettingSend', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
+Route::get('/Setting/{id}', [Setting_mainController::class, 'index'])->name("Setting_Main");
+Route::post('/SettingSend/{id}', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
 
-Route::get('/SupportHelp', [SupportController::class, 'support'])->name("support");
-Route::post('/PostSupport', [SupportController::class, 'supportSend'])->name("Send");
+Route::get('/SupportHelp/{id}', [SupportController::class, 'support'])->name("support");
+Route::post('/PostSupport/{id}', [SupportController::class, 'supportSend'])->name("Send");
 
-Route::get('/Whatsapp', [WhatsappController::class, 'Index'])->name("whatsapp");
-Route::post('/WhatsappSend', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
+Route::get('/Whatsapp/{id}', [WhatsappController::class, 'Index'])->name("whatsapp");
+Route::post('/WhatsappSend/{id}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
 
