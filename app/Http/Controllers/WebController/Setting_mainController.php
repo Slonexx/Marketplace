@@ -106,7 +106,7 @@ class Setting_mainController extends Controller
 
         $notify = $app->status != AppInstanceContoller::ACTIVATED;
         $app->status = AppInstanceContoller::ACTIVATED;
-
+        dd($app);
         $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
 
         $app->persist();
