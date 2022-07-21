@@ -40,11 +40,13 @@ switch ($method) {
     case 'GET':
         break;
     case 'DELETE':
-        loginfo("MOYSKLAD => APP", "Метод делит");
+
         $app->delete($appId, $accountId);
         $replyStatus = false;
         break;
 }
+
+    if ($method == 'DELETE') {   loginfo("MOYSKLAD => APP", "Метод делит");   }
 
 if (!$app->getStatusName()) {
     http_response_code(404);
