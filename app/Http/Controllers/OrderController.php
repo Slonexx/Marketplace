@@ -320,7 +320,7 @@ class OrderController extends Controller
                                 $orderId = $orderMs['id'];
                                 $positionId = $row->id;
                                 $quantity = $row->quantity;
-                                if($orderKaspi['status'] == 'APPROVED_BY_BANK'){
+                                if($orderKaspi['status'] == 'ACCEPTED_BY_MERCHANT'){
                                     app(PositionController::class)->setPositionReserve($orderId, $positionId,
                                      $quantity,$request->tokenMs);
                                 } else {
