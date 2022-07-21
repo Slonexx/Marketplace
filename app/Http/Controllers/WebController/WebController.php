@@ -20,6 +20,7 @@ class WebController extends Controller
         $cfg = new cfg();
 
         $contextKey = $request->contextKey;
+        dd($request);
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
 
