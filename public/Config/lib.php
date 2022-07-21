@@ -195,7 +195,7 @@ class AppInstance {
 
     function persist() {
         @mkdir('data');
-        file_put_contents($this->filename(), json_encode($this));
+        file_put_contents($this->filename(), serialize($this));
     }
 
     function delete() {
@@ -207,7 +207,7 @@ class AppInstance {
     }
 
     private static function buildFilename($appId, $accountId) {
-        return $GLOBALS['dirRoot'] . "data/$appId.$accountId.app";
+        return $GLOBALS['dirRoot'] . "data/$appId.$accountId.json";
     }
 
     static function loadApp($accountId): AppInstance {
@@ -219,7 +219,7 @@ class AppInstance {
         if ($data === false) {
             $app = new AppInstance($appId, $accountId);
         } else {
-            $app = json_decode($data);
+            $app = unserialize($data);
         }
         $GLOBALS['currentAppInstance'] = $app;
         return $app;
