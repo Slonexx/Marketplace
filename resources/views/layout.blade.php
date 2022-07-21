@@ -7,9 +7,8 @@
         <div class="sidenav">
 
 
-
             <div class="toc-list-h1">
-                <a href="{{  route('Index') }}">Главная </a>
+                <a href="{{  route('Index', ['id' => $id]) }}">Главная </a>
                 <a href="{{  route('Setting_Main') }}">Настройки </a>
             </div>
             <div class="">

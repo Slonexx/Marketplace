@@ -21,7 +21,7 @@ class WebController extends Controller
         $_SESSION['cfg'] = $cfg;
 
         $contextKey = $request->contextKey;
-
+/*
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
 
@@ -29,15 +29,16 @@ class WebController extends Controller
         $accountId = $employee->accountId;
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-        //dd($app);
+        //dd($app);*/
 
-        //return redirect()->route('Index', ['id' => $contextKey] );
+        return redirect()->route('Index', ['id' => $contextKey] );
 
-        return view('web.index', ['id'=> $contextKey]  );
+        //return view('web.index', ['id' => $contextKey ]);
     }
 
-    public function idIndex(Request $request, $id){
-        return view('web.index');
+    public function show($id){
+        //dd($id);
+        return view('web.index', ['id' => $id ]);
     }
 
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WebController::class, 'index']);
 
-Route::get('/{id}', [WebController::class, 'idIndex'])->name("Index");
+Route::get('/{id}', [WebController::class, 'show'])->name("Index");
 
 Route::get('/Setting', [Setting_mainController::class, 'index'])->name("Setting_Main");
 Route::post('/SettingSend', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
