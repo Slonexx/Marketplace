@@ -10,17 +10,10 @@ use Illuminate\Http\Request;
 
 class CheckC extends Controller
 {
-    public function index(Request $request, $id){
+    public function index($accountId){
         $cfg = new cfg();
-        $_SESSION['cfg'] = $cfg;
-
-        $contextKey = $id;
-
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
 
         $appId = $cfg->appId;
-        $accountId = $employee->accountId;
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
         dd($app);
