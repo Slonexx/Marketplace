@@ -27,21 +27,41 @@ class getSettingVendorController extends Controller
     var $CANCELLED;
     var $RETURNED;
 
-    public function __construct($contextKey)
-    {
-        $cfg = new cfg();
-        $_SESSION['cfg'] = $cfg;
 
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
-
-        $appId = $cfg->appId;
-        $accountId = $employee->accountId;
-
-        $app = AppInstanceContoller::loadApp($appId, $accountId);
-        return $app;
+    public function __construct($contextKey){
+        $app = $this->setAll($contextKey);
+        $this->appId = $app->appId;
+        $this->accountId = $app->accountId;
+        $this->TokenMoySklad = $app->TokenMoySklad;
+        $this->TokenKaspi = $app->TokenKaspi;
+        $this->Organization = $app->Organization;
+        $this->PaymentDocument = $app->PaymentDocument;
+        $this->Document = $app->Document;
+        $this->PaymentAccount = $app->PaymentAccount;
+        $this->Saleschannel = $app->Saleschannel;
+        $this->Project = $app->Project;
+        $this->CheckCreatProduct = $app->CheckCreatProduct;
+        $this->APPROVED_BY_BANK = $app->APPROVED_BY_BANK;
+        $this->ACCEPTED_BY_MERCHANT = $app->ACCEPTED_BY_MERCHANT;
+        $this->COMPLETED = $app->COMPLETED;
+        $this->CANCELLED = $app->CANCELLED;
+        $this->RETURNED = $app->RETURNED;
     }
 
+
+    public function setAll($contextKey){
+            $cfg = new cfg();
+            $_SESSION['cfg'] = $cfg;
+
+            $vendorAPI = new VendorApiController();
+            $employee = $vendorAPI->context($contextKey);
+
+            $appId = $cfg->appId;
+            $accountId = $employee->accountId;
+
+            $app = AppInstanceContoller::loadApp($appId, $accountId);
+            return $app;
+        }
     /**
      * @return mixed
      */
