@@ -23,8 +23,6 @@ class WebController extends Controller
         $START = new getSettingVendorController($id);
         $appId = $START->appId;
         $accountId = $START->accountId;
-        dd($START);
-
 
         return view('web.index', ['id' => $id,  'appId'=> $appId, 'accountId'=> $accountId]);
     }

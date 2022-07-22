@@ -62,18 +62,8 @@ class getSettingVendorController extends Controller
 
     }
 
-    public function getSetting($contextKey){
-        $cfg = new cfg();
-        $_SESSION['cfg'] = $cfg;
-
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
-
-        $appId = $cfg->appId;
-        $accountId = $employee->accountId;
-
-        $app = AppInstanceContoller::loadApp($appId, $accountId);
-        return $app;
+    public function getSetting(){
+    return $this->APP;
 }
 
     /**

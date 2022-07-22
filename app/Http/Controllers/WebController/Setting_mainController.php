@@ -17,7 +17,7 @@ class Setting_mainController extends Controller
 {
     public function index($id){
 
-        $Setting = app(getSettingVendorController::class);
+        $Setting = new getSettingVendorController($id);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
