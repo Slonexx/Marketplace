@@ -20,7 +20,7 @@ class Setting_mainController extends Controller
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $Setting = new getSettingVendorController($id);
         $apiKey = $Setting->TokenMoySklad;
-
+        dd($apiKey);
 
 
         $colorMC = [
