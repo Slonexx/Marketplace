@@ -74,7 +74,7 @@ class Setting_mainController extends Controller
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
             "TokenKaspi" => $TokenKaspi,
-            "apiKey" => $TokenKaspi,
+            "apiKey" => $TokenMoySklad,
             'id' => $id,
         ]);
 
