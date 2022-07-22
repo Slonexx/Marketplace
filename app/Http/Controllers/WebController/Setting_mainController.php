@@ -82,7 +82,8 @@ class Setting_mainController extends Controller
     }
 
     public function postFormSetting(Request $request, $accountId){
-        $Setting = $request->request;
+        $Setting = $request->parameters;
+        dd($Setting);
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
 
