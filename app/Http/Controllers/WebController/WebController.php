@@ -19,16 +19,13 @@ class WebController extends Controller
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
 
-        return redirect()->route('Index', ['id' => $contextKey, 'accountId' => $accountId] );
+        return redirect()->route('Index', ['accountId' => $accountId] );
 
     }
 
-    public function show(Request $request, $id){
-        $accountId = $request->accountId;
-        dd($accountId);
+    public function show($accountId){
 
-
-        return view('web.index', ['id' => $id, 'accountId' => $accountId]);
+        return view('web.index', ['accountId' => $accountId] );
     }
 
 
