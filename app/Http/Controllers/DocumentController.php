@@ -20,7 +20,7 @@ class DocumentController extends Controller
     #RETURN_ACCEPTED_BY_MERCHANT – ожидает решения по возврату
     #RETURNED – возвращён
 
-    public function initDocuments($orderEntries,$statusOrder,$metaOrder,$isPayment,$formattedOrder, $apiKey)
+    public function initDocuments($orderEntries,$statusOrder,$metaOrder,$paymentOption,$demandOption,$formattedOrder, $apiKey)
     {
         // $meta  = [
         //     "href" => $metaOrder->href,
@@ -42,39 +42,100 @@ class DocumentController extends Controller
             break;
             case 'ACCEPTED_BY_MERCHANT':
               //"Подтвержден";
-              $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
+              if($paymentOption > 0){
+                $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
+              }
             break;
             case 'CANCELLED':
                 case 'CANCELLING':
               // "Отменен";
-              $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
-              $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
-              $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
-              $this->createPayOutDocument($apiKey,$metaReturn,$isPayment,$formattedOrder,$sum);
+              //При отмене Если выбрано не создавать отгрузку, то не создавать и платежный документ
+              if($paymentOption > 0 && $demandOption != 0){
+                $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
+              }
+
+              if($demandOption > 0){
+                    
+                 $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                 $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
+
+                    //При отмене не создается счет-фактура????
+                 if($demandOption == 2){
+                    $this->createFactureout($apiKey,$metaDemand);
+                 }
+
+                if($paymentOption > 0){
+                    //Если пользователь решил не создавать платежный документ????
+                   $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
+                }
+              }
+
+             
+              
             break;
             case 'COMPLETED':
               // "Доставлен";
-              $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
-              $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+              if($paymentOption > 0){
+                $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
+              }
+              
+              if($demandOption > 0){
+                $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                if($demandOption == 2){
+                    $this->createFactureout($apiKey,$metaDemand);
+                 }
+              }
+
+              
             break;
             case 'KASPI_DELIVERY_RETURN_REQUESTED':
                 case 'RETURN_ACCEPTED_BY_MERCHANT':
                   case 'RETURNED':
                     // "Возврат";
-                    $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
-                    $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
-                    $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
+                    if($paymentOption > 0) {
+                        $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
+                    }
+
+                    if($demandOption > 0){
+                        $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                        $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
+
+                        if($demandOption == 2){
+                            $this->createFactureout($apiKey,$metaDemand);
+                        }
+
+                        if($paymentOption > 0){
+                            //Если пользователь решил не создавать платежный документ????
+                           $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
+                        }
+                    }
+                    
+                    
                     break;
         }
 
     }
 
+    private function createFactureout($apiKey,$metaDemand)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/factureout";
+        $client = new ApiClientMC($uri,$apiKey);
+        $docBody = [
+            "demands" => [
+                0 => [
+                    "meta" => $metaDemand,
+                ],
+            ],
+        ];
+        $client->requestPost($docBody);
+    }
+
     private function createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum)
     {
         $uri = null;
-        if ($isPayment == true) {
+        if ($isPayment == 2) {
             $uri = "https://online.moysklad.ru/api/remap/1.2/entity/paymentin";
-        } else {
+        } elseif($isPayment == 1) {
             $uri = "https://online.moysklad.ru/api/remap/1.2/entity/cashin";
         }
         
@@ -86,7 +147,6 @@ class DocumentController extends Controller
             "agent" => $formattedOrder['agent'],
             "organization" => $formattedOrder['organization'],
             "rate" => $formattedOrder['rate'],
-            "salesChannel" => $formattedOrder['salesChannel'],
             "sum" => $sum*100,
             "operations" => [
                 0=> [
@@ -94,6 +154,20 @@ class DocumentController extends Controller
                 ],
             ],
         ];
+
+        if(array_key_exists("salesChannel",$formattedOrder)){
+            $docBody["salesChannel"] = $formattedOrder['salesChannel'];
+        }
+
+        if(array_key_exists("project",$formattedOrder)){
+            $docBody["project"] = $formattedOrder['project'];
+        }
+
+        if(array_key_exists("organizationAccount",$formattedOrder)){
+            $docBody["organizationAccount"] = $formattedOrder['organizationAccount'];
+        }
+        
+
         $client->requestPost($docBody);
     }
 
@@ -106,9 +180,24 @@ class DocumentController extends Controller
             "organization" => $formattedOrder['organization'],
             "rate" => $formattedOrder['rate'],
             "store" => $formattedOrder['store'],
-            "salesChannel" => $formattedOrder['salesChannel'],
             "addInfo" => $formattedOrder['shipmentAddressFull']['addInfo'],
         ];
+
+
+        if(array_key_exists("salesChannel",$formattedOrder)){
+            $docBodyDemand["salesChannel"] = $formattedOrder['salesChannel'];
+        }
+
+        if(array_key_exists("project",$formattedOrder)){
+            $docBodyDemand["project"] = $formattedOrder['project'];
+        }
+
+        if(array_key_exists("organizationAccount",$formattedOrder)){
+            $docBodyDemand["organizationAccount"] = $formattedOrder['organizationAccount'];
+        }
+        
+
+
         $createdDemand = $client->requestPost($docBodyDemand);
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/demand"."/".$createdDemand->id."/positions";
@@ -143,11 +232,25 @@ class DocumentController extends Controller
             "agent" => $formattedOrder['agent'],
             "organization" => $formattedOrder['organization'],
             "store" => $formattedOrder['store'],
-            "salesChannel" => $formattedOrder['salesChannel'],
             "demand" => [
                 "meta" => $metaDemand,
             ],
         ];
+
+        if(array_key_exists("salesChannel",$formattedOrder)){
+            $docBodyReturn["salesChannel"] = $formattedOrder['salesChannel'];
+        }
+
+        if(array_key_exists("project",$formattedOrder)){
+            $docBodyReturn["project"] = $formattedOrder['project'];
+        }
+
+        if(array_key_exists("organizationAccount",$formattedOrder)){
+            $docBodyReturn["organizationAccount"] = $formattedOrder['organizationAccount'];
+        }
+        
+
+
         $createdReturn = $client->requestPost($docBodyReturn);
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/salesreturn"."/".$createdReturn->id."/positions";
@@ -170,9 +273,9 @@ class DocumentController extends Controller
     private function createPayOutDocument($apiKey,$metaReturn,$isPayment,$formattedOrder,$sum)
     {
         $uri = null;
-        if ($isPayment == true) {
+        if ($isPayment == 2) {
             $uri = "https://online.moysklad.ru/api/remap/1.2/entity/paymentout";
-        } else {
+        } elseif($isPayment == 1) {
             $uri = "https://online.moysklad.ru/api/remap/1.2/entity/cashout";
         }
 
@@ -180,7 +283,6 @@ class DocumentController extends Controller
         $docBody = [
             "agent" => $formattedOrder['agent'],
             "organization" => $formattedOrder['organization'],
-            "salesChannel" => $formattedOrder['salesChannel'],
             "expenseItem" => [
                 "meta" => app(ExpenseItemController::class)->getExpenseItem('Возврат',$apiKey),
             ],
@@ -191,10 +293,24 @@ class DocumentController extends Controller
                 ],
             ],
         ];
+
+
+        if(array_key_exists("salesChannel",$formattedOrder)){
+            $docBody["salesChannel"] = $formattedOrder['salesChannel'];
+        }
+
+        if(array_key_exists("project",$formattedOrder)){
+            $docBody["project"] = $formattedOrder['project'];
+        }
+
+        if(array_key_exists("organizationAccount",$formattedOrder)){
+            $docBody["organizationAccount"] = $formattedOrder['organizationAccount'];
+        }
+        
         $client->requestPost($docBody);
     }
 
-    public function createDocuments($payments,$demands,$orderEntries,$statusOrder,$metaOrder,$isPayment,$formattedOrder, $apiKey)
+    public function createDocuments($payments,$demands,$orderEntries,$statusOrder,$metaOrder,$paymentOption,$demandOption,$formattedOrder, $apiKey)
     {
         // if($payments == null && $demands == null){
         //     $this->initDocuments($orderEntries,$statusOrder,$metaOrder,$isPayment, $formattedOrder, $apiKey);
@@ -213,7 +329,9 @@ class DocumentController extends Controller
             break;
             case 'ACCEPTED_BY_MERCHANT':
               //"Подтвержден";
-              $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
+              if($paymentOption > 0){
+                $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
+              }
             break;
             case 'CANCELLED':
                 case 'CANCELLING':
@@ -221,11 +339,19 @@ class DocumentController extends Controller
                         $metaDemand = null;
                         $metaReturn = null;
                         if ($payments == null) {
-                            $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
+                            if($paymentOption > 0 && $demandOption != 0){
+                                $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
+                            }
+                        } else {
+                            if($demandOption == 0){
+                                $this->deletePayments($payments,$apiKey);
+                            }
                         } 
 
                         if($demands == null){
-                            $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                            if($demandOption > 0){
+                                $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                             }
                         } else {
                             foreach($demands as $demand){
                                 $metaDemand = $demand->meta;
@@ -241,41 +367,84 @@ class DocumentController extends Controller
                             }
                         }
 
-                        if($metaReturn == null){
-                            $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
-                        }
+                        if($demandOption > 0){
+                             if($metaReturn == null && $metaDemand != null){
+                                 $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
+                            }
+
+                            if($demandOption == 2 && $metaDemand != null){
+                                $this->createFactureout($apiKey,$metaDemand);
+                            } 
+
+                            if($metaReturn != null){
+                                $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
+                            }
                             
-                        $this->createPayOutDocument($apiKey,$metaReturn,$isPayment,$formattedOrder,$sum);   
+                        }
+
+                           
               
                 break;
             case 'COMPLETED':
               // "Доставлен";
-              if ($payments == null) {
-                $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
+              if ($payments == null && $paymentOption > 0) {
+                $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
               } 
-              $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+
+              if($demandOption > 0){
+                $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                if($demandOption == 2){
+                    $this->createFactureout($apiKey,$metaDemand);
+                }
+              }
+
+              
+              
             break;
             case 'KASPI_DELIVERY_RETURN_REQUESTED':
                 case 'RETURN_ACCEPTED_BY_MERCHANT':
                   case 'RETURNED':
                     // "Возврат";
                     $metaDemand = null;
-                    if ($payments == null) {
-                        $this->createPayInDocument($apiKey,$meta,$isPayment,$formattedOrder,$sum);
+                    if ($payments == null && $paymentOption > 0) {
+                        $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
                       } 
         
                       if($demands == null){
-                        $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+
+                        if($demandOption > 0){
+                           $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
+                        }
+                        
                       } else {
                         foreach($demands as $demand){
                             $metaDemand = $demand->meta;
                             break;
                         }
                       }
-                      $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
+
+                      if($demandOption == 2 && $metaDemand != null){
+                        $this->createFactureout($apiKey,$metaDemand);
+                      } 
+
+                      if($demandOption > 0 && $metaDemand != null){
+                        $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
+                        $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
+                      }
+                    
                 break;
         }
 
+    }
+
+    private function deletePayments($payments,$apiKey)
+    {
+        $client = new ApiClientMC("",$apiKey);
+        foreach($payments as $payment){
+            $uri = $payment->meta->href;
+            $client->setRequestUrl($uri);
+            $client->requestDelete();
+        }
     }
 
 }

@@ -73,4 +73,18 @@ class ApiClientMC {
         return json_decode($res->getBody());
     }
 
+    public function requestDelete()
+    {
+        $headers = [
+            'Authorization' => $this->apiKey,
+        ];
+
+        $client = new Client([
+            'headers' => $headers,
+        ]);
+
+        $res = $client->delete($this->uri);
+        //return json_decode($res->getBody());
+    }
+
 }

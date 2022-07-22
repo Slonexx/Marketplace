@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
 {
-    public function getKaspiOrganization($apiKey)
+    public function getKaspiOrganization($nameOrganization,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/organization?search=Kaspi";
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/organization?search=".$nameOrganization;
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;
@@ -25,17 +25,16 @@ class OrganizationController extends Controller
             break;
         }
         if (is_null($foundedMeta) == true){
-            return $this->createOrganization($apiKey);
+            return $this->createOrganization($nameOrganization,$apiKey);
         } else return $foundedMeta;
     }
 
-    public function createOrganization($apiKey)
+    public function createOrganization($nameOrganization,$apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
         $client = new ApiClientMC($uri,$apiKey);
         $organization = [ 
-            "name" => "Kaspi",
-            "description" => "Kaspi shop account",
+            "name" => $nameOrganization,
         ];
         $createdMeta = $client->requestPost($organization)->meta;
 
@@ -49,4 +48,30 @@ class OrganizationController extends Controller
             ],
         ];
     }
+
+    public function getOrganizationNameById($organizationId,$apiKey)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$organizationId;
+        $client = new ApiClientMC($uri,$apiKey);
+        $json = $client->requestGet();
+        return $json->name;
+    }
+
+    public function getOrganizationAccountByNumber($organizationId,$number,$apiKey)
+    {
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$organizationId."/accounts";
+        $client = new ApiClientMC($uri,$apiKey);
+        $json = $client->requestGet();
+        $foundedMeta = null;
+        foreach($json->rows as $row){
+            if($row->accountNumber == $number){
+                $foundedMeta = $row->meta;
+                break;
+            }
+        }
+        return [
+            "meta" => $foundedMeta,
+        ];
+    }
+
 }
