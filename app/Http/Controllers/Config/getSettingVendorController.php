@@ -28,42 +28,54 @@ class getSettingVendorController extends Controller
     var $RETURNED;
     var $APP;
 
+    public function __construct($contextKey)
+    {
 
-public function getSetting(){
-    return $this->APP;
+        $cfg = new cfg();
+        $_SESSION['cfg'] = $cfg;
+
+        $vendorAPI = new VendorApiController();
+        $employee = $vendorAPI->context($contextKey);
+
+        $appId = $cfg->appId;
+        $accountId = $employee->accountId;
+
+        $app = AppInstanceContoller::loadApp($appId, $accountId);
+
+        $this->appId = $app->appId;
+        $this->accountId = $app->accountId;
+        $this->TokenMoySklad = $app->TokenMoySklad;
+        $this->TokenKaspi = $app->TokenKaspi;
+        $this->Organization = $app->Organization;
+        $this->PaymentDocument = $app->PaymentDocument;
+        $this->Document = $app->Document;
+        $this->PaymentAccount = $app->PaymentAccount;
+        $this->Saleschannel = $app->Saleschannel;
+        $this->Project = $app->Project;
+        $this->CheckCreatProduct = $app->CheckCreatProduct;
+        $this->APPROVED_BY_BANK = $app->APPROVED_BY_BANK;
+        $this->ACCEPTED_BY_MERCHANT = $app->ACCEPTED_BY_MERCHANT;
+        $this->COMPLETED = $app->COMPLETED;
+        $this->CANCELLED = $app->CANCELLED;
+        $this->RETURNED = $app->RETURNED;
+        $this->APP = $app;
+
+    }
+
+    public function getSetting($contextKey){
+        $cfg = new cfg();
+        $_SESSION['cfg'] = $cfg;
+
+        $vendorAPI = new VendorApiController();
+        $employee = $vendorAPI->context($contextKey);
+
+        $appId = $cfg->appId;
+        $accountId = $employee->accountId;
+
+        $app = AppInstanceContoller::loadApp($appId, $accountId);
+        return $app;
 }
 
-
-    public function setAll($contextKey){
-            $cfg = new cfg();
-            $_SESSION['cfg'] = $cfg;
-
-            $vendorAPI = new VendorApiController();
-            $employee = $vendorAPI->context($contextKey);
-
-            $appId = $cfg->appId;
-            $accountId = $employee->accountId;
-
-            $app = AppInstanceContoller::loadApp($appId, $accountId);
-
-            $this->appId = $app->appId;
-            $this->accountId = $app->accountId;
-            $this->TokenMoySklad = $app->TokenMoySklad;
-            $this->TokenKaspi = $app->TokenKaspi;
-            $this->Organization = $app->Organization;
-            $this->PaymentDocument = $app->PaymentDocument;
-            $this->Document = $app->Document;
-            $this->PaymentAccount = $app->PaymentAccount;
-            $this->Saleschannel = $app->Saleschannel;
-            $this->Project = $app->Project;
-            $this->CheckCreatProduct = $app->CheckCreatProduct;
-            $this->APPROVED_BY_BANK = $app->APPROVED_BY_BANK;
-            $this->ACCEPTED_BY_MERCHANT = $app->ACCEPTED_BY_MERCHANT;
-            $this->COMPLETED = $app->COMPLETED;
-            $this->CANCELLED = $app->CANCELLED;
-            $this->RETURNED = $app->RETURNED;
-            $this->APP = $app;
-        }
     /**
      * @return mixed
      */
