@@ -20,6 +20,11 @@ class Setting_mainController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
+        $Organization = $Setting->TokenKaspi;
+        $PaymentDocument = $Setting->PaymentDocument;
+        $Document = $Setting->Document;
+
+
 
 
 
@@ -76,6 +81,9 @@ class Setting_mainController extends Controller
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
             "TokenKaspi" => $TokenKaspi,
+            "Organization" => $Organization,
+            "PaymentDocument" => $PaymentDocument,
+            "Document" => $Document,
 
 
 

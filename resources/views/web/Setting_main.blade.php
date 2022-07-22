@@ -49,7 +49,7 @@
                         <P class="col-sm-5 col-form-label"> Выберите на какую организацию создавать заказы: </P>
                         <div class="col-sm-7">
                             <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required>
-                                <option selected ></option> <?php $value = 0; ?>
+                                <option selected >{{$Organization}}</option> <?php $value = 0; ?>
                                 @foreach($Body_organization as $bodyItem)
                                     <option value="{{ $bodyItem->id }}"> {{ ($bodyItem->name) }} </option> <?php $value++; ?>
                                 @endforeach
@@ -61,9 +61,21 @@
                         <P class="col-sm-5 col-form-label"> Выберите какой тип платёжного документа: </P>
                         <div class="col-sm-7">
                             <select name="PaymentDocument" class="form-select text-black evidence-select" >
-                                <option selected value="0">Не создавать</option>
-                                <option value="1">Приходной ордер</option>
-                                <option value="2">Входящий платёж </option>
+                                @if($PaymentDocument = 0)
+                                    <option selected value="0">Не создавать</option>
+                                    <option value="1">Приходной ордер</option>
+                                    <option value="2">Входящий платёж </option>
+                                @endif
+                                    @if($PaymentDocument = 1)
+                                        <option value="0">Не создавать</option>
+                                        <option selected value="1">Приходной ордер</option>
+                                        <option value="2">Входящий платёж </option>
+                                    @endif
+                                    @if($PaymentDocument = 2)
+                                        <option selected value="0">Не создавать</option>
+                                        <option value="1">Приходной ордер</option>
+                                        <option selected value="2">Входящий платёж </option>
+                                    @endif
                             </select>
                         </div>
                     </div>
@@ -72,9 +84,22 @@
                         <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавть: </P>
                         <div class="col-sm-7">
                             <select name="Document" class="form-select text-black evidence-select" >
-                                <option selected value="0">Не создавать</option>
-                                <option value="1">Отгрузка</option>
-                                <option value="2">Отгрузка + счет-фактура выданный</option>
+                                @if($Document = 0)
+                                    <option selected value="0">Не создавать</option>
+                                    <option value="1">Отгрузка</option>
+                                    <option value="2">Отгрузка + счет-фактура выданный</option>
+                                @endif
+                                    @if($Document = 1)
+                                        <option value="0">Не создавать</option>
+                                        <option selected value="1">Отгрузка</option>
+                                        <option value="2">Отгрузка + счет-фактура выданный</option>
+                                    @endif
+                                    @if($Document = 2)
+                                        <option value="0">Не создавать</option>
+                                        <option value="1">Отгрузка</option>
+                                        <option selected value="2">Отгрузка + счет-фактура выданный</option>
+                                    @endif
+
                             </select>
                         </div>
                     </div>
