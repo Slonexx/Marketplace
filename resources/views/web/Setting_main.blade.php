@@ -138,9 +138,9 @@
                     <P class="col-sm-5 col-form-label"> Выберите проект: </P>
                     <div class="col-sm-7">
                         <select name="Saleschannel" class="form-select text-black evidence-select" >
-                            <option selected>Не выбирать/option>
+                            <option selected>Не выбирать </option>
                             @foreach($Body_saleschannel as $Body_saleschannel_item)
-                                <option value="{{ $Body_saleschannel_item->name}}"> {{ ($Body_saleschannel_item->name) }} </option>
+                                <option value="{{ $Body_saleschannel_item->name }}"> {{ ($Body_saleschannel_item->name) }} </option>
                             @endforeach
                         </select>
                     </div>
