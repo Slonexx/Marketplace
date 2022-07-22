@@ -60,7 +60,7 @@ class AppInstanceContoller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-        return $dir . "data/$appId.$accountId.app";
+        return $dir . "data/$appId.$accountId.json";
     }
 
     static function loadApp($appId, $accountId): AppInstanceContoller {
