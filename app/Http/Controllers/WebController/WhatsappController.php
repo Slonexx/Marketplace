@@ -10,7 +10,7 @@ class WhatsappController extends Controller
 {
 
     public function Index($accountId){
-       return redirect()->to("https://wa.me/87750498821?");
+       return redirect()->to("https://api.whatsapp.com/send/?phone=87750498821&text&type=phone_number&app_absent=0");
         return view('web.whatsapp', ['accountId' => $accountId] );
     }
 
