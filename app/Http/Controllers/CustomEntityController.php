@@ -13,10 +13,10 @@ class CustomEntityController extends Controller
         $bodyEntity = [
             "name" => $entityName,
         ];
-        $entityId = $client->requestPost($bodyEntity)->id;
+        $entity = $client->requestPost($bodyEntity);
 
         foreach($values as $val){
-            $this->createEntityElement($apiKey,$entityId,$val);
+            $this->createEntityElement($apiKey,$entity->id,$val);
         }
 
     }
