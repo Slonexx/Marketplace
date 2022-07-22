@@ -27,8 +27,9 @@ class WhatsappController extends Controller
 
         $message = "https://wa.me/87750498821?text=".$inputName.$inputMessage;
 
-
-        return redirect()->to($message);
+        $triggersms = file_get_contents($message);
+        return $triggersms;
+        //return redirect()->to($message);
 
     }
 
