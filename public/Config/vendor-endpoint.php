@@ -14,6 +14,8 @@ $accountId = $pp[$n - 1];
 $app = AppInstanceContoller::load($appId, $accountId);
 $replyStatus = true;
 
+$app->loginfo("MOYSKLAD => APP", "Received: method=$method, path=$path");
+
 switch ($method) {
     case 'PUT':
         $requestBody = file_get_contents('php://input');
