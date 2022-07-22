@@ -108,8 +108,13 @@ class Setting_mainController extends Controller
         $app->PaymentDocument = $Setting->PaymentDocument;
         $app->Document = $Setting->Document;
         $app->PaymentAccount = $Setting->PaymentAccount;
-        $app->Saleschannel = $Setting->Saleschannel;
-        $app->Project = $Setting->Project;
+
+        if ($Setting->Saleschannel == 0) $app->Saleschannel = null;
+        else $app->Saleschannel = $Setting->Saleschannel;
+
+        if ($Setting->Project == 0) $app->Project = null;
+        else $app->Project = $Setting->Project;
+
         $app->CheckCreatProduct = $Setting->CheckCreatProduct;
 
         if ($Setting->APPROVED_BY_BANK == "Статус МойСклад") $app->APPROVED_BY_BANK = null;

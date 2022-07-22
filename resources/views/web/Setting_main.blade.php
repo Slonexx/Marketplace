@@ -138,7 +138,7 @@
                     <P class="col-sm-5 col-form-label"> Выберите проект: </P>
                     <div class="col-sm-7">
                         <select name="Saleschannel" class="form-select text-black evidence-select" >
-                            <option value="null" selected>Не выбирать </option>
+                            <option value="0" selected>Не выбирать </option>
                             @foreach($Body_saleschannel as $Body_saleschannel_item)
                                 <option value="{{ $Body_saleschannel_item->name }}"> {{ ($Body_saleschannel_item->name) }} </option>
                             @endforeach
@@ -150,7 +150,7 @@
                     <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
                     <div class="col-sm-7">
                         <select name="Project" class="form-select text-black evidence-select" >
-                            <option value="null" selected>Не выбирать</option>
+                            <option value="0" selected>Не выбирать</option>
                             @foreach($Body_project as $Body_project_item)
                                 <option value="{{ $Body_project_item->name}}"> {{ ($Body_project_item->name) }} </option>
                             @endforeach
@@ -175,7 +175,7 @@
                             <select name="CheckCreatProduct" class="form-select text-black">
                                 <option value="1" selected>По артикулу</option>
                                <option value="2">По названию</option>
-                               <option value="3>">По артикулу и названию</option>
+                               <option value="3">По артикулу и названию</option>
                             </select>
                         </div>
 
