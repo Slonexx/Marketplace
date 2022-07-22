@@ -21,6 +21,8 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
+
+
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $colorMC = [
@@ -74,7 +76,9 @@ class Setting_mainController extends Controller
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
             "TokenKaspi" => $TokenKaspi,
-            "Setting" => $Setting,
+
+
+
             "message" => null,
             "apiKey" => $TokenMoySklad,
             'accountId' => $accountId,
