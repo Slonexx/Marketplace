@@ -19,7 +19,7 @@
 
 
         <div class="mt-3">
-            <form action=" {{  route('whatsapp_Send', ['accountId' => $accountId] ) }} " method="post">
+            <form action=" {{  route('whatsapp_Send', ['accountId' => $accountId] ) }} " target="_blank" method="post">
 
             @csrf <!-- {{ csrf_field() }} -->
                 <div class="form-group mb-3 row ">
