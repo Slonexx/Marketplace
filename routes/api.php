@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Config\Vendor\VendorEndpointController;
+use \App\Http\Controllers\Config\DeleteVendorApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
@@ -22,6 +23,8 @@ Route::get('excelProducts', [ExcelController::class,'getProductsExcel']);
 
 Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 
+
+Route::post('DeleteVendorApi/{appId}/{accountId}', [DeleteVendorApiController::class, 'Delete'])->name('Delete');
 
 Route::get('getTest', [TestController::class,'init']);
 //Route::get('getTest2', [TestController2::class,'getTest'])->name('Test');

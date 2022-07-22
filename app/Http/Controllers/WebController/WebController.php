@@ -38,7 +38,18 @@ class WebController extends Controller
 
     public function show($id){
         //dd($id);
-        return view('web.index', ['id' => $id ]);
+
+        $cfg = new cfg();
+
+        $contextKey = $id;
+
+        $vendorAPI = new VendorApiController();
+        $employee = $vendorAPI->context($contextKey);
+
+        $appId = $cfg->appId;
+        $accountId = $employee->accountId;
+
+        return view('web.index', ['id' => $id,  'appId'=> $appId, 'accountId'=> $accountId]);
     }
 
 
