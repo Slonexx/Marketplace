@@ -21,4 +21,5 @@ Route::post('/PostSupport/{accountId}', [SupportController::class, 'supportSend'
 
 Route::get('/Whatsapp/{accountId}', [WhatsappController::class, 'Index'])->name("whatsapp");
 Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
+Route::post('/WhatsappSendNext/', [WhatsappController::class, 'WhatsappSendNext'])->name("WhatsappSendNext");
 
