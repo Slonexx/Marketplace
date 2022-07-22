@@ -20,7 +20,7 @@ class Setting_mainController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
-        $Organization = $Setting->TokenKaspi;
+        $Organization = $Setting->Organization;
         $PaymentDocument = $Setting->PaymentDocument;
         $Document = $Setting->Document;
 
