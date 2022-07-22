@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Session;
 class WhatsappController extends Controller
 {
 
-    public function Index($id){
-        return view('web.whatsapp', ['id' => $id] );
+    public function Index($accountId){
+        return view('web.whatsapp', ['accountId' => $accountId] );
     }
 
-    public function WhatsappSend(Request $request){
+    public function WhatsappSend(Request $request, $accountId){
         $request->validate([
             'name' => 'required|max:100',
             'message' => 'required|max:500',
@@ -32,9 +32,6 @@ class WhatsappController extends Controller
         Session::flash('alert-class', 'alert-success');
 
         return redirect()->back();
-
-        //return redirect()->back();
-      //  return redirect()->intended("https://wa.me/87750498821?text=Я%20заинтересован%20в%20покупке%20вашего%20авто");
 
     }
 
