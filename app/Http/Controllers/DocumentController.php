@@ -376,7 +376,7 @@ class DocumentController extends Controller
                                 $this->createFactureout($apiKey,$metaDemand);
                             } 
 
-                            if($metaReturn != null){
+                            if($metaReturn != null && $paymentOption>0){
                                 $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
                             }
                             
@@ -429,7 +429,10 @@ class DocumentController extends Controller
 
                       if($demandOption > 0 && $metaDemand != null){
                         $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
-                        $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
+                        if($paymentOption > 0){
+                            $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
+                        }
+                        
                       }
                     
                 break;
@@ -439,11 +442,9 @@ class DocumentController extends Controller
 
     private function deletePayments($payments,$apiKey)
     {
-        $client = new ApiClientMC("",$apiKey);
         foreach($payments as $payment){
-            $uri = $payment->meta->href;
-            $client->setRequestUrl($uri);
-            $client->requestDelete();
+           $client = new ApiClientMC($payment->meta->href,$apiKey);
+           $client->requestDelete();
         }
     }
 

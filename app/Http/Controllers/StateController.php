@@ -12,16 +12,20 @@ class StateController extends Controller
 
         $status = app(StatusController::class)->getStatusName($statusKaspi);
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $client = new ApiClientMC($uri,$apiKey);
-        $jsonStates = $client->requestGet();
-        $foundedState = null;
-        foreach($jsonStates->states as $state){
-            if($state->name == $status){
-                $foundedState = $state->meta;
-                break;
+        if($status == null){
+            return null;
+        } else {
+            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+            $client = new ApiClientMC($uri,$apiKey);
+            $jsonStates = $client->requestGet();
+            $foundedState = null;
+            foreach($jsonStates->states as $state){
+                if($state->name == $status){
+                    $foundedState = $state->meta;
+                    break;
+                }
             }
+            return $foundedState;
         }
-        return $foundedState;
     }
 }

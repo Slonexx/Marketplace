@@ -202,7 +202,13 @@ class OrderController extends Controller
             ];
             $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
-            $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
+
+            $statusFromMs = $this->getState($order['status'],$apiKey);
+
+            if($statusFromMs != null){
+                $formattedOrder['state'] = $statusFromMs;
+            }
+            
 
             $info = "https://kaspi.kz/merchantcabinet/#/orders/details/".$order['code'];
             $formattedOrder['description'] = "Order code: ".$order['code'].". More info: ".$info;
@@ -251,14 +257,19 @@ class OrderController extends Controller
     private function getState($status,$apiKey)
     {
        $meta = app(StateController::class)->getState($status,$apiKey);
-       $res = [
-            "meta" => [
-                "href" => $meta->href,
-                "type" => $meta->type,
-                "mediaType" => $meta->mediaType,
-            ],
-        ];
-        return $res;
+
+        if($meta == null){
+            return null;
+        } else {
+            $res = [
+                "meta" => [
+                    "href" => $meta->href,
+                    "type" => $meta->type,
+                    "mediaType" => $meta->mediaType,
+                ],
+            ];
+            return $res;
+        }
     }
     
     private function setPositions($orderId,$orderStatus,$entries,$apiKey)
@@ -368,8 +379,12 @@ class OrderController extends Controller
             foreach($ordersFromMs as $orderMs){
                 if($orderKaspi['id'] == $orderMs['externalCode']) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
+                        
                         $metaState = app(StateController::class)->getState($orderKaspi['status'],$request->tokenMs);
-                        $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
+                        if($metaState != null){
+                            $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
+                        }
+                        
                         $formattedOrder = $this->mapOrderToAdd(
                             $orderKaspi,
                             $sale_channel_name,
