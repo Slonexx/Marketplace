@@ -26,7 +26,7 @@ switch ($method) {
         $accessToken = $data->access[0]->access_token;
 
         if (!$app->getStatusName()) {
-            $app->accessToken = $accessToken;
+            $app->TokenMoySklad = $accessToken;
             $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
             $app->persist();
         }
