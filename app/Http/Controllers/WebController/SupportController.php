@@ -25,8 +25,8 @@ class SupportController extends Controller
         $subject = 'Обрантная связь с сайта Kaspi marketplace';
 
         $headers = [
-            "From" => "sergei@smartkaspi.kz",
-            "Reply-To" => "sergei@smartkaspi.kz",
+            "From" => "support@smartinnovations.kz",
+            "Reply-To" => "support@smartinnovations.kz",
             "Content-type" => "text/plain; charset=utf-8",
         ];
 
