@@ -8,17 +8,17 @@
 
 
             <div class="toc-list-h1">
-                <a href="{{  route('Index', ['id' => $id] ) }}">Главная </a>
-                <a href="{{  route('Setting_Main', ['id' => $id] ) }}">Настройки </a>
+                <a href="{{  route('Index', ['accountId' => $accountId] ) }}">Главная </a>
+                <a href="{{  route('Setting_Main', ['accountId' => $accountId] ) }}">Настройки </a>
             </div>
             <div class="">
                 <button class="dropdown-btn">Помощь
                     <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-container">
-                        <a href={{  route('support', ['id' => $id] ) }}>
+                        <a href={{  route('support', ['accountId' => $accountId] ) }}>
                             <i class="fa-solid fa-at"></i>
                             Написать на почту</a>
-                        <a  href={{  route('whatsapp', ['id' => $id] ) }} >
+                        <a  href={{  route('whatsapp', ['accountId' => $accountId] ) }} >
                             <i class="fa-brands fa-whatsapp"></i>
                             Написать в WhatsApp </a>
                     </div>
