@@ -20,7 +20,7 @@
 
 
         <div class="mt-3">
-            <form action=" {{  route('Send', ['id' => $id] ) }} " method="post">
+            <form action=" {{  route('Send', ['accountId' => $accountId] ) }} " method="post">
 
 
             @csrf <!-- {{ csrf_field() }} -->
