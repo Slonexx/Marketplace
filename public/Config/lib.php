@@ -46,7 +46,8 @@ class AppInstanceContoller {
 
     function delete() {
         $url = 'https://smartkaspi.kz/api/DeleteVendorApi/'.$this->appId.'/'.$this->accountId;
-        file_get_contents($url);
+        $result = file_get_contents($url);
+        $this->loginfo('Удлаение', $result);
         @unlink($this->filename());
 
     }
@@ -73,5 +74,14 @@ class AppInstanceContoller {
         $GLOBALS['currentAppInstance'] = $app;
         return $app;
     }
+
+
+    function loginfo($name, $msg) {
+        global $dirRoot;
+        $logDir = $dirRoot . 'logs';
+        @mkdir($logDir);
+        file_put_contents($logDir . '/log.txt', date(DATE_W3C) . ' [' . $name . '] '. $msg . "\n", FILE_APPEND);
+    }
+
 
 }
