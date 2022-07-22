@@ -13,7 +13,7 @@ class DeleteVendorApiController extends Controller
         $path = public_path().'Config/data/'.$appId.".".$accountId.'.json';
 
         //dd($path);
-
+        unlink($path);
         Storage::delete($path);
 
     }
