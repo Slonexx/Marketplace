@@ -122,30 +122,6 @@
 
                                 @if ($PaymentAccount == "0")
                                     @if($Organization == "0")
-                                @foreach($Body_organization as $row)
-                                    <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
-                                        @php
-                                            $id = $row->id;
-                                            $array_element = [];
-                                            $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
-                                            $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
-                                            $Body_accounts = $clinet->requestGet()->rows;
-
-                                            if (array_key_exists(0, $Body_accounts)) {
-                                                foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
-                                            else { $array_element = [ 0 => "Нету Расчетного счета"];
-                                            }
-                                        @endphp
-                                        <select name="PaymentAccount" class="form-select text-black">
-                                            <option selected></option>
-                                            @foreach ($array_element as $array_element_item)
-                                                <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endforeach
-                                    @else
-
                                         @foreach($Body_organization as $row)
                                             <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
                                                 @php
@@ -168,7 +144,31 @@
                                                 </select>
                                             </div>
                                         @endforeach
+                                    @else
+                                        @php
+                                            $id = $Organization->id;
+                                            $array_element = [];
+                                            $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
+                                            $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
+                                            $Body_accounts = $clinet->requestGet()->rows;
 
+                                            if (array_key_exists(0, $Body_accounts)) {
+                                                foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
+                                            else { $array_element = [ 0 => "Нету Расчетного счета"];
+                                            }
+                                        @endphp
+                                        <select name="PaymentAccount" class="form-select text-black">
+                                            @if($PaymentAccount == "0")
+                                                <option selected></option>
+                                            @endif
+                                            @foreach ($array_element as $array_element_item)
+                                                @if($PaymentAccount == $array_element_item )
+                                                    <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+                                                @else <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+                                                @endif
+
+                                            @endforeach
+                                        </select>
                                     @endif
                                 @else
                                     @php
