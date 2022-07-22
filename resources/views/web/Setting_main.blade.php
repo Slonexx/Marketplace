@@ -119,7 +119,7 @@
                         <div class="mb-3 row evidence-content" >
                             <P class="col-sm-5 col-form-label"> Выберите расчетный счет: </P>
                             <div class="col-sm-7">
-                                @if ($PaymentAccount == "0")
+                                @if ($PaymentAccount == "0" and $Organization == "0")
                                 @foreach($Body_organization as $row)
                                     <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
                                         @php
