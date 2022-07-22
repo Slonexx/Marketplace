@@ -28,17 +28,13 @@ class getSettingVendorController extends Controller
     var $RETURNED;
     var $APP;
 
-    public function __construct($contextKey)
+    public function __construct($accountId)
     {
 
         $cfg = new cfg();
-        $_SESSION['cfg'] = $cfg;
-
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
 
         $appId = $cfg->appId;
-        $accountId = $employee->accountId;
+
 
         $app = AppInstanceContoller::loadApp($appId, $accountId);
 
@@ -59,6 +55,8 @@ class getSettingVendorController extends Controller
         $this->CANCELLED = $app->CANCELLED;
         $this->RETURNED = $app->RETURNED;
         $this->APP = $app;
+
+        return $app;
 
     }
 
