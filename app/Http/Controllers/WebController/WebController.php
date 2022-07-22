@@ -15,7 +15,7 @@ class WebController extends Controller
         $contextKey = $request->contextKey;
         $START = new getSettingVendorController();
         $START->setAll($contextKey);
-
+        dd($START);
         return redirect()->route('Index', ['id' => $contextKey] );
 
     }
@@ -26,7 +26,7 @@ class WebController extends Controller
         $appId = $START->appId;
         $accountId = $START->accountId;
 
-        dd($START);
+
 
         return view('web.index', ['id' => $id,  'appId'=> $appId, 'accountId'=> $accountId]);
     }
