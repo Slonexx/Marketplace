@@ -15,13 +15,12 @@ class WebController extends Controller
         $contextKey = $request->contextKey;
         $START = new getSettingVendorController();
         $START->setAll($contextKey);
-        dd($START);
-        return redirect()->route('Index', ['id' => $contextKey] );
+        return redirect()->route('Index', ['id' => $contextKey, ['START'=> $START]] );
 
     }
 
-    public function show($id){
-
+    public function show(Request $request, $id){
+        dd($request);
         $START = app(getSettingVendorController::class);
         $appId = $START->appId;
         $accountId = $START->accountId;
