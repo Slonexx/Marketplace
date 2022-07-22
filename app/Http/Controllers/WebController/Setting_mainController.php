@@ -34,7 +34,7 @@ class Setting_mainController extends Controller
             $urlCheck = $url_organization . "/" . $Organization;
             $Client->setRequestUrl($urlCheck);
             $Organization = $Client->requestGet();
-        } else ($Organization = 0);
+        } else ($Organization = "0");
 
         $PaymentDocument = $Setting->PaymentDocument;
         $Document = $Setting->Document;
