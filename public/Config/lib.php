@@ -71,12 +71,25 @@ class AppInstanceContoller {
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
-            $app = unserialize($data);
+            $unser = json_encode( unserialize($data) );
+            $app =  json_decode($unser);
         }
-        $GLOBALS['currentAppInstance'] = $app;
-        return $app;
+
+        $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
+        $AppInstance->Pasrs($app);
+
+        $GLOBALS['currentAppInstance'] = $AppInstance;
+        return $AppInstance;
     }
 
+    public function Pasrs($json){
+        $this->appId = $json->appId;
+        $this->accountId = $json->accountId;
+        $this->infoMessage = $json->infoMessage;
+        $this->store = $json->store;
+        $this->accessToken = $json->accessToken;
+        $this->status = $json->status;
+    }
 
     function loginfo($name, $msg) {
         global $dirRoot;
