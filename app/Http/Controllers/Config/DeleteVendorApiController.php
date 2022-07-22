@@ -10,9 +10,9 @@ class DeleteVendorApiController extends Controller
 {
     public function Delete($appId, $accountId){
 
-        $path = public_path().'Config/data/'.$appId.$accountId.'.json';
+        $path = public_path().'Config/data/'.$appId.".".$accountId.'.json';
 
-        dd($path);
+        //dd($path);
 
         Storage::delete($path);
 
