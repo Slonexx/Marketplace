@@ -37,10 +37,13 @@ class Setting_mainController extends Controller
         } else ($Organization = "0");
 
         $PaymentDocument = $Setting->PaymentDocument;
+        if ($PaymentDocument == null) $PaymentDocument = "0";
+
         $Document = $Setting->Document;
+        if ($Document == null) $Document = "0";
 
-
-
+        $PaymentAccount = $Setting->PaymentAccount;
+        if ($PaymentAccount == null) $PaymentAccount = "0";
 
 
 
@@ -98,7 +101,7 @@ class Setting_mainController extends Controller
             "Organization" => $Organization,
             "PaymentDocument" => $PaymentDocument,
             "Document" => $Document,
-
+            "PaymentAccount" => $PaymentAccount,
 
 
             "message" => null,
