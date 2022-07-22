@@ -10,6 +10,7 @@ class WhatsappController extends Controller
 {
 
     public function Index($accountId){
+       return redirect()->to("https://wa.me/87750498821?");
         return view('web.whatsapp', ['accountId' => $accountId] );
     }
 
