@@ -22,7 +22,8 @@ class WebController extends Controller
 
         $contextKey = $request->contextKey;
 
-        $START = new getSettingVendorController($contextKey);
+        $START = new getSettingVendorController();
+        $START->setAll($contextKey);
 
         return redirect()->route('Index', ['id' => $contextKey] );
 
