@@ -8,10 +8,20 @@ class AppInstanceContoller {
 
     var $appId;
     var $accountId;
-    var $infoMessage;
-    var $store;
-
-    var $accessToken;
+    var $TokenKaspi;
+    var $Organization;
+    var $PaymentDocument;
+    var $Document;
+    var $PaymentAccount;
+    var $Saleschannel;
+    var $Project;
+    var $CheckCreatProduct;
+    var $APPROVED_BY_BANK;
+    var $ACCEPTED_BY_MERCHANT;
+    var $COMPLETED;
+    var $CANCELLED;
+    var $RETURNED;
+    var $TokenMoySklad;
 
     var $status = AppInstanceContoller::UNKNOWN;
 
@@ -85,10 +95,20 @@ class AppInstanceContoller {
     public function Pasrs($json){
         $this->appId = $json->appId;
         $this->accountId = $json->accountId;
-        $this->infoMessage = $json->infoMessage;
-        $this->store = $json->store;
-        $this->accessToken = $json->accessToken;
-        $this->status = $json->status;
+        $this->TokenMoySklad = $json->TokenMoySklad;
+        $this->TokenKaspi = $json->TokenKaspi;
+        $this->Organization = $json->Organization;
+        $this->PaymentDocument = $json->PaymentDocument;
+        $this->Saleschannel = $json->Saleschannel;
+        $this->Project = $json->Project;
+        $this->Document = $json->Document;
+        $this->PaymentAccount = $json->PaymentAccount;
+        $this->CheckCreatProduct = $json->CheckCreatProduct;
+        $this->APPROVED_BY_BANK = $json->APPROVED_BY_BANK;
+        $this->ACCEPTED_BY_MERCHANT = $json->ACCEPTED_BY_MERCHANT;
+        $this->COMPLETED = $json->COMPLETED;
+        $this->CANCELLED = $json->CANCELLED;
+        $this->RETURNED = $json->RETURNED;
     }
 
     function loginfo($name, $msg) {

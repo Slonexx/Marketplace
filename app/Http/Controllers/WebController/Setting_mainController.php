@@ -51,12 +51,24 @@ class Setting_mainController extends Controller
         }
 
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
-            $Client = new ApiClientMC($url_organization, $apiKey);
+            $Client->setRequestUrl($url_organization);
             $Body_organization = $Client->requestGet()->rows;
+
+
+        $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
+            $Client->setRequestUrl($url_saleschannel);
+            $Body_saleschannel = $Client->requestGet()->rows;
+
+
+        $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
+            $Client->setRequestUrl($url_project);
+            $Body_project = $Client->requestGet()->rows;
 
         return view('web.Setting_main',['Body' => $Body,
             "setBackground" => $setBackground,
             "Body_organization" => $Body_organization,
+            "Body_saleschannel" => $Body_saleschannel,
+            "Body_project" => $Body_project,
             'id' => $id,
         ]);
 
@@ -67,7 +79,7 @@ class Setting_mainController extends Controller
 
         $check = $request->request;
         $API_KEY = $request->TokenKaspi;
-        //dd($check);
+        dd($check);
 
         $message = $this->saveApiKey($API_KEY);
 

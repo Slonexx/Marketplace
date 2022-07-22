@@ -41,7 +41,6 @@
 
                 <div class="mb-3 row">
                     <p>Настройка документов</p>
-
                     <div class="mb-3 row">
                         <P class="col-sm-5 col-form-label"> Выберите на какую организацию создавать заказы: </P>
                         <div class="col-sm-7">
@@ -75,6 +74,7 @@
                             </select>
                         </div>
                     </div>
+
 
                         {{--Выберите расчетный счет--}}
                         <div class="evidence-content"></div>
@@ -132,19 +132,44 @@
 
                 <hr class="href_padding">
 
+                <div class="mb-3 row">
+                    <P class="col-sm-5 col-form-label"> Выберите проект: </P>
+                    <div class="col-sm-7">
+                        <select name="Saleschannel" class="form-select text-black evidence-select" >
+                            <option selected value="0">Не выберать</option>
+                            @foreach($Body_saleschannel as $Body_saleschannel_item)
+                                <option value="{{ $Body_saleschannel_item->name}}"> {{ ($Body_saleschannel_item->name) }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
+                    <div class="col-sm-7">
+                        <select name="Project" class="form-select text-black evidence-select" >
+                            <option selected value="0">Не выберать</option>
+                            @foreach($Body_project as $Body_project_item)
+                                <option value="{{ $Body_project_item->name}}"> {{ ($Body_project_item->name) }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+
 
 
                 <div>
                     <div class="mb-3 row">
-                        <p class="col-sm-4 col-form-label">
+                        <p class="col-sm-5 col-form-label">
                             <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover6"
                             data-toggle="popover" data-placement="right" data-trigger="focus"
-                            data-content="По умолчанию идёт проверка по артикулу, вы можете убрать или же добавить еще проверки для добавлений товаров с kaspi в мой склад"></button>
+                            data-content="Выбор проверки при создание товара (С Kaspi в МойСклад)"></button>
                             Выберите способ проверки товаров: </p>
 
                         <script> $('.myPopover6').popover(); </script>
 
-                        <div class="col-sm-8 ">
+                        <div class="col-sm-7 ">
                             <select name="CheckCreatProduct" class="form-select text-black">
                                 <option value="1" selected>По артикулу</option>
                                <option value="2">По названию</option>
