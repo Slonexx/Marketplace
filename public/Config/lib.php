@@ -46,7 +46,12 @@ class AppInstanceContoller {
 
     function delete() {
         @unlink($this->filename());
+    }
 
+    function deleteAnway(){
+        $url = 'https://smartkaspi.kz/api/DeleteVendorApi/'.$this->appId.'/'.$this->accountId;
+        $result = file_get_contents($url);
+        $this->loginfo('Удлаение', $result);
     }
 
     private function filename() {
