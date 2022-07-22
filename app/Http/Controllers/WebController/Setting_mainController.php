@@ -137,7 +137,8 @@ class Setting_mainController extends Controller
         $app->Organization = $Setting->Organization;
         $app->PaymentDocument = $Setting->PaymentDocument;
         $app->Document = $Setting->Document;
-        $app->PaymentAccount = $Setting->PaymentAccount;
+        if ($Setting->PaymentDocument == "2") $app->PaymentAccount = $Setting->PaymentAccount;
+        else $app->PaymentAccount = null;
 
         if ($Setting->Saleschannel == 0) $app->Saleschannel = null;
         else $app->Saleschannel = $Setting->Saleschannel;
