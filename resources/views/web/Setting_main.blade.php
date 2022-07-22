@@ -172,10 +172,14 @@
                                     @endif
                                 @else
                                     @foreach($Body_organization as $row)
-                                            @if($Organization->id == $row->id)
-                                            <div class="activate">
+                                            @php
+                                            if ($Organization->id == $row->id){$style = "";}
+                                            else    $style = "display:none";
+                                            @endphp
+
+                                            <div class="some"  id="some_{{  $row->id }}"  style="{{$style}}">
                                                 @php
-                                                    $id = $Organization->id;
+                                                    $id = $row->id;
                                                     $array_element = [];
                                                     $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
                                                     $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
@@ -191,41 +195,34 @@
                                                         <option selected></option>
                                                     @endif
                                                     @foreach ($array_element as $array_element_item)
-                                                        @if($PaymentAccount == $array_element_item )
-                                                            <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                        @else <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                        @endif
-
+                                                            @if($PaymentAccount == $array_element_item )
+                                                                <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+                                                            @else <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+                                                            @endif
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            @endif
-                                            <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
-                                                @php
-                                                    $id = $row->id;
-                                                    $array_element = [];
-                                                    $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
-                                                    $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
-                                                    $Body_accounts = $clinet->requestGet()->rows;
-
-                                                    if (array_key_exists(0, $Body_accounts)) {
-                                                        foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
-                                                    else { $array_element = [ 0 => "Нету Расчетного счета"];
-                                                    }
-                                                @endphp
-                                                <select name="PaymentAccount" class="form-select text-black">
-                                                    <option selected></option>
-                                                    @foreach ($array_element as $array_element_item)
-                                                        <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
                                     @endforeach
                                 @endif
 
                             </div>
                         </div>
+
+                    <script>
+                        let select = document.getElementById('parent_id');
+                        let block = document.querySelectorAll('.block');
+                        let lastIndex = 0; // После каждой смены опции, сохраняем сюда индекс предыдущего блока
+
+                        select.addEventListener('change', function() {
+                            block[lastIndex].style.display = "none";
+                            // Чтобы сразу делать именно его невидимым при следующей смене
+
+                            let index = select.selectedIndex; // Определить индекс выбранной опции
+                            block[index].style.display = "block"; // Показать блок с соответствующим индексом
+
+                            lastIndex = index; // Обновить сохраненный индекс.
+                        });
+                    </script>
 
                     <script>
                         const selector = $('.evidence-select');
@@ -459,5 +456,11 @@
          background-color: rgba(123, 123, 123, 0.14) !important;
      }
 
+     .block {
+         display: none;
+         margin: 10px;
+         padding: 10px;
+         border: 2px solid orange;
+     }
 
 </style>
