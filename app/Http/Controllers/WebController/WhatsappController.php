@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 class WhatsappController extends Controller
 {
 
-    public function Index(){
+    public function index(){
         return view('web.whatsapp');
     }
 
