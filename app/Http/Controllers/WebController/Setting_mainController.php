@@ -21,7 +21,6 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-        dd($TokenMoySklad);
             $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
             $Client = new ApiClientMC($url, $TokenMoySklad);
             $colorMC = [
