@@ -21,9 +21,9 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-            $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-            $Client = new ApiClientMC($url, $TokenMoySklad);
-            $colorMC = [
+        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+        $Client = new ApiClientMC($url, $TokenMoySklad);
+        $colorMC = [
             10066329 => "gray",
             15280409 => "red",
             15106326 => "orange",
@@ -46,26 +46,26 @@ class Setting_mainController extends Controller
         $Body = $Client->requestGet()->states;
         $setBackground = array();
 
-            foreach ($Body as $item){
-                $color = $item->color;
-                foreach ($colorMC as $itemcolormc=>$indexcolor){
-                    if ($color == $itemcolormc) $setBackground[] = $indexcolor;
-                }
+        foreach ($Body as $item){
+            $color = $item->color;
+            foreach ($colorMC as $itemcolormc=>$indexcolor){
+                if ($color == $itemcolormc) $setBackground[] = $indexcolor;
             }
+        }
 
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
-            $Client->setRequestUrl($url_organization);
-            $Body_organization = $Client->requestGet()->rows;
+        $Client->setRequestUrl($url_organization);
+        $Body_organization = $Client->requestGet()->rows;
 
 
         $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
-            $Client->setRequestUrl($url_saleschannel);
-            $Body_saleschannel = $Client->requestGet()->rows;
+        $Client->setRequestUrl($url_saleschannel);
+        $Body_saleschannel = $Client->requestGet()->rows;
 
 
         $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
-            $Client->setRequestUrl($url_project);
-            $Body_project = $Client->requestGet()->rows;
+        $Client->setRequestUrl($url_project);
+        $Body_project = $Client->requestGet()->rows;
 
 
         return view('web.Setting_main',['Body' => $Body,
@@ -108,7 +108,7 @@ class Setting_mainController extends Controller
         $cfg = new cfg();
         $appId = $cfg->appId;
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-
+        dd($Setting);
         $app->TokenKaspi = $Setting->TokenKaspi;
         $app->Organization = $Setting->Organization;
         $app->PaymentDocument = $Setting->PaymentDocument;
