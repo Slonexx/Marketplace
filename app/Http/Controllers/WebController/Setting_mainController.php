@@ -45,6 +45,14 @@ class Setting_mainController extends Controller
         $PaymentAccount = $Setting->PaymentAccount;
         if ($PaymentAccount == null) $PaymentAccount = "0";
 
+        $Saleschannel = $Setting->Saleschannel;
+        if ($Saleschannel == null) $Saleschannel = "0";
+
+        $Project = $Setting->Project;
+        if ($Project == null) $Project = "0";
+
+        $CheckCreatProduct = $Setting->CheckCreatProduct;
+        if ($CheckCreatProduct == null) $CheckCreatProduct = "0";
 
 
 
@@ -102,6 +110,9 @@ class Setting_mainController extends Controller
             "PaymentDocument" => $PaymentDocument,
             "Document" => $Document,
             "PaymentAccount" => $PaymentAccount,
+            "Saleschannel" => $Saleschannel,
+            "Project" => $Project,
+            "CheckCreatProduct" => $CheckCreatProduct,
 
 
             "message" => null,
@@ -115,13 +126,11 @@ class Setting_mainController extends Controller
         $Setting = $request;
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
-
         if ($MessageKaspi["StatusCode"] == 200 ) {
             $message = $this->updateSetting($accountId, $Setting);
             return Redirect::back()->withErrors(["message"=> $message]);
         } else {
             return Redirect::back()->withErrors(["message"=> $MessageKaspi["API"]]);
-
         }
 
 

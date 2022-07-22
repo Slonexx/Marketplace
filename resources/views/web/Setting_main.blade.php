@@ -186,21 +186,32 @@
                                                     $Body_accounts = $clinet->requestGet()->rows;
 
                                                     if (array_key_exists(0, $Body_accounts)) {
-                                                        foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
+                                                        foreach ($Body_accounts as $item => $value) {
+                                                            if ($PaymentAccount == $value->accountNumber) {$PaymentAccountNamber = $item; }
+                                                            array_push($array_element, $value->accountNumber);
+                                                        }
+                                                    }
                                                     else { $array_element = [ 0 => "Нету Расчетного счета"];
                                                     }
                                                 @endphp
-                                                <select name="PaymentAccount" class="form-select text-black">
-                                                    @if($PaymentAccount == "0")
-                                                        <option selected></option>
-                                                    @endif
-                                                    @foreach ($array_element as $array_element_item)
-                                                            @if($PaymentAccount == $array_element_item )
-                                                                <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+
+                                                {{--@if($Organization->id == $row->id)
+                                                    <select name="PaymentAccountOld" class="form-select text-black">
+                                                        @foreach ($array_element as $array_element_item)
+                                                            @if($PaymentAccount == $array_element_item)
+                                                            <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
                                                             @else <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
                                                             @endif
-                                                    @endforeach
+                                                        @endforeach
+                                                    </select>
+                                                @else--}}
+                                                <select name="PaymentAccount" class="form-select text-black">
+                                                            <option selected></option>
+                                                @foreach ($array_element as $array_element_item)
+                                                        <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+                                                   @endforeach
                                                 </select>
+                                               {{-- @endif--}}
                                             </div>
                                     @endforeach
                                 @endif
@@ -208,21 +219,6 @@
                             </div>
                         </div>
 
-                    <script>
-                        let select = document.getElementById('parent_id');
-                        let block = document.querySelectorAll('.block');
-                        let lastIndex = 0; // После каждой смены опции, сохраняем сюда индекс предыдущего блока
-
-                        select.addEventListener('change', function() {
-                            block[lastIndex].style.display = "none";
-                            // Чтобы сразу делать именно его невидимым при следующей смене
-
-                            let index = select.selectedIndex; // Определить индекс выбранной опции
-                            block[index].style.display = "block"; // Показать блок с соответствующим индексом
-
-                            lastIndex = index; // Обновить сохраненный индекс.
-                        });
-                    </script>
 
                     <script>
                         const selector = $('.evidence-select');
@@ -255,9 +251,15 @@
                     <P class="col-sm-5 col-form-label"> Выберите проект: </P>
                     <div class="col-sm-7">
                         <select name="Saleschannel" class="form-select text-black " >
+                            @if ($Saleschannel == "0")
                             <option value="0" selected>Не выбирать </option>
+                            @else  <option value="{{$Saleschannel}}" selected> {{$Saleschannel}} </option>
+                                   <option value="0" >Не выбирать </option>
+                            @endif
                             @foreach($Body_saleschannel as $Body_saleschannel_item)
+                                    @if ($Saleschannel != $Body_saleschannel_item->name)
                                 <option value="{{ $Body_saleschannel_item->name }}"> {{ ($Body_saleschannel_item->name) }} </option>
+                                    @endif
                             @endforeach
                         </select>
                     </div>
@@ -267,9 +269,15 @@
                     <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
                     <div class="col-sm-7">
                         <select name="Project" class="form-select text-black " >
-                            <option value="0" selected>Не выбирать</option>
+                            @if ($Project == "0")
+                                <option value="0" selected>Не выбирать </option>
+                            @else  <option value="{{$Project}}" selected> {{$Project}} </option>
+                            <option value="0" >Не выбирать </option>
+                            @endif
                             @foreach($Body_project as $Body_project_item)
-                                <option value="{{ $Body_project_item->name}}"> {{ ($Body_project_item->name) }} </option>
+                                    @if ($Project != $Body_project_item->name)
+                                    <option value="{{ $Body_project_item->name}}"> {{ ($Body_project_item->name) }} </option>
+                                    @endif
                             @endforeach
                         </select>
                     </div>
@@ -290,9 +298,24 @@
 
                         <div class="col-sm-7 ">
                             <select name="CheckCreatProduct" class="form-select text-black">
-                                <option value="1" selected>По артикулу</option>
-                               <option value="2">По названию</option>
-                               <option value="3">По артикулу и названию</option>
+
+
+                                @if($CheckCreatProduct == "0")
+                                    <option value="1" selected>По артикулу</option>
+                                    <option value="2">По названию</option>
+                                    <option value="3">По артикулу и названию</option>
+                                @endif
+                                @if($CheckCreatProduct == "1")
+                                        <option value="1" >По артикулу</option>
+                                        <option value="2"selected>По названию</option>
+                                        <option value="3">По артикулу и названию</option>
+                                @endif
+                                @if($CheckCreatProduct == "2")
+                                        <option value="1" >По артикулу</option>
+                                        <option value="2">По названию</option>
+                                        <option value="3" selected>По артикулу и названию</option>
+                                @endif
+
                             </select>
                         </div>
 
