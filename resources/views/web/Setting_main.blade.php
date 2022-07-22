@@ -93,7 +93,7 @@
                     <div class="mb-3 row">
                         <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавть: </P>
                         <div class="col-sm-7">
-                            <select name="Document" class="form-select text-black evidence-select" >
+                            <select name="Document" class="form-select text-black" >
                                 @if($Document == "0")
                                     <option selected value="0">Не создавать</option>
                                     <option value="1">Отгрузка</option>
@@ -172,7 +172,7 @@
                                     @endif
                                 @else
                                     @foreach($Body_organization as $row)
-                                        @if($Organization->id == $row->id)
+                                        {{--@if($Organization->id == $row->id)
                                             @php
                                                 $id = $Organization->id;
                                                 $array_element = [];
@@ -197,8 +197,8 @@
 
                                                 @endforeach
                                             </select>
-                                        @else
-                                            <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
+                                        @else--}}
+                                            <div class="some evidence-select"  id="some_{{  $row->id }}"  style="display:none;">
                                                 @php
                                                     $id = $row->id;
                                                     $array_element = [];
@@ -218,7 +218,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        @endif
+                                        {{--@endif--}}
                                     @endforeach
                                 @endif
 
@@ -238,12 +238,25 @@
                         update();
                     </script>
 
+
                     <script type="text/javascript">
+                        const selector = $('.update');
+                        function update(){
+                            $(".some").hide();
+                            var some = $(this).find('option:selected').val();
+                            $("#some_" + some).show();
+                        }
+                        selector.on('click', update);
+                        update();
+                    </script>
+
+
+                    {{--<script type="text/javascript">
                         $('#parent_id').on('change',function(){
                             $(".some").hide();
                             var some = $(this).find('option:selected').val();
                             $("#some_" + some).show();});
-                    </script>
+                    </script>--}}
 
                 </div>
 
@@ -254,7 +267,7 @@
                 <div class="mb-3 row">
                     <P class="col-sm-5 col-form-label"> Выберите проект: </P>
                     <div class="col-sm-7">
-                        <select name="Saleschannel" class="form-select text-black evidence-select" >
+                        <select name="Saleschannel" class="form-select text-black " >
                             <option value="0" selected>Не выбирать </option>
                             @foreach($Body_saleschannel as $Body_saleschannel_item)
                                 <option value="{{ $Body_saleschannel_item->name }}"> {{ ($Body_saleschannel_item->name) }} </option>
@@ -266,7 +279,7 @@
                 <div class="mb-3 row">
                     <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
                     <div class="col-sm-7">
-                        <select name="Project" class="form-select text-black evidence-select" >
+                        <select name="Project" class="form-select text-black " >
                             <option value="0" selected>Не выбирать</option>
                             @foreach($Body_project as $Body_project_item)
                                 <option value="{{ $Body_project_item->name}}"> {{ ($Body_project_item->name) }} </option>
