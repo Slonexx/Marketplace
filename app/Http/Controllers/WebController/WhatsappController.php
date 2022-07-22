@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Session;
 class WhatsappController extends Controller
 {
 
+    public function show(){
+        return redirect()->away("https://smartkaspi.kz/Whatsapp/");
+    }
+
     public function index(){
         return view('web.whatsapp');
     }
