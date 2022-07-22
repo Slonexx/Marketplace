@@ -51,14 +51,18 @@
                             <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required><?php $value = 0; ?>
                                 @if($Organization == 0)
                                     <option value="" selected > </option>
+                                    @foreach($Body_organization as $bodyItem)
+                                            <option value="{{ $bodyItem->id }}"> {{ ($bodyItem->name) }} </option> <?php $value++; ?>
+                                    @endforeach
                                 @else
                                     <option value="{{$Organization->id}}" selected >{{$Organization->name}}</option>
+                                    @foreach($Body_organization as $bodyItem)
+                                        @if($bodyItem->id != $Organization->id)
+                                            <option value="{{ $bodyItem->id }}"> {{ ($bodyItem->name) }} </option> <?php $value++; ?>
+                                        @endif
+                                    @endforeach
                                 @endif
-                                @foreach($Body_organization as $bodyItem)
-                                    @if($bodyItem->id != $Organization->id)
-                                    <option value="{{ $bodyItem->id }}"> {{ ($bodyItem->name) }} </option> <?php $value++; ?>
-                                    @endif
-                                @endforeach
+
                             </select>
                         </div>
                     </div>
