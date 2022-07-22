@@ -8,6 +8,7 @@ class AppInstanceContoller {
 
     var $appId;
     var $accountId;
+    var $TokenMoySklad;
     var $TokenKaspi;
     var $Organization;
     var $PaymentDocument;
@@ -21,7 +22,6 @@ class AppInstanceContoller {
     var $COMPLETED;
     var $CANCELLED;
     var $RETURNED;
-    var $TokenMoySklad;
 
     var $status = AppInstanceContoller::UNKNOWN;
 
