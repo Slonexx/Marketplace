@@ -95,6 +95,9 @@ class Setting_mainController extends Controller
             Session::flash('alert-class', 'alert-danger');
         }
         $Setting = $request->request;
+
+        dd($Setting);
+
         $message = $this->updateSetting($accountId, $Setting);
 
         return Redirect::back();
