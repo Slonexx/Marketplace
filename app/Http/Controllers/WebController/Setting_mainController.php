@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Session;
 
 class Setting_mainController extends Controller
 {
-    public function index($id){
+    public function index($accountId){
 
-        $Setting = new getSettingVendorController($id);
+        $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
@@ -46,12 +46,12 @@ class Setting_mainController extends Controller
         $Body = $Client->requestGet()->states;
         $setBackground = array();
 
-        foreach ($Body as $item){
-            $color = $item->color;
-            foreach ($colorMC as $itemcolormc=>$indexcolor){
-                if ($color == $itemcolormc) $setBackground[] = $indexcolor;
+            foreach ($Body as $item){
+                $color = $item->color;
+                foreach ($colorMC as $itemcolormc=>$indexcolor){
+                    if ($color == $itemcolormc) $setBackground[] = $indexcolor;
+                }
             }
-        }
 
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
             $Client->setRequestUrl($url_organization);
@@ -75,12 +75,12 @@ class Setting_mainController extends Controller
             "Body_project" => $Body_project,
             "TokenKaspi" => $TokenKaspi,
             "apiKey" => $TokenMoySklad,
-            'id' => $id,
+            'accountId' => $accountId,
         ]);
 
     }
 
-    public function postFormSetting(Request $request, $id){
+    public function postFormSetting(Request $request, $accountId){
 
         $TokenKaspi = $request->TokenKaspi;
         $message = $this->saveApiKey($TokenKaspi);
@@ -94,25 +94,23 @@ class Setting_mainController extends Controller
         else {
             Session::flash('alert-class', 'alert-danger');
         }
-        dd($request->request);
-        $message = $this->updateSetting($id);
+        $Setting = $request->request;
+        $message = $this->updateSetting($accountId, $Setting);
 
         return Redirect::back();
 
     }
 
-    public function updateSetting($contextKey){
+    public function updateSetting($accountId ,$Setting){
         $cfg = new cfg();
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
-
         $appId = $cfg->appId;
-        $accountId = $employee->accountId;
-
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-        $app->infoMessage = "Hello world";
+
+        $app->TokenKaspi = $Setting->TokenKaspi;
 
         $app->status = AppInstanceContoller::ACTIVATED;
+
+        $vendorAPI = new VendorApiController();
         $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
 
         $app->persist();
