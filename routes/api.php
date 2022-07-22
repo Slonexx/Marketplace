@@ -24,7 +24,7 @@ Route::get('excelProducts', [ExcelController::class,'getProductsExcel']);
 Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 
 
-Route::post('DeleteVendorApi/{appId}/{accountId}', [DeleteVendorApiController::class, 'Delete'])->name('Delete');
+Route::get('DeleteVendorApi/{appId}/{accountId}', [DeleteVendorApiController::class, 'Delete'])->name('Delete');
 
 Route::get('getTest', [TestController::class,'init']);
 //Route::get('getTest2', [TestController2::class,'getTest'])->name('Test');
