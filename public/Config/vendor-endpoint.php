@@ -32,6 +32,7 @@ switch ($method) {
     case 'GET':
         break;
     case 'DELETE':
+        file_get_contents('https://smartkaspi.kz/api/DeleteVendorApi/'.$appId.'/'.$accountId);
         $app->delete();
         $replyStatus = false;
         break;
