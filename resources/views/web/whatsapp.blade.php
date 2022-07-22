@@ -13,11 +13,6 @@
                 <div class="alert {{ Session::get('alert-class', 'alert-info') }}" role="alert">
                     {{ Session::get('whatsapp') }}
                 </div>
-                <?php
-                $url = Session::get('whatsapp_url');
-                echo "<script>window.open('".$url."', '_blank')</script>";
-                ?>
-
             </div>
         @endif
 

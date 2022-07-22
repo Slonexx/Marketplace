@@ -27,11 +27,8 @@ class WhatsappController extends Controller
 
         $message = "https://wa.me/87750498821?text=".$inputName.$inputMessage;
 
-        Session::flash('whatsapp', "Сообщение отправлено");
-        Session::flash('whatsapp_url', $message);
-        Session::flash('alert-class', 'alert-success');
 
-        return redirect()->back();
+        return redirect()->to($message);
 
     }
 
