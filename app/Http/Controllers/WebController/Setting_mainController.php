@@ -18,9 +18,9 @@ class Setting_mainController extends Controller
     public function index($id){
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $Setting = new getSettingVendorController($id);
+        $Setting = app(getSettingVendorController::class);
         $apiKey = $Setting->TokenMoySklad;
-
+        $TokenKaspi = $Setting->TokenKaspi;
 
         $colorMC = [
             10066329 => "gray",
@@ -70,6 +70,7 @@ class Setting_mainController extends Controller
             "Body_organization" => $Body_organization,
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
+            "TokenKaspi" => $TokenKaspi,
             "apiKey" => $apiKey,
             'id' => $id,
         ]);
@@ -78,13 +79,9 @@ class Setting_mainController extends Controller
 
     public function postFormSetting(Request $request, $id){
 
-
-        $check = $request->request;
         $API_KEY = $request->TokenKaspi;
-        dd($check);
 
         $message = $this->saveApiKey($API_KEY);
-
 
         Session::flash('message', $message["API"]);
         if ($message["StatusCode"] == 200 ) {

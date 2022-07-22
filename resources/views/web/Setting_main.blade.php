@@ -30,7 +30,7 @@
                     <label for="TokenKaspi" class="col-sm-2 col-form-label"> <i class="text-danger">*</i> Токен Kaspi-Api</label>
                     <div class="col-sm-10">
                         <input type="text" name="TokenKaspi" placeholder="Token-API ключ от Kaspi" id="TokenKaspi" class="form-control form-control-orange"
-                               required maxlength="255" value="<?php if(isset($_SESSION['TokenKaspi'])) {echo ($_SESSION["TokenKaspi"]); } else { echo "";} ?>">
+                               required maxlength="255" value="{{ $TokenKaspi }}">
                     </div>
                 </div>
 

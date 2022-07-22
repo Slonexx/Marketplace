@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebController;
 
+use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\AppConfigController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\cfg;
@@ -18,18 +19,10 @@ class WebController extends Controller
     public function index(Request $request){
 
         $cfg = new cfg();
-        $_SESSION['cfg'] = $cfg;
 
         $contextKey = $request->contextKey;
 
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
-
-        $appId = $cfg->appId;
-        $accountId = $employee->accountId;
-
-        $app = AppInstanceContoller::loadApp($appId, $accountId);
-        //dd($app);
+        $START = new getSettingVendorController($contextKey);
 
         return redirect()->route('Index', ['id' => $contextKey] );
 
@@ -37,17 +30,10 @@ class WebController extends Controller
     }
 
     public function show($id){
-        //dd($id);
 
-        $cfg = new cfg();
-
-        $contextKey = $id;
-
-        $vendorAPI = new VendorApiController();
-        $employee = $vendorAPI->context($contextKey);
-
-        $appId = $cfg->appId;
-        $accountId = $employee->accountId;
+        $START = app(getSettingVendorController::class);
+        $appId = $START->appId;
+        $accountId = $START->accountId;
 
         return view('web.index', ['id' => $id,  'appId'=> $appId, 'accountId'=> $accountId]);
     }
