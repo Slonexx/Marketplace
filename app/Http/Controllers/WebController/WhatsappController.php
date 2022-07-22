@@ -24,7 +24,7 @@ class WhatsappController extends Controller
         $inputMessage = str_ireplace(" ", "%20", $request->message);
 
 
-        return redirect()->to("https://smartkaspi.kz/WhatsappSendNext/".$inputName."/".$inputMessage);
+        return redirect()->route('WhatsappSendNext', ["inputName"=> $inputName, "inputMessage" => $inputMessage]);
 
     }
 
