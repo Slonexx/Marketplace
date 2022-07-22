@@ -17,12 +17,14 @@ class Setting_mainController extends Controller
 {
     public function index($id){
 
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $Setting = app(getSettingVendorController::class);
-        $apiKey = $Setting->TokenMoySklad;
+        $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-        $colorMC = [
+        dd($TokenMoySklad);
+            $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+            $Client = new ApiClientMC($url, $TokenMoySklad);
+            $colorMC = [
             10066329 => "gray",
             15280409 => "red",
             15106326 => "orange",
@@ -41,7 +43,7 @@ class Setting_mainController extends Controller
             0 => "black",
         ];
 
-        $Client = new ApiClientMC($url, $apiKey);
+
         $Body = $Client->requestGet()->states;
         $setBackground = array();
 
@@ -65,6 +67,8 @@ class Setting_mainController extends Controller
         $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
             $Client->setRequestUrl($url_project);
             $Body_project = $Client->requestGet()->rows;
+
+
         return view('web.Setting_main',['Body' => $Body,
             "setBackground" => $setBackground,
             "Body_organization" => $Body_organization,
