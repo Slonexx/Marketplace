@@ -50,9 +50,9 @@
                         <div class="col-sm-7">
                             <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required><?php $value = 0; ?>
                                 @if($Organization == 0)
-                                <option value="{{$Organization->id}}" selected >{{$Organization->name}}</option>
-                                @else
                                     <option value="" selected > </option>
+                                @else
+                                    <option value="{{$Organization->id}}" selected >{{$Organization->name}}</option>
                                 @endif
                                 @foreach($Body_organization as $bodyItem)
                                     @if($bodyItem->id != $Organization->id)
