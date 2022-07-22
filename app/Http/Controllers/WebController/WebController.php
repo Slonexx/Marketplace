@@ -18,13 +18,10 @@ class WebController extends Controller
 
     }
 
-    public function show(Request $request, $id){
+    public function show($id){
 
-        $START = new getSettingVendorController($id);
-        $appId = $START->appId;
-        $accountId = $START->accountId;
 
-        return view('web.index', ['id' => $id,  'appId'=> $appId, 'accountId'=> $accountId]);
+        return view('web.index', ['id' => $id]);
     }
 
 

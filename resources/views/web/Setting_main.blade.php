@@ -40,7 +40,7 @@
 
 
                 <div class="mb-3 row">
-                    <p>Настройка документов</p>
+                    <p>Создание документов при заказе из Kaspi </p>
                     <div class="mb-3 row">
                         <P class="col-sm-5 col-form-label"> Выберите на какую организацию создавать заказы: </P>
                         <div class="col-sm-7">
@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <P class="col-sm-5 col-form-label"> Выберите какой тип платёщного документа: </P>
+                        <P class="col-sm-5 col-form-label"> Выберите какой тип платёжного документа: </P>
                         <div class="col-sm-7">
                             <select name="PaymentDocument" class="form-select text-black evidence-select" >
                                 <option selected value="0">Не создавать</option>
@@ -70,7 +70,7 @@
                             <select name="Document" class="form-select text-black evidence-select" >
                                 <option selected value="0">Не создавать</option>
                                 <option value="1">Отгрузка</option>
-                                <option value="2">Счет-фактура выданный</option>
+                                <option value="2">Отгрузка + счет-фактура выданный</option>
                             </select>
                         </div>
                     </div>

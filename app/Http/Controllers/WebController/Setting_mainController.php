@@ -82,9 +82,10 @@ class Setting_mainController extends Controller
 
     public function postFormSetting(Request $request, $id){
 
-        $API_KEY = $request->TokenKaspi;
+        $TokenKaspi = $request->TokenKaspi;
+        $message = $this->saveApiKey($TokenKaspi);
 
-        $message = $this->saveApiKey($API_KEY);
+
 
         Session::flash('message', $message["API"]);
         if ($message["StatusCode"] == 200 ) {
@@ -93,11 +94,8 @@ class Setting_mainController extends Controller
         else {
             Session::flash('alert-class', 'alert-danger');
         }
-
-        //dd($check);
-        Session::flash('error', 'Error message here');
-
-        $this->updateSetting($id);
+        dd($request->request);
+        $message = $this->updateSetting($id);
 
         return Redirect::back();
 
@@ -114,12 +112,11 @@ class Setting_mainController extends Controller
         $app = AppInstanceContoller::loadApp($appId, $accountId);
         $app->infoMessage = "Hello world";
 
-        $notify = $app->status != AppInstanceContoller::ACTIVATED;
         $app->status = AppInstanceContoller::ACTIVATED;
         $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
 
         $app->persist();
-
+        return "ACTIVATED";
     }
 
     public function saveApiKey(string $API_KEY){
