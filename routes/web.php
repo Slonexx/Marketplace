@@ -19,6 +19,6 @@ Route::post('/SettingSend/{accountId}', [Setting_mainController::class, 'postFor
 Route::get('/SupportHelp/{accountId}', [SupportController::class, 'support'])->name("support");
 Route::post('/PostSupport/{accountId}', [SupportController::class, 'supportSend'])->name("Send");
 
-Route::get('/ShowWhatsappSupport', [WhatsappController::class, 'show'])->name("ShowWhatsappSupport");
-Route::get('/Whatsapp/', [WhatsappController::class, 'index'])->name("whatsapp");
-Route::post('/WhatsappSend/', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
+Route::get('/Whatsapp/{accountId}', [WhatsappController::class, 'Index'])->name("whatsapp");
+Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
+
