@@ -74,6 +74,7 @@ class Setting_mainController extends Controller
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
             "TokenKaspi" => $TokenKaspi,
+            "message" => null,
             "apiKey" => $TokenMoySklad,
             'accountId' => $accountId,
         ]);
@@ -81,26 +82,25 @@ class Setting_mainController extends Controller
     }
 
     public function postFormSetting(Request $request, $accountId){
-
+        $Setting = $request->request;
         $TokenKaspi = $request->TokenKaspi;
-        $message = $this->saveApiKey($TokenKaspi);
+        $MessageKaspi = $this->saveApiKey($TokenKaspi);
 
-
-
-        Session::flash('message', $message["API"]);
-        if ($message["StatusCode"] == 200 ) {
+        Session::flash('message', $MessageKaspi["API"]);
+        if ($MessageKaspi["StatusCode"] == 200 ) {
             Session::flash('alert-class', 'alert-success');
+            $message = $this->updateSetting($accountId, $Setting);
+            return Redirect::back()->with(["message"=> $message]);
+
         }
         else {
             Session::flash('alert-class', 'alert-danger');
+            return Redirect::back()->with(["message"=> $MessageKaspi["API"]]);
+
         }
-        $Setting = $request->request;
 
-        dd($Setting);
 
-        $message = $this->updateSetting($accountId, $Setting);
 
-        return Redirect::back();
 
     }
 
@@ -110,6 +110,31 @@ class Setting_mainController extends Controller
         $app = AppInstanceContoller::loadApp($appId, $accountId);
 
         $app->TokenKaspi = $Setting->TokenKaspi;
+        $app->Organization = $Setting->Organization;
+        $app->PaymentDocument = $Setting->PaymentDocument;
+        $app->Document = $Setting->Document;
+        $app->PaymentAccount = $Setting->PaymentAccount;
+        $app->Saleschannel = $Setting->Saleschannel;
+        $app->Project = $Setting->Project;
+        $app->CheckCreatProduct = $Setting->CheckCreatProduct;
+
+        if ($Setting->APPROVED_BY_BANK == "Статус МойСклад") $app->APPROVED_BY_BANK = null;
+        else $app->APPROVED_BY_BANK = $Setting->APPROVED_BY_BANK;
+
+        if ($Setting->ACCEPTED_BY_MERCHANT == "Статус МойСклад") $app->ACCEPTED_BY_MERCHANT = null;
+        else $app->ACCEPTED_BY_MERCHANT = $Setting->ACCEPTED_BY_MERCHANT;
+
+        if ($Setting->APPROVED_BY_BANK == "Статус МойСклад") $app->APPROVED_BY_BANK = null;
+        else $app->APPROVED_BY_BANK = $Setting->APPROVED_BY_BANK;
+
+        if ($Setting->COMPLETED == "Статус МойСклад") $app->COMPLETED = null;
+        else $app->COMPLETED = $Setting->COMPLETED;
+
+        if ($Setting->CANCELLED == "Статус МойСклад") $app->CANCELLED = null;
+        else $app->CANCELLED = $Setting->CANCELLED;
+
+        if ($Setting->RETURNED == "Статус МойСклад") $app->RETURNED = null;
+        else $app->RETURNED = $Setting->RETURNED;
 
         $app->status = AppInstanceContoller::ACTIVATED;
 
@@ -117,7 +142,8 @@ class Setting_mainController extends Controller
         $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
 
         $app->persist();
-        return "ACTIVATED";
+        $message = "Настройки сохранились";
+        return $message;
     }
 
     public function saveApiKey(string $API_KEY){

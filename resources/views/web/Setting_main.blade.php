@@ -16,11 +16,14 @@
         </div>
 
 
-
+        @if ($message != null)
         <div class="row mb-3 g-3 align-items-center">
-            @include('alerts')
-        </div>
+            <div class="alert alert-success alert-dismissible fade show in text-center "> {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
+            </div>
+        </div>
+        @endif
 
 
 
@@ -135,7 +138,7 @@
                     <P class="col-sm-5 col-form-label"> Выберите проект: </P>
                     <div class="col-sm-7">
                         <select name="Saleschannel" class="form-select text-black evidence-select" >
-                            <option selected value="0">Не выберать</option>
+                            <option selected>Не выберать</option>
                             @foreach($Body_saleschannel as $Body_saleschannel_item)
                                 <option value="{{ $Body_saleschannel_item->name}}"> {{ ($Body_saleschannel_item->name) }} </option>
                             @endforeach
@@ -147,7 +150,7 @@
                     <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
                     <div class="col-sm-7">
                         <select name="Project" class="form-select text-black evidence-select" >
-                            <option selected value="0">Не выберать</option>
+                            <option selected>Не выберать</option>
                             @foreach($Body_project as $Body_project_item)
                                 <option value="{{ $Body_project_item->name}}"> {{ ($Body_project_item->name) }} </option>
                             @endforeach
