@@ -18,7 +18,7 @@
                         <a href={{  route('support', ['accountId' => $accountId] ) }}>
                             <i class="fa-solid fa-at"></i>
                             Написать на почту</a>
-                        <a  href="https://api.whatsapp.com/send/?phone=87750498821"  target="_blank">
+                        <a  target="_blank" href={{  route('whatsapp') }} >
                             <i class="fa-brands fa-whatsapp"></i>
                             Написать в WhatsApp </a>
                     </div>
