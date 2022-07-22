@@ -29,8 +29,8 @@
                 <div class="mb-3 row">
                     <label for="TokenKaspi" class="col-sm-2 col-form-label"> <i class="text-danger">*</i> Токен Kaspi-Api</label>
                     <div class="col-sm-10">
-                        <input type="text" name="API_KEY" placeholder="Token-API ключ от Kaspi" id="TokenKaspi" class="form-control form-control-orange"
-                               required maxlength="255" value="<?php if(isset($_SESSION['API_KEY'])) {echo ($_SESSION["API_KEY"]); } else { echo "";} ?>">
+                        <input type="text" name="TokenKaspi" placeholder="Token-API ключ от Kaspi" id="TokenKaspi" class="form-control form-control-orange"
+                               required maxlength="255" value="<?php if(isset($_SESSION['TokenKaspi'])) {echo ($_SESSION["TokenKaspi"]); } else { echo "";} ?>">
                     </div>
                 </div>
 
@@ -45,21 +45,33 @@
                     <div class="mb-3 row">
                         <P class="col-sm-5 col-form-label"> Выберите на какую организацию создавать заказы: </P>
                         <div class="col-sm-7">
-                            <select name="organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details">
+                            <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required>
                                 <option selected ></option> <?php $value = 0; ?>
-                                @foreach($Body_organization as $bodyItem => $dat)
-                                    <option value="{{ $dat->id }}"> {{ ($dat->name) }} </option> <?php $value++; ?>
+                                @foreach($Body_organization as $bodyItem)
+                                    <option value="{{ $bodyItem->id }}"> {{ ($bodyItem->name) }} </option> <?php $value++; ?>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
                     <div class="mb-3 row">
-                        <P class="col-sm-5 col-form-label"> Выберите какой тип документа создавать: </P>
+                        <P class="col-sm-5 col-form-label"> Выберите какой тип платёщного документа: </P>
                         <div class="col-sm-7">
-                            <select name="document" class="form-select text-black evidence-select" >
-                                <option value="1">Приходной ордер (нету счёта) </option>
+                            <select name="PaymentDocument" class="form-select text-black evidence-select" >
+                                <option selected value="0">Не создавать</option>
+                                <option value="1">Приходной ордер</option>
                                 <option value="2">Входящий платёж </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавть: </P>
+                        <div class="col-sm-7">
+                            <select name="Document" class="form-select text-black evidence-select" >
+                                <option selected value="0">Не создавать</option>
+                                <option value="1">Отгрузка</option>
+                                <option value="2">Счет-фактура выданный</option>
                             </select>
                         </div>
                     </div>
@@ -84,7 +96,7 @@
                                             else { $array_element = [ 0 => "Нету Расчетного счета"];
                                             }
                                         @endphp
-                                        <select name="payment" class="form-select text-black">
+                                        <select name="PaymentAccount" class="form-select text-black">
                                             <option selected></option>
                                             @foreach ($array_element as $array_element_item)
                                                 <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
@@ -118,7 +130,7 @@
 
 
 
-
+                <hr class="href_padding">
 
 
 
@@ -132,14 +144,14 @@
 
                         <script> $('.myPopover6').popover(); </script>
 
-                        <div class="ms-4 form-check col-sm-3 col-form-label">
-                            <input name="CheckArticle" class="form-check-input" type="checkbox" value="Article" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">проверять по Артикулу </label>
+                        <div class="col-sm-8 ">
+                            <select name="CheckCreatProduct" class="form-select text-black">
+                                <option value="1" selected>По артикулу</option>
+                               <option value="2">По названию</option>
+                               <option value="3>">По артикулу и названию</option>
+                            </select>
                         </div>
-                        <div class="form-check col-sm-4 col-form-label">
-                            <input name="CheckName"CheckName class="form-check-input" type="checkbox" value="Name" id="flexCheckDefault">
-                            <label class="form-check-label" for="flexCheckDefault"> проверять по Названию </label>
-                        </div>
+
                     </div>
                 </div>
 
@@ -149,20 +161,20 @@
 
 
 
-                <div>Сопоставьте статусы платежей и заказов покупателя в МойСклад:
+                <div>Сопоставьте статусы заказов покупателя в МойСклад:
                     {{--Статус одобрен банком :--}}
                     <div class="mb-3 row pt-3">
                         <P class="col-sm-4 col-form-label">
                             <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover2"
                                     data-toggle="popover" data-placement="right" data-trigger="focus"
-                                    data-content="Данный статус информирует продавца о том, что необходимо принять заказ в kaspi"> </button>
-                            Статус одобрен банком : </P>
+                                    data-content="Данный статус информирует продавца о том, что необходимо принять заказ в Kaspi"> </button>
+                            Одобрен банком : </P>
 
                         <script> $('.myPopover2').popover(); </script>
 
                         <div class="col-sm-8 ">
                             <select name="APPROVED_BY_BANK" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус</option>
+                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
                                 @foreach($Body as $bodyItem => $dat)
                                         <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
                                                 value="{{ $dat->name }}"> {{ ($dat->name) }}
@@ -176,14 +188,14 @@
                         <P class="col-sm-4 col-form-label">
                             <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover3"
                                     data-toggle="popover" data-placement="right" data-trigger="focus"
-                                    data-content="Данный статус информирует продавца о том, что заказ принят продавцом и его необходимо отдать заказчику"> </button>
-                            Статус принят на обработку продавцом: </P>
+                                    data-content="Данный статус информирует продавца о том, что заказ принят продавцом и его необходимо выдать покупателю"> </button>
+                            Принят на обработку продавцом: </P>
 
                         <script> $('.myPopover3').popover(); </script>
 
                         <div class="col-sm-8 ">
                             <select name="ACCEPTED_BY_MERCHANT" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус</option>
+                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
                                 @foreach($Body as $bodyItem => $dat)
                                     <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
                                     value="{{ $dat->name }}"> {{ ($dat->name) }}
@@ -198,13 +210,13 @@
                             <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover4"
                                     data-toggle="popover" data-placement="right" data-trigger="focus"
                                     data-content="Данный статус информирует продавца о том, что заказ уже завершён"> </button>
-                            Статус завершён: </P>
+                            Завершён: </P>
 
                         <script> $('.myPopover4').popover(); </script>
 
                         <div class="col-sm-8 ">
                             <select name="COMPLETED" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус</option>
+                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
                                 @foreach($Body as $bodyItem => $dat)
                                     <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
                                     value="{{ $dat->name }}"> {{ ($dat->name) }}
@@ -218,14 +230,14 @@
                         <P class="col-sm-4 col-form-label">
                             <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover5"
                                     data-toggle="popover" data-placement="right" data-trigger="focus"
-                                    data-content="Данный статус информирует продавца о том, что заказ был отменён"> </button>
-                            Статус отменён: </P>
+                                    data-content="Данный статус информирует об отмене заказа"> </button>
+                            Отменён: </P>
 
                         <script> $('.myPopover5').popover(); </script>
 
                         <div class="col-sm-8 ">
                             <select name="CANCELLED" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус</option>
+                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
                                 @foreach($Body as $bodyItem => $dat)
                                     <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
                                     value="{{ $dat->name }}"> {{ ($dat->name) }}
@@ -234,7 +246,27 @@
                             </select>
                         </div>
                     </div>
+                    {{--Статус Возврат--}}
+                    <div class="mb-3 row">
+                        <P class="col-sm-4 col-form-label">
+                            <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover7"
+                                    data-toggle="popover" data-placement="right" data-trigger="focus"
+                                    data-content="Данный статус информирует о возврате товара"> </button>
+                            Возвращён: </P>
 
+                        <script> $('.myPopover7').popover(); </script>
+
+                        <div class="col-sm-8 ">
+                            <select name="RETURNED" class="form-select text-black">
+                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
+                                @foreach($Body as $bodyItem => $dat)
+                                    <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
+                                    value="{{ $dat->name }}"> {{ ($dat->name) }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
 

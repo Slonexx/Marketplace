@@ -60,21 +60,14 @@ class Setting_mainController extends Controller
             'id' => $id,
         ]);
 
-
-//        dd($Body);
-        //return view('web.Setting_main');
     }
 
     public function postFormSetting(Request $request, $id){
 
-        /*$date = $request->document;
-        dd($date);*/
-
-
 
         $check = $request->request;
-        $API_KEY = $request->API_KEY;
-        dd($check);
+        $API_KEY = $request->TokenKaspi;
+        //dd($check);
 
         $message = $this->saveApiKey($API_KEY);
 

@@ -63,7 +63,7 @@ class KaspiApiClient {
             $message["API"] = "API-ключ верный!";
             //МИРАС ЗАНЕСИ ЭТО В КУКИ
             session_start();
-            $_SESSION["API_KEY"] = $this->apiKey;
+            $_SESSION["TokenKaspi"] = $this->apiKey;
         } else if ($responsecode == 401){
             $message["API"] = "Hе верный API-ключ";
         } else {
