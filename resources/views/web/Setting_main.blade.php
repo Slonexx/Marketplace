@@ -3,10 +3,6 @@
 
 @section('content')
 
-    @php
-        $apiKey = new \App\Http\Controllers\Config\getSettingVendorController($id);
-    @endphp
-
     <div class="content p-4 mt-2 bg-white text-Black rounded">
         <h2 align="center">Основные настройки <i class="fa-solid fa-gears text-orange"></i> </h2>
         <div>
