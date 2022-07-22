@@ -44,7 +44,7 @@
                 </div>
 
                 <div class='d-flex justify-content-end text-black btnP' >
-                    <button type="submit" class="mt-3 btn btn-outline-dark "> <i class="fa-brands fa-whatsapp"></i> Отправить </button>
+                    <button type="submit" class="mt-3 btn btn-outline-dark" formtarget="_blank"> <i class="fa-brands fa-whatsapp"></i> Отправить </button>
                 </div>
 
 
