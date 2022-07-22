@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\ApiClientMC;
+use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\cfg;
 use App\Http\Controllers\Config\Lib\VendorApiController;
@@ -17,7 +18,9 @@ class Setting_mainController extends Controller
     public function index($id){
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $apiKey = "8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f";
+        $Setting = new getSettingVendorController($id);
+        $apiKey = $Setting->TokenMoySklad;
+
 
 
         $colorMC = [
@@ -69,6 +72,7 @@ class Setting_mainController extends Controller
             "Body_organization" => $Body_organization,
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
+            "apiKey" => $apiKey,
             'id' => $id,
         ]);
 

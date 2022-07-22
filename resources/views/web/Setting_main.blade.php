@@ -86,7 +86,6 @@
                                         @php
                                             $id = $row->id;
                                             $array_element = [];
-                                            $apiKey = "8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f"; // Пока что так
                                             $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
                                             $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
                                             $Body_accounts = $clinet->requestGet()->rows;
