@@ -20,7 +20,7 @@ class Setting_mainController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
-        dd($Setting->App);
+        dd($Setting);
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $Client = new ApiClientMC($url, $TokenMoySklad);
