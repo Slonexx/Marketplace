@@ -20,7 +20,6 @@ class Setting_mainController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
-        dd($Setting);
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $Client = new ApiClientMC($url, $TokenMoySklad);
@@ -75,6 +74,7 @@ class Setting_mainController extends Controller
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
             "TokenKaspi" => $TokenKaspi,
+            "Setting" => $Setting,
             "message" => null,
             "apiKey" => $TokenMoySklad,
             'accountId' => $accountId,
