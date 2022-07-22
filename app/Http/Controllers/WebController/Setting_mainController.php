@@ -82,8 +82,7 @@ class Setting_mainController extends Controller
     }
 
     public function postFormSetting(Request $request, $accountId){
-        $Setting = $request->parameters;
-        dd($Setting);
+        $Setting = $request;
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
 
@@ -109,7 +108,7 @@ class Setting_mainController extends Controller
         $cfg = new cfg();
         $appId = $cfg->appId;
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-        dd($Setting);
+        dd( $Setting->TokenKaspi);
         $app->TokenKaspi = $Setting->TokenKaspi;
         $app->Organization = $Setting->Organization;
         $app->PaymentDocument = $Setting->PaymentDocument;
