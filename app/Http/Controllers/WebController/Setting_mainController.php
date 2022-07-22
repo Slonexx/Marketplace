@@ -30,8 +30,8 @@ class Setting_mainController extends Controller
         $setBackground = array();
 
         $Organization = $Setting->Organization;
-        $urlCheck = $url_organization."/".$Organization;
-        $Client->setRequestUrl($urlCheck);
+            $urlCheck = $url_organization."/".$Organization;
+            $Client->setRequestUrl($urlCheck);
         $Organization = $Client->requestGet();
 
         $PaymentDocument = $Setting->PaymentDocument;

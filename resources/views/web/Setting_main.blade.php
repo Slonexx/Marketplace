@@ -63,21 +63,21 @@
                         <P class="col-sm-5 col-form-label"> Выберите какой тип платёжного документа: </P>
                         <div class="col-sm-7">
                             <select name="PaymentDocument" class="form-select text-black evidence-select" >
-                                @if($PaymentDocument = 0)
-                                    <option selected value="0">Не создавать</option>
-                                    <option value="1">Приходной ордер</option>
-                                    <option value="2">Входящий платёж </option>
-                                @endif
-                                    @if($PaymentDocument = 1)
-                                        <option value="0">Не создавать</option>
-                                        <option selected value="1">Приходной ордер</option>
-                                        <option value="2">Входящий платёж </option>
-                                    @endif
-                                    @if($PaymentDocument = 2)
+                                    @if($PaymentDocument == "0")
                                         <option selected value="0">Не создавать</option>
                                         <option value="1">Приходной ордер</option>
-                                        <option selected value="2">Входящий платёж </option>
+                                        <option value="2">Входящий платёж </option>
                                     @endif
+                                        @if($PaymentDocument == "1")
+                                            <option value="0">Не создавать</option>
+                                            <option selected value="1">Приходной ордер</option>
+                                            <option value="2">Входящий платёж </option>
+                                        @endif
+                                        @if($PaymentDocument == "2")
+                                            <option value="0">Не создавать</option>
+                                            <option value="1">Приходной ордер</option>
+                                            <option selected value="2">Входящий платёж </option>
+                                        @endif
                             </select>
                         </div>
                     </div>
@@ -86,21 +86,11 @@
                         <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавть: </P>
                         <div class="col-sm-7">
                             <select name="Document" class="form-select text-black evidence-select" >
-                                @if($Document = 0)
+
                                     <option selected value="0">Не создавать</option>
                                     <option value="1">Отгрузка</option>
                                     <option value="2">Отгрузка + счет-фактура выданный</option>
-                                @endif
-                                    @if($Document = 1)
-                                        <option value="0">Не создавать</option>
-                                        <option selected value="1">Отгрузка</option>
-                                        <option value="2">Отгрузка + счет-фактура выданный</option>
-                                    @endif
-                                    @if($Document = 2)
-                                        <option value="0">Не создавать</option>
-                                        <option value="1">Отгрузка</option>
-                                        <option selected value="2">Отгрузка + счет-фактура выданный</option>
-                                    @endif
+
 
                             </select>
                         </div>
