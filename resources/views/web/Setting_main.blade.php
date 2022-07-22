@@ -48,8 +48,12 @@
                     <div class="mb-3 row">
                         <P class="col-sm-5 col-form-label"> Выберите на какую организацию создавать заказы: </P>
                         <div class="col-sm-7">
-                            <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required>
-                                <option value="{{$Organization->id}}" selected >{{$Organization->name}}</option> <?php $value = 0; ?>
+                            <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required><?php $value = 0; ?>
+                                @if($Organization == 0)
+                                <option value="{{$Organization->id}}" selected >{{$Organization->name}}</option>
+                                @else
+                                    <option value="" selected > </option>
+                                @endif
                                 @foreach($Body_organization as $bodyItem)
                                     @if($bodyItem->id != $Organization->id)
                                     <option value="{{ $bodyItem->id }}"> {{ ($bodyItem->name) }} </option> <?php $value++; ?>
