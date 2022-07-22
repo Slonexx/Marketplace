@@ -86,16 +86,11 @@ class Setting_mainController extends Controller
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
 
-        Session::flash('message', $MessageKaspi["API"]);
         if ($MessageKaspi["StatusCode"] == 200 ) {
-            Session::flash('alert-class', 'alert-success');
             $message = $this->updateSetting($accountId, $Setting);
-            return Redirect::back()->with(["message"=> $message]);
-
-        }
-        else {
-            Session::flash('alert-class', 'alert-danger');
-            return Redirect::back()->with(["message"=> $MessageKaspi["API"]]);
+            return Redirect::back()->withErrors(["message"=> $message]);
+        } else {
+            return Redirect::back()->withErrors(["message"=> $MessageKaspi["API"]]);
 
         }
 
@@ -108,7 +103,6 @@ class Setting_mainController extends Controller
         $cfg = new cfg();
         $appId = $cfg->appId;
         $app = AppInstanceContoller::loadApp($appId, $accountId);
-        dd( $Setting->TokenKaspi);
         $app->TokenKaspi = $Setting->TokenKaspi;
         $app->Organization = $Setting->Organization;
         $app->PaymentDocument = $Setting->PaymentDocument;

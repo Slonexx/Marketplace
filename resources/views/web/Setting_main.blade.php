@@ -16,7 +16,7 @@
         </div>
 
 
-        @if ($message != null)
+        @if ($errors->any())
         <div class="row mb-3 g-3 align-items-center">
             <div class="alert alert-success alert-dismissible fade show in text-center "> {{ $message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
