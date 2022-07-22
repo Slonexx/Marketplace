@@ -20,7 +20,6 @@ class Setting_mainController extends Controller
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $Setting = new getSettingVendorController($id);
         $apiKey = $Setting->TokenMoySklad;
-        //dd($apiKey);
 
 
         $colorMC = [
@@ -66,7 +65,7 @@ class Setting_mainController extends Controller
         $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
             $Client->setRequestUrl($url_project);
             $Body_project = $Client->requestGet()->rows;
-
+dd("DDDDDDDDDDDDDDDDDD");
         return view('web.Setting_main',['Body' => $Body,
             "setBackground" => $setBackground,
             "Body_organization" => $Body_organization,
