@@ -24,15 +24,13 @@ class WhatsappController extends Controller
         $inputMessage = str_ireplace(" ", "%20", $request->message);
 
 
-
-        $message = "https://wa.me/87750498821?text=".$inputName.$inputMessage;
-
-        return redirect()->to("https://smartkaspi.kz/WhatsappSendNext/".$message);
+        return redirect()->to("https://smartkaspi.kz/WhatsappSendNext/".$inputName."/".$inputMessage);
 
     }
 
-    public function WhatsappSendNext($url){
-        return redirect()->to($url);
+    public function WhatsappSendNext($inputName,$inputMessage ){
+        $message = "https://wa.me/87750498821?text=".$inputName.$inputMessage;
+        return redirect()->to($message);
     }
 
 }
