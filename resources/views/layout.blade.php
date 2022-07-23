@@ -21,6 +21,10 @@
                         <a  target="_blank" href={{  route('whatsapp', ['accountId' => $accountId] ) }} >
                             <i class="fa-brands fa-whatsapp"></i>
                             Написать в WhatsApp </a>
+
+                        <a  target="_blank" href="https://l.clck.bar/f5334">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            Написать в WhatsApp + </a>
                     </div>
             </div>
 
