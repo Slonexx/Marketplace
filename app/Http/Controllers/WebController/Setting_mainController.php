@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\ApiClientMC;
-use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\cfg;
@@ -172,21 +171,6 @@ class Setting_mainController extends Controller
         $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
 
         $app->persist();
-
-        $settings = app(SettingController::class)->getSettings();
-
-        $currSetting = null;
-
-        foreach($settings as $setting){
-            if($setting->accountId == $accountId){
-                $currSetting = $setting;
-                break;
-            }
-        }
-
-        $att = new AttributeController();
-        $att->createAllAttributes($currSetting->TokenMoySklad);
-
         $message = "Настройки сохранились";
         return $message;
     }
