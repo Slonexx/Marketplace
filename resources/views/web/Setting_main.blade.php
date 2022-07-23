@@ -52,7 +52,7 @@
                 <div class="mb-3 row">
                     <p>Создание документов при заказе из Kaspi </p>
                     <div class="mb-3 row">
-                        <P class="col-sm-5 col-form-label"> Выберите на какую организацию создавать заказы: </P>
+                        <P class="col-sm-5 col-form-label"> <i class="text-danger">*</i> Выберите на какую организацию создавать заказы: </P>
                         <div class="col-sm-7">
                             <select name="Organization"  id="parent_id" class="form-select text-black dynamic" data-dependent="details" required><?php $value = 0; ?>
                                 @if($Organization == "0")
