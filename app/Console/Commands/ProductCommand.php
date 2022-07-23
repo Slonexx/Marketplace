@@ -56,7 +56,7 @@ class ProductCommand extends Command
                 //здесь настройки
 
                 InfoLogModel::create([
-                    'accountId' => 'fdhadkfdsd',
+                    'accountId' => $settings->accountId,
                     'message' => $log,
                 ]);
 
@@ -66,7 +66,7 @@ class ProductCommand extends Command
 
                     foreach($kaspiAllStates as $state){
                             $response = Http::post('https://smartkaspi.kz/api/products',[
-                                'tokenKaspi' => $settings->TokenMoySklad,
+                                'tokenKaspi' => $settings->TokenKaspi,
                                 'tokenMs' => $settings->TokenMoySklad,
                                 'state' => $state,
                                 'fdate' => $tenDaysBefore,
@@ -77,7 +77,7 @@ class ProductCommand extends Command
                         print_r($logSt);
 
                         InfoLogModel::create([
-                            'accountId' => 'fdhadkfdsd',
+                            'accountId' => $settings->accountId,
                             'message' => $logSt,
                         ]);
 
@@ -87,7 +87,7 @@ class ProductCommand extends Command
                     $this->error($th->getMessage());
 
                     InfoLogModel::create([
-                        'accountId' => 'fdhadkfdsd',
+                        'accountId' => $settings->accountId,
                         'message' => $th->getMessage(),
                     ]);
 

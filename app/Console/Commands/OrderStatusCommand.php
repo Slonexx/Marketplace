@@ -57,7 +57,7 @@ class OrderStatusCommand extends Command
              print_r($log);
 
              InfoLogModel::create([
-                'accountId' => 'fdhadkfdsd',
+                'accountId' => $settings->accountId,
                 'message' => $log,
             ]);
 
@@ -67,7 +67,7 @@ class OrderStatusCommand extends Command
 
                  foreach($kaspiAllStates as $state){
                     $response = Http::post('https://smartkaspi.kz/api/orderStatus',[
-                        'tokenKaspi' => $settings->TokenMoySklad,
+                        'tokenKaspi' => $settings->TokenKaspi,
                         'tokenMs' => $settings->TokenMoySklad,
                         'accountId' => $settings->accountId,
                         'payment_option' => $settings->PaymentDocument,
@@ -84,7 +84,7 @@ class OrderStatusCommand extends Command
                      print_r($logSt);
 
                      InfoLogModel::create([
-                        'accountId' => 'fdhadkfdsd',
+                        'accountId' => $settings->accountId,
                         'message' => $logSt,
                     ]);
 
@@ -94,7 +94,7 @@ class OrderStatusCommand extends Command
                 $this->error($th->getMessage());
 
                 InfoLogModel::create([
-                    'accountId' => 'fdhadkfdsd',
+                    'accountId' => $settings->accountId,
                     'message' => $th->getMessage(),
                 ]);
 

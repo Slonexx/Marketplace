@@ -16,7 +16,8 @@ class InfoLogModelObserver
     public function created(InfoLogModel $infoLogModel)
     {
         $count = InfoLogModel::count();
-        if($count > 20){
+        
+        if($count > 200){
             DB::table('info_log_models')
             ->orderBy('created_at', 'ASC')
             ->limit(1)
