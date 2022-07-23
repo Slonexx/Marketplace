@@ -25,6 +25,7 @@ Route::get('excelProducts/{TokenMoySklad}', [ExcelController::class,'getProducts
 Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 
 Route::get('checkSettings', [SettingController::class, 'getSettings']);
+Route::get('checkSettings2', [CheckSettingsController::class, 'haveSettings']);
 
 Route::get('DeleteVendorApi/{appId}/{accountId}', [DeleteVendorApiController::class, 'Delete'])->name('Delete');
 
