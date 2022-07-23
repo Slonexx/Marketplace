@@ -17,13 +17,13 @@ class CheckSettingsController extends Controller
 
         $usersSettings = [];
 
-        foreach($filesInFolder as $path) { 
+        foreach($filesInFolder as $file) { 
             //$file = pathinfo($path);
-            if(str_ends_with($path,'.json')){
+            if(str_ends_with($file->filename,'.json')){
                 //$data = file_get_contents($path);
                 //$unser = json_encode( unserialize($data) );
                 //$setting =  $this->getContentJson($path);
-                array_push($usersSettings,$path);
+                array_push($usersSettings,$file->filename);
             }
         } 
 
@@ -33,7 +33,8 @@ class CheckSettingsController extends Controller
     }
 
 
-    private function getContentJson($path) {
+    private function getContentJson($filename) {
+        $path = public_path().'/Config/data/'.$filename;
         return json_decode(file_get_contents($path),true);
     }
 }
