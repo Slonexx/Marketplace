@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\ApiClientMC;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\cfg;
@@ -110,6 +111,7 @@ class Setting_mainController extends Controller
 
     public function postFormSetting(Request $request, $accountId){
         $Setting = $request;
+
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
         if ($MessageKaspi["StatusCode"] == 200 ) {
@@ -170,6 +172,11 @@ class Setting_mainController extends Controller
         $vendorAPI->updateAppStatus($appId, $accountId, $app->getStatusName());
 
         $app->persist();
+
+        $TokenMoySklad = $Setting->TokenMoySklad;
+        $att = new AttributeController();
+        $att->createAllAttributes($TokenMoySklad);
+
         $message = "Настройки сохранились";
         return $message;
     }
