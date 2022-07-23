@@ -26,9 +26,7 @@
 
 
         @error('password')
-        <div class="alert alert-danger alert-dismissible fade show in text-center " role="alert">  {{ $message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+            ОШИБКАААААААААААААААА
         @enderror
 
         <form action=" {{  route('Setting_Send' , ['accountId' => $accountId] ) }} " method="post">
