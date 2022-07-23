@@ -46,6 +46,8 @@ class OrderStatusCommand extends Command
              $today = date("Y-m-d", strtotime ('+1 day'));
              $tenDaysBefore = date ('Y-m-d', strtotime ('-9 day'));
 
+            //здесь настройки
+
              $log = "Update orders status... ".$tenDaysBefore."|".$today."\n";
              print_r($log);
 

@@ -28,12 +28,17 @@ class AgentController extends Controller
         $client = new ApiClientMC($uri,$apiKey);
         $attributes = app(AgentAttributesController::class)->getAttributeGos($apiKey);
         //$attributes = app(SessionController::class)->getCookie('gos_attribute');
+        $cellPhone = "  ".$customer->cellPhone;
+        $toPhone = sprintf("%s %s %s",
+        substr($cellPhone, 2, 3),
+        substr($cellPhone, 5, 3),
+        substr($cellPhone, 8));
         $agent = [
             'name' => $customer->name,
             "legalLastName" => $customer->lastName,
             "legalFirstName" => $customer->firstName,
             "actualAddress" => $address,
-            "phone" => "8".$customer->cellPhone,
+            "phone" => "+7 ".$toPhone,
             "companyType" => "individual",
             "attributes" => [
                 0 => [

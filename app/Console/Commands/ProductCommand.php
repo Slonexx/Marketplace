@@ -49,6 +49,8 @@ class ProductCommand extends Command
              $log = "Add products... ".$tenDaysBefore."|".$today."\n";
              print_r($log);
 
+            //здесь настройки
+
              InfoLogModel::create([
                 'accountId' => 'fdhadkfdsd',
                 'message' => $log,

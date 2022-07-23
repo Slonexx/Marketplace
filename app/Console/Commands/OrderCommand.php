@@ -42,6 +42,9 @@ class OrderCommand extends Command
     {
         $havAllRequiredSettings = app(CheckSettingsController::class)->haveSettings();
            //$schedule->command('queue:listen')->everyTwoMinutes();
+
+            //здесь настройки
+
            if($havAllRequiredSettings == true){
                 $today = date("Y-m-d", strtotime ('+1 day'));
                 $tenDaysBefore = date ('Y-m-d', strtotime ('-9 day'));
