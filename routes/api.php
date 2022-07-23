@@ -11,7 +11,7 @@ use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
-
+use App\Http\Controllers\SettingController;
 
 Route::post('orders', [OrderController::class,'insertOrders']);
 Route::post('orderStatus',[OrderController::class,'changeOrderStatus']);
@@ -24,7 +24,7 @@ Route::get('excelProducts/{TokenMoySklad}', [ExcelController::class,'getProducts
 
 Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 
-Route::get('checkSettings', [CheckSettingsController::class, 'haveSettings']);
+Route::get('checkSettings', [SettingController::class, 'getSettings']);
 
 Route::get('DeleteVendorApi/{appId}/{accountId}', [DeleteVendorApiController::class, 'Delete'])->name('Delete');
 
