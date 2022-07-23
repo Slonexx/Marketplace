@@ -23,7 +23,10 @@ class WhatsappController extends Controller
         $inputName = str_ireplace(" ", "%20", $name);
         $inputMessage = str_ireplace(" ", "%20", $request->message);
         $message = "https://wa.me/87750498821?text=".$inputName.$inputMessage;
-        return redirect()->to($message);
+
+        $time_url = "https://api.whatsapp.com/send/?phone=77750498821&text=";
+
+        return redirect()->to($time_url);
 
     }
 
