@@ -44,7 +44,7 @@ class OrderStatusCommand extends Command
         if($havAllRequiredSettings == true){
              $today = date("Y-m-d", strtotime ('+1 day'));
              $tenDaysBefore = date ('Y-m-d', strtotime ('-9 day'));
-             
+
              $log = "Update orders status... ".$tenDaysBefore."|".$today."\n";
              print_r($log);
 
@@ -53,7 +53,7 @@ class OrderStatusCommand extends Command
                  $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
 
                  foreach($kaspiAllStates as $state){
-                    $response = Http::post('http://kaspi/api/orderStatus',[
+                    $response = Http::post('https://smartkaspi.kz/api/orderStatus',[
                              'tokenKaspi' => 'Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=',
                              'tokenMs' => '8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f',
                              'payment_option' => 2,
@@ -69,7 +69,7 @@ class OrderStatusCommand extends Command
                     $logSt = "Kaspi State:".$state." ".$response->body()."\n";
                      print_r($logSt);
                  }
-                
+
              } catch (\Throwable $th) {
                 $this->error($th->getMessage());
              }
