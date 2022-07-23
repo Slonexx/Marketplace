@@ -53,7 +53,7 @@ class ProductCommand extends Command
                  $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
 
                  foreach($kaspiAllStates as $state){
-                         $response = Http::post('http://kaspi/api/products',[
+                         $response = Http::post('https://smartkaspi.kz/api/products',[
                              'tokenKaspi' => 'Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=',
                              'tokenMs' => '8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f',
                              'state' => $state,
@@ -64,7 +64,7 @@ class ProductCommand extends Command
                      $logSt = "Kaspi State:".$state." ".$response->body()."\n";
                      print_r($logSt);
                  }
-                
+
              } catch (\Throwable $th) {
                 $this->error($th->getMessage());
              }
