@@ -22,7 +22,7 @@ class CheckSettingsController extends Controller
             if(str_ends_with($path,'.json')){
                 $data = file_get_contents($path);
                 //$unser = json_encode( unserialize($data) );
-                $setting =  json_decode($path);
+                $setting =  json_decode($data);
                 array_push($usersSettings,$setting);
             }
         } 
@@ -33,8 +33,7 @@ class CheckSettingsController extends Controller
     }
 
 
-    //  private function getContentJson($filename) {
-    //     $path = public_path().'/json'.'/'.$filename.'.json';
-    //     return json_decode(file_get_contents($path),true);
-    // }
+    private function getContentJson($path) {
+        return json_decode(file_get_contents($path),true);
+    }
 }
