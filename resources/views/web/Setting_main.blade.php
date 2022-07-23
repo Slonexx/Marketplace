@@ -73,28 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-3 row">
-                        <P class="col-sm-5 col-form-label"> Выберите какой тип платёжного документа: </P>
-                        <div class="col-sm-7">
-                            <select name="PaymentDocument" class="form-select text-black evidence-select" >
-                                    @if($PaymentDocument == "0")
-                                        <option selected value="0">Не создавать</option>
-                                        <option value="1">Приходной ордер</option>
-                                        <option value="2">Входящий платёж </option>
-                                    @endif
-                                        @if($PaymentDocument == "1")
-                                            <option value="0">Не создавать</option>
-                                            <option selected value="1">Приходной ордер</option>
-                                            <option value="2">Входящий платёж </option>
-                                        @endif
-                                        @if($PaymentDocument == "2")
-                                            <option value="0">Не создавать</option>
-                                            <option value="1">Приходной ордер</option>
-                                            <option selected value="2">Входящий платёж </option>
-                                        @endif
-                            </select>
-                        </div>
-                    </div>
+
 
                     <div class="mb-3 row">
                         <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавть: </P>
@@ -119,6 +98,28 @@
                         </div>
                     </div>
 
+                    <div class="mb-3 row">
+                        <P class="col-sm-5 col-form-label"> Выберите какой тип платёжного документа: </P>
+                        <div class="col-sm-7">
+                            <select name="PaymentDocument" class="form-select text-black evidence-select" >
+                                @if($PaymentDocument == "0")
+                                    <option selected value="0">Не создавать</option>
+                                    <option value="1">Приходной ордер</option>
+                                    <option value="2">Входящий платёж </option>
+                                @endif
+                                @if($PaymentDocument == "1")
+                                    <option value="0">Не создавать</option>
+                                    <option selected value="1">Приходной ордер</option>
+                                    <option value="2">Входящий платёж </option>
+                                @endif
+                                @if($PaymentDocument == "2")
+                                    <option value="0">Не создавать</option>
+                                    <option value="1">Приходной ордер</option>
+                                    <option selected value="2">Входящий платёж </option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
 
                         {{--Выберите расчетный счет--}}
                         <div class="evidence-content"></div>
