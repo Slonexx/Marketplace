@@ -1,7 +1,6 @@
-<!doctype html>
-<html lang="en">
-@include('head')
-<body>
+@extends('layout')
+
+@section('content')
 
     <div class="content p-4 mt-2 bg-white text-black rounded">
         <h2 align="center">Написать в WhatsApp
@@ -48,8 +47,4 @@
         </div>
     </div>
 
-
-
-
-</body>
-</html>
+    @endsection
