@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebController;
 
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,12 @@ class WebController extends Controller
         $vendorAPI = new VendorApiController();
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
+
+        $Setting = new getSettingVendorController($accountId);
+        $TokenMoySklad = $Setting->TokenMoySklad;
+
+        $att = new AttributeController();
+        $att->createAllAttributes($TokenMoySklad);
 
         return redirect()->route('Index', ['accountId' => $accountId] );
 

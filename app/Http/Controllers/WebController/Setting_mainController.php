@@ -110,6 +110,7 @@ class Setting_mainController extends Controller
 
     public function postFormSetting(Request $request, $accountId){
         $Setting = $request;
+
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
         if ($MessageKaspi["StatusCode"] == 200 ) {
