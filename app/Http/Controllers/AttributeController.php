@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 class AttributeController extends Controller
 {
 
+    private ApiClientMC $client;
+
     public function createAllAttributes($TokenMoySklad)
     {
+        $this->client = new ApiClientMC("",$TokenMoySklad);
 
         $this->createProductAttributes($TokenMoySklad);
         $this->createOrderAttributes($TokenMoySklad);
@@ -41,8 +44,9 @@ class AttributeController extends Controller
 
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes";
-        $client = new ApiClientMC($uri, $apiKey);
-        $json = $client->requestGet();
+        //$client = new ApiClientMC($uri, $apiKey);
+        $this->client->setRequestUrl($uri);
+        $json = $this->client->requestGet();
 
         foreach($bodyAttributes as $body){
             $foundedAttrib = false;
@@ -53,7 +57,7 @@ class AttributeController extends Controller
                 }
             }
             if($foundedAttrib == false){
-                $client->requestPost($body);
+                $this->client->requestPost($body);
             }
         }
 
@@ -63,8 +67,9 @@ class AttributeController extends Controller
     private function createOrderAttributes($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
-        $client = new ApiClientMC($uri, $apiKey);
-        $json = $client->requestGet();
+        //$client = new ApiClientMC($uri, $apiKey);
+        $this->client->setRequestUrl($uri);
+        $json = $this->client->requestGet();
 
         $customEntityMeta = null;
         foreach($json->customEntities as $customEntity){
@@ -92,8 +97,8 @@ class AttributeController extends Controller
         ];
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
-        $client->setRequestUrl($uri);
-        $json = $client->requestGet();
+        $this->client->setRequestUrl($uri);
+        $json = $this->client->requestGet();
         $foundedAttrib = false;
 
         foreach($json->rows as $row){
@@ -104,15 +109,16 @@ class AttributeController extends Controller
         }
 
         if($foundedAttrib == false){
-            $client->requestPost($body);
+            $this->client->requestPost($body);
         }
     }
 
     private function createAgentAttributes($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
-        $client = new ApiClientMC($uri, $apiKey);
-        $json = $client->requestGet();
+        //$client = new ApiClientMC($uri, $apiKey);
+        $this->client->setRequestUrl($uri);
+        $json = $this->client->requestGet();
 
         $customEntityMeta = null;
         foreach($json->customEntities as $customEntity){
