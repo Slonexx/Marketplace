@@ -88,12 +88,12 @@ class ProductController extends Controller
        $notAddedProducts = [];
        foreach($productsFromKaspi as $product){
             switch ($option) {
-                case 1:
+                case 2:
                     if(in_array($product['article'],$productsFromMs["articles"]) == false){
                         array_push($notAddedProducts, $product);
                     }
                     break;
-                case 2:
+                case 1:
                     if(in_array($product['name'],$productsFromMs["names"]) == false){
                         array_push($notAddedProducts, $product);
                     }
