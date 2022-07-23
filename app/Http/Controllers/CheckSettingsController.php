@@ -19,11 +19,11 @@ class CheckSettingsController extends Controller
 
         foreach($filesInFolder as $file) { 
             //$file = pathinfo($path);
-            if(str_ends_with($file->filename,'.json')){
+            if(str_ends_with($file,'.json')){
                 //$data = file_get_contents($path);
                 //$unser = json_encode( unserialize($data) );
                 //$setting =  $this->getContentJson($path);
-                array_push($usersSettings,$file->filename);
+                array_push($usersSettings,$file);
             }
         } 
 
