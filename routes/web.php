@@ -5,6 +5,7 @@ use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\WebController;
 use App\Http\Controllers\WebController\WhatsappController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\WebController\ExportProductController;
 
 
 Route::get('/', [WebController::class, 'index']);
@@ -22,3 +23,4 @@ Route::post('/PostSupport/{accountId}', [SupportController::class, 'supportSend'
 Route::get('/Whatsapp/{accountId}', [WhatsappController::class, 'Index'])->name("whatsapp");
 Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
 
+Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
