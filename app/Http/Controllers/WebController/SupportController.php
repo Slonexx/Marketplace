@@ -22,12 +22,12 @@ class SupportController extends Controller
             'message' => 'required|max:500',
         ]);
 
-        $to = 'support@smartinnovations.kz';
+        $to = 'sergei@smartkaspi.kz';
         $subject = 'Обрантная связь с сайта Kaspi marketplace';
 
         $headers = [
-            "From" => "support@smartinnovations.kz",
-            "Reply-To" => "support@smartinnovations.kz",
+            "From" => "sergei@smartkaspi.kz",
+            "Reply-To" => "sergei@smartkaspi.kz",
             "Content-type" => "text/plain; charset=utf-8",
         ];
 
