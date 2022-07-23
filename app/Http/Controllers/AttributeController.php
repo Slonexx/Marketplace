@@ -14,8 +14,8 @@ class AttributeController extends Controller
         $this->client = new ApiClientMC("",$TokenMoySklad);
 
         try{
-            $this->createProductAttributes($TokenMoySklad);
             $this->createOrderAttributes($TokenMoySklad);
+            $this->createProductAttributes($TokenMoySklad);
             $this->createAgentAttributes($TokenMoySklad);
         } catch(ClientException $e){
             dd($e);
