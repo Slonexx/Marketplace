@@ -11,7 +11,7 @@ class CheckSettingsController extends Controller
     {
         //Проверка есть ли необходимые найстройки
 
-        $directory = public_path().'/Config/';
+        $directory = public_path().'/Config/data';
 
         $filesInFolder = File::files($directory);
 
@@ -19,10 +19,12 @@ class CheckSettingsController extends Controller
 
         foreach($filesInFolder as $path) { 
             //$file = pathinfo($path);
-            $data = file_get_contents($path);
-            //$unser = json_encode( unserialize($data) );
-            $setting =  json_decode($path);
-            array_push($usersSettings,$setting);
+            if(str_ends_with($path,'.json')){
+                $data = file_get_contents($path);
+                //$unser = json_encode( unserialize($data) );
+                $setting =  json_decode($path);
+                array_push($usersSettings,$setting);
+            }
         } 
 
         dd($usersSettings);
