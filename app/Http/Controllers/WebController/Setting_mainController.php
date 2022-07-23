@@ -112,6 +112,9 @@ class Setting_mainController extends Controller
 
     public function postFormSetting(Request $request, $accountId){
         $Setting = $request;
+        $TokenMoySklad = $Setting->TokenMoySklad;
+        $att = new AttributeController();
+        $att->createOrderAttributes($TokenMoySklad);
 
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);

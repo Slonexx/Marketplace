@@ -32,11 +32,7 @@ class WebController extends Controller
 
     public function show($accountId){
 
-        $Setting = new getSettingVendorController($accountId);
-        $TokenMoySklad = $Setting->TokenMoySklad;
 
-        $att = new AttributeController();
-        $att->createOrderAttributes($TokenMoySklad);
 
         return view('web.index', ['accountId' => $accountId] );
     }
