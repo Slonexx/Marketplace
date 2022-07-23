@@ -45,7 +45,7 @@ class KaspiApiClient {
     {
 
         $headers = [
-            'Accept' => 'application/json',
+            'Accept' => 'application/vnd.api+json',
             'X-Auth-Token' => $this->apiKey,
         ];
 

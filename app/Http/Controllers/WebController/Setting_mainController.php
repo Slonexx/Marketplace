@@ -19,7 +19,7 @@ class Setting_mainController extends Controller
 
 
 
-       if($request->has('error')) $error = $request->error;
+       if($request->has('error')) if ( $request->error != "0" ) $error = $request->error;
         else $error = "0" ;
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
@@ -110,8 +110,9 @@ class Setting_mainController extends Controller
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
         if ($MessageKaspi["StatusCode"] == 200 ) {
+            $request->request->add(["error"=>"0"]);
             $message = $this->updateSetting($accountId, $Setting);
-            return Redirect::back()->with('success', $message);
+            return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>"0" ]);
         } else {
             /*$_SESSION["error"] = $MessageKaspi["API"];
             return Redirect::back()->with('error', $MessageKaspi["API"]);*/
@@ -171,7 +172,7 @@ class Setting_mainController extends Controller
     }
 
     public function saveApiKey(string $API_KEY){
-        $url = "https://kaspi.kz/shop/api/products/classification/attributes?c=Master";
+        $url = "https://kaspi.kz/shop/api/v2/orders?filter[orders][code]=21";
         $status = new KaspiApiClient($url,$API_KEY);
         $message = $status->CheckAndSaveApiKey();
         return $message;
