@@ -33,8 +33,6 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-        $att = new AttributeController();
-        $att->createAgentAttributes($TokenMoySklad);
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
@@ -112,9 +110,6 @@ class Setting_mainController extends Controller
 
     public function postFormSetting(Request $request, $accountId){
         $Setting = $request;
-        $TokenMoySklad = $Setting->TokenMoySklad;
-        $att = new AttributeController();
-        $att->createOrderAttributes($TokenMoySklad);
 
         $TokenKaspi = $request->TokenKaspi;
         $MessageKaspi = $this->saveApiKey($TokenKaspi);

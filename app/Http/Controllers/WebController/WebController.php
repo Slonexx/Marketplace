@@ -20,19 +20,12 @@ class WebController extends Controller
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
 
-        $Setting = new getSettingVendorController($accountId);
-        $TokenMoySklad = $Setting->TokenMoySklad;
-
-        $att = new AttributeController();
-        $att->createProductAttributes($TokenMoySklad);
 
         return redirect()->route('Index', ['accountId' => $accountId] );
 
     }
 
     public function show($accountId){
-
-
 
         return view('web.index', ['accountId' => $accountId] );
     }
