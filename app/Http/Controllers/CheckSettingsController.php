@@ -22,8 +22,8 @@ class CheckSettingsController extends Controller
             if(str_ends_with($file->getFilename(),'.json')){
                 //$data = file_get_contents($path);
                 //$unser = json_encode( unserialize($data) );
-                $setting =  $this->getContentJson($file->getFilename());
-                array_push($usersSettings,$setting);
+                //$setting =  $this->getContentJson($file->getFilename());
+                array_push($usersSettings,$file->getFilename());
             }
         } 
 
