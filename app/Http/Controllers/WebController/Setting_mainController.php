@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\ApiClientMC;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\cfg;
@@ -16,8 +17,6 @@ use Illuminate\Support\Facades\Session;
 class Setting_mainController extends Controller
 {
     public function index(Request $request, $accountId){
-
-
 
        if($request->has('error')) {
            if( $request->error != "0" ) $error = $request->error;
@@ -33,6 +32,10 @@ class Setting_mainController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
+
+        $att = new AttributeController();
+        $att->createAllAttributes($TokenMoySklad);
+
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
