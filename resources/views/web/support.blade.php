@@ -7,16 +7,6 @@
             <i class="fa-solid fa-envelope text-orange"></i>
             Написать нам на почту </h2>
 
-            @if(Session::has('message'))
-                <div class="alert text-center">
-                    <div class="alert {{ Session::get('alert-class', 'alert-info') }}  alert-dismissible fade show "
-                         role="alert"> {{ Session::get('message') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        <br>
-                    </div>
-                </div>
-            @endif
-
 
 
         <div class="mt-3">
@@ -26,34 +16,53 @@
             @csrf <!-- {{ csrf_field() }} -->
 
 
-                    <div class="form-group mb-3 row ">
-                        <label for="TokenKaspi" class="col-sm-2 col-form-label mt-2">Введите Имя</label>
-                        <div class="col-sm-10">
+                    <div class="form-group row ">
+                        <label for="TokenKaspi" class="col-form-label ">Введите Имя</label>
+                        <div class="col-sm-12">
                             <input type="text" name="name" placeholder="Введите Имя, фамилия" id="name" class="form-control form-control-orange"
                                    required maxlength="100" value="{{ old('name') ?? '' }}">
                         </div>
                     </div>
 
-                    <div class="form-group mb-3 row ">
-                        <label for="TokenKaspi" class="col-sm-2 col-form-label mt-2">Адрес почты</label>
-                        <div class="col-sm-10">
+                    <div class="form-group row ">
+                        <label for="TokenKaspi" class="col-form-label ">Адрес почты</label>
+                        <div class="col-sm-12">
                             <input type="email" name="email" placeholder="Адрес почты" id="email" class="form-control form-control-orange"
                                    required maxlength="100" value="{{ old('email') ?? '' }}">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="TokenKaspi" class="col-sm-2 col-form-label mt-2"></label>
-                        <div class="col-sm-10">
+                        <label for="TokenKaspi" class="col-form-label"></label>
+                        <div class="col-sm-12">
                         <textarea class="form-control form-control-orange" name="message" placeholder="Ваше сообщение"
                                   required maxlength="500" rows="3">{{ old('message') ?? '' }}</textarea>
                         </div>
                     </div>
 
-                <div class='d-flex justify-content-end text-black btnP' >
-                    <button type="submit" class="mt-3 btn btn-outline-dark textHover"> <i class="fa-solid fa-envelope"></i> Отправить  </button>
-                </div>
+                <br>
 
+                <div class='d-flex justify-content-end text-black btnP' >
+                    <p class="btn btn-outline-dark textHover" data-bs-toggle="modal" data-bs-target="#modal">
+                        <i class="fa-solid fa-arrow-down-to-arc"></i> Сохранить </p>
+                </div>
+                <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"> Вопрос <i class="fa-solid fa-circle-question text-danger"></i></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Отправить сообщение ? </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Нет</button>
+                                <button type="submit" class="btn btn-outline-success">Да</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </form>
 
