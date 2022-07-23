@@ -108,7 +108,7 @@ class Setting_mainController extends Controller
             $message = $this->updateSetting($accountId, $Setting);
             return Redirect::back()->with('success', $message);
         } else {
-            return Redirect::back()->with('error', $MessageKaspi["API"]);
+            return back()->with('error', $MessageKaspi["API"]);
         }
 
 
