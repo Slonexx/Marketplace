@@ -61,30 +61,6 @@ class Setting_mainController extends Controller
 
 
 
-        $colorMC = [
-            10066329 => "gray",
-            15280409 => "red",
-            15106326 => "orange",
-            6900510 => "saddlebrown",
-            12430848 => "darkolivegreen",
-            10667543 => "lawngreen",
-            8825440 => "darkseagreen",
-            34617 => "green",
-            8767198 => "cadetblue",
-            40931 => "deepskyblue",
-            4354177 => "rgb(66, 112, 129)",
-            18842 => "blue",
-            15491487 => "rgb(236, 97, 159)",
-            10774205 => "rgb(164, 102, 189)",
-            9245744 => "rgb(141, 20, 48)",
-            0 => "black",
-        ];
-
-
-
-
-
-
 
         $Client->setRequestUrl($url_organization);
         $Body_organization = $Client->requestGet()->rows;
