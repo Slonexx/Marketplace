@@ -17,7 +17,7 @@ class CheckSettingsController extends Controller
             array_push($usersCheckSettings,$userCheckSetting);
         }
 
-        dd($usersCheckSettings);
+       return $usersCheckSettings;
 
     }
 

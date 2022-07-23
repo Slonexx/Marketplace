@@ -8,9 +8,9 @@ use App\Http\Controllers\StatusController;
 class StateController extends Controller
 {
 
-    public function getState($statusKaspi,$apiKey){
+    public function getState($accountId,$statusKaspi,$apiKey){
 
-        $status = app(StatusController::class)->getStatusName($statusKaspi);
+        $status = app(StatusController::class)->getStatusName($accountId,$statusKaspi);
 
         if($status == null){
             return null;

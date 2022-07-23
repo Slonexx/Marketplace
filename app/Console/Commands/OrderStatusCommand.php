@@ -40,9 +40,14 @@ class OrderStatusCommand extends Command
      */
     public function handle()
     {
-        $havAllRequiredSettings = app(CheckSettingsController::class)->haveSettings();
+        $allRequiredSettings = app(CheckSettingsController::class)->haveSettings();
         //$schedule->command('queue:listen')->everyTwoMinutes();
-        if($havAllRequiredSettings == true){
+
+         //здесь настройки
+         if(count($allRequiredSettings)>0)
+         foreach($allRequiredSettings as $requiredSettings){
+             if($requiredSettings['check'] == true){
+             $settings = $requiredSettings['settings'];
              $today = date("Y-m-d", strtotime ('+1 day'));
              $tenDaysBefore = date ('Y-m-d', strtotime ('-9 day'));
 
@@ -62,17 +67,18 @@ class OrderStatusCommand extends Command
 
                  foreach($kaspiAllStates as $state){
                     $response = Http::post('https://smartkaspi.kz/api/orderStatus',[
-                             'tokenKaspi' => 'Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=',
-                             'tokenMs' => '8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f',
-                             'payment_option' => 2,
-                             'demand_option' => 2,
-                             'state' => $state,
-                             'fdate' => $tenDaysBefore,
-                             'sdate' => $today,
-                             'organization_id' => '72d4b01d-feab-11ec-0a80-0738000e5a8d',
-                             'project_name' => 'Test Project',
-                             'sale_channel_name' => 'Kaspi Shop',
-                             'organization_account_number' => '21003543',
+                        'tokenKaspi' => $settings->TokenMoySklad,
+                        'tokenMs' => $settings->TokenMoySklad,
+                        'accountId' => $settings->accountId,
+                        'payment_option' => $settings->PaymentDocument,
+                        'demand_option' => $settings->Document,
+                        'state' => $state,
+                        'fdate' => $tenDaysBefore,
+                        'sdate' => $today,
+                        'organization_id' => $settings->Organization,
+                        'project_name' => $settings->Project,
+                        'sale_channel_name' => $settings->Saleschannel,
+                        'organization_account_number' => $settings->PaymentAccount,
                     ])->throw();
                     $logSt = "Kaspi State:".$state." ".$response->body()."\n";
                      print_r($logSt);
@@ -95,5 +101,8 @@ class OrderStatusCommand extends Command
              }
 
         }
+         }
+
+        
     }
 }

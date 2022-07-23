@@ -20,30 +20,39 @@ class StatusController extends Controller
     #RETURN_ACCEPTED_BY_MERCHANT – ожидает решения по возврату
     #RETURNED – возвращён
 
-    public function getStatusName($status_Kaspi)
+    public function getStatusName($accountId,$status_Kaspi)
     {
         $status = null;
 
         //Настройка статусов нужны тут
+        $settings = app(SettingController::class)->getSettings();
+
+        $currSetting = null;
+
+        foreach($settings as $setting){
+            if($setting->accountId == $accountId){
+              $currSetting = $setting;
+            }
+        }
 
         switch ($status_Kaspi) {
             case 'APPROVED_BY_BANK':
-              $status = "Новый";
+              $status = $currSetting->APPROVED_BY_BANK;
             break;
             case 'ACCEPTED_BY_MERCHANT':
-              $status = "Подтвержден";
+              $status = $currSetting->ACCEPTED_BY_MERCHANT;
             break;
             case 'CANCELLED':
                 case 'CANCELLING':
-              $status = "Отменен";
+              $status = $currSetting->CANCELLED;
             break;
             case 'COMPLETED':
-              $status = "Доставлен";
+              $status = $currSetting->COMPLETED;
             break;
             case 'KASPI_DELIVERY_RETURN_REQUESTED':
               case 'RETURN_ACCEPTED_BY_MERCHANT':
                 case 'RETURNED':
-                    $status = "Возврат";
+                    $status = $currSetting->RETURNED;
                   break;
         }
         return $status;

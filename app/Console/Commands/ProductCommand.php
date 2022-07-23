@@ -40,55 +40,63 @@ class ProductCommand extends Command
      */
     public function handle()
     {
-        $havAllRequiredSettings = app(CheckSettingsController::class)->haveSettings();
+        $allRequiredSettings = app(CheckSettingsController::class)->haveSettings();
         //$schedule->command('queue:listen')->everyTwoMinutes();
-        if($havAllRequiredSettings == true){
-             $today = date("Y-m-d", strtotime ('+1 day'));
-             $tenDaysBefore = date ('Y-m-d', strtotime ('-9 day'));
+         //здесь настройки
+         if(count($allRequiredSettings)>0)
+         foreach($allRequiredSettings as $requiredSettings){
+           if($requiredSettings['check'] == true){
+                $settings = $requiredSettings['settings'];
+                $today = date("Y-m-d", strtotime ('+1 day'));
+                $tenDaysBefore = date ('Y-m-d', strtotime ('-9 day'));
 
-             $log = "Add products... ".$tenDaysBefore."|".$today."\n";
-             print_r($log);
+                $log = "Add products... ".$tenDaysBefore."|".$today."\n";
+                print_r($log);
 
-            //здесь настройки
-
-             InfoLogModel::create([
-                'accountId' => 'fdhadkfdsd',
-                'message' => $log,
-            ]);
-
-             try {
-
-                 $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
-
-                 foreach($kaspiAllStates as $state){
-                         $response = Http::post('https://smartkaspi.kz/api/products',[
-                             'tokenKaspi' => 'Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=',
-                             'tokenMs' => '8eb0e2e3fc1f31effe56829d5fdf60444d2e3d3f',
-                             'state' => $state,
-                             'fdate' => $tenDaysBefore,
-                             'sdate' => $today,
-                             'option' => 2,
-                          ])->throw();
-                     $logSt = "Kaspi State:".$state." ".$response->body()."\n";
-                     print_r($logSt);
-
-                     InfoLogModel::create([
-                        'accountId' => 'fdhadkfdsd',
-                        'message' => $logSt,
-                    ]);
-
-                 }
-
-             } catch (\Throwable $th) {
-                $this->error($th->getMessage());
+                //здесь настройки
 
                 InfoLogModel::create([
                     'accountId' => 'fdhadkfdsd',
-                    'message' => $th->getMessage(),
+                    'message' => $log,
                 ]);
 
-             }
+                try {
 
-        }
+                    $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
+
+                    foreach($kaspiAllStates as $state){
+                            $response = Http::post('https://smartkaspi.kz/api/products',[
+                                'tokenKaspi' => $settings->TokenMoySklad,
+                                'tokenMs' => $settings->TokenMoySklad,
+                                'state' => $state,
+                                'fdate' => $tenDaysBefore,
+                                'sdate' => $today,
+                                'option' => $settings->CheckCreatProduct,
+                            ])->throw();
+                        $logSt = "Kaspi State:".$state." ".$response->body()."\n";
+                        print_r($logSt);
+
+                        InfoLogModel::create([
+                            'accountId' => 'fdhadkfdsd',
+                            'message' => $logSt,
+                        ]);
+
+                    }
+
+                } catch (\Throwable $th) {
+                    $this->error($th->getMessage());
+
+                    InfoLogModel::create([
+                        'accountId' => 'fdhadkfdsd',
+                        'message' => $th->getMessage(),
+                    ]);
+
+                }
+
+            }
+         }
+
+
+       
     }
 }

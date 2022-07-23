@@ -127,17 +127,20 @@ class OrderController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
+            'accountId' => 'required|string',
             'payment_option' => 'required|integer',
             'demand_option' => 'required|integer',
             'state' => 'required|string',
             'fdate' => 'required|string',
             'sdate' => 'required|string',
             'organization_id' => 'required|string',
-            'project_name' => 'sometimes|required|string',
-            'sale_channel_name' => 'sometimes|required|string',
-            'organization_account_number' => 'sometimes|required|string',
+            'project_name' => 'sometimes|nullable|string',
+            'sale_channel_name' => 'sometimes|nullable|string',
+            'organization_account_number' => 'sometimes|nullable|string',
         ]);
 
+
+        $accountId = $request->accountId;
         $paymentOption = $request->payment_option;
         $demandOption = $request->demand_option;
 
@@ -164,6 +167,7 @@ class OrderController extends Controller
         $count = 0;
         foreach ($orders as $order) {
             $formattedOrder = $this->mapOrderToAdd(
+                $accountId,
                 $order,
                 $sale_channel_name,
                 $project_name,
@@ -185,7 +189,7 @@ class OrderController extends Controller
     }
 
     private function mapOrderToAdd(
-        $order,$sale_channel_name,$project_name,
+        $accountId,$order,$sale_channel_name,$project_name,
         $organization_name,$organization_account,$apiKey)
     {
             //$formattedOrders = [];
@@ -203,7 +207,7 @@ class OrderController extends Controller
             $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
 
-            $statusFromMs = $this->getState($order['status'],$apiKey);
+            $statusFromMs = $this->getState($accountId,$order['status'],$apiKey);
 
             if($statusFromMs != null){
                 $formattedOrder['state'] = $statusFromMs;
@@ -254,9 +258,9 @@ class OrderController extends Controller
        return $res;
     }
   
-    private function getState($status,$apiKey)
+    private function getState($accountId,$status,$apiKey)
     {
-       $meta = app(StateController::class)->getState($status,$apiKey);
+       $meta = app(StateController::class)->getState($accountId,$status,$apiKey);
 
         if($meta == null){
             return null;
@@ -340,17 +344,19 @@ class OrderController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
+            'accountId' => 'required|string',
             'payment_option' => 'required|integer',
             'demand_option' => 'required|integer',
             'state' => 'required|string',
             'fdate' => 'required|string',
             'sdate' => 'required|string',
             'organization_id' => 'required|string',
-            'project_name' => 'sometimes|required|string',
-            'sale_channel_name' => 'required|string',
-            'organization_account_number' => 'sometimes|required|string',
+            'project_name' => 'sometimes|nullable|string',
+            'sale_channel_name' => 'sometimes|nullable|string',
+            'organization_account_number' => 'sometimes|nullable|string',
         ]);
 
+        $accountId = $request->accountId;
         $paymentOption = $request->payment_option;
         $demandOption = $request->demand_option;
 
@@ -380,12 +386,13 @@ class OrderController extends Controller
                 if($orderKaspi['id'] == $orderMs['externalCode']) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
                         
-                        $metaState = app(StateController::class)->getState($orderKaspi['status'],$request->tokenMs);
+                        $metaState = app(StateController::class)->getState($accountId,$orderKaspi['status'],$request->tokenMs);
                         if($metaState != null){
                             $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
                         }
                         
                         $formattedOrder = $this->mapOrderToAdd(
+                            $accountId,
                             $orderKaspi,
                             $sale_channel_name,
                             $project_name,
