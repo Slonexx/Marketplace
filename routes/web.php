@@ -28,5 +28,5 @@ Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSe
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
 
 
-Route::get('/InfoLog/{accountId}', [infoLogController::class, 'index'])->name('InfoLog');
+Route::get('/infoLog/{accountId}', [infoLogController::class, 'index'])->name('InfoLog');
 
