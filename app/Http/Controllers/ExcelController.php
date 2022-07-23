@@ -8,14 +8,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
 {
-    public function getProductsExcel(Request $request)
+    public function getProductsExcel(Request $request, $TokenMoySklad)
     {
-        $request->validate([
-            'token' => 'required|string'
-        ]);
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
-        $apiKey = $request->token;
+        $apiKey = $TokenMoySklad;
         $client = new ApiClientMC($uri,$apiKey);
         $data = $client->requestGet();
 
