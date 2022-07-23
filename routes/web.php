@@ -6,7 +6,7 @@ use App\Http\Controllers\WebController\WebController;
 use App\Http\Controllers\WebController\WhatsappController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController\ExportProductController;
-use App\Http\Controllers\webController\InfoLogController;
+use App\Http\Controllers\webController\infoLogController;
 
 
 Route::get('/', [WebController::class, 'index']);
@@ -27,5 +27,5 @@ Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSe
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
 
 
-Route::get('/InfoLog/{accountId}', [InfoLogController::class, 'index'])->name('InfoLog');
+Route::get('/InfoLog/{accountId}', [infoLogController::class, 'index'])->name('InfoLog');
 

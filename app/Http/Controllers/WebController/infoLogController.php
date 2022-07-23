@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\InfoLogModel;
 use Illuminate\Http\Request;
 
-class InfoLogController extends Controller
+class infoLogController extends Controller
 {
     public function index($accountId){
 
