@@ -13,9 +13,13 @@ class AttributeController extends Controller
     {
         $this->client = new ApiClientMC("",$TokenMoySklad);
 
-        $this->createProductAttributes($TokenMoySklad);
-        $this->createOrderAttributes($TokenMoySklad);
-        $this->createAgentAttributes($TokenMoySklad);
+        try{
+            $this->createProductAttributes($TokenMoySklad);
+            $this->createOrderAttributes($TokenMoySklad);
+            $this->createAgentAttributes($TokenMoySklad);
+        } catch(ClientException $e){
+            dd($e);
+        }
     }
 
     private function createProductAttributes($apiKey)
