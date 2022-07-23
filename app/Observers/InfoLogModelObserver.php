@@ -17,10 +17,11 @@ class InfoLogModelObserver
     {
         //$count = InfoLogModel::count();
         
-        $accountIds = DB::table('info_log_models')->get('accountId');
+        $accountIds = InfoLogModel::all('accountId');
 
         foreach($accountIds as $accountId){
-            $logs = DB::table('info_log_models')->where('accountId',$accountId)->get();
+            $query = InfoLogModel::query();
+            $logs = $query->where('accountId',$accountId)->get();
             if(count($logs) > 20){
                 DB::table('info_log_models')
                 ->where('accountId',$accountId)
