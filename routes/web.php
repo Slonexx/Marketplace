@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\webController\infoLogController;
 use App\Http\Controllers\WebController\Setting_mainController;
 use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\WebController;
 use App\Http\Controllers\WebController\WhatsappController;
 use App\Http\Controllers\WebController\ExportProductController;
-use App\Http\Controllers\webController\infoLogController;
 use Illuminate\Support\Facades\Route;
 
 
