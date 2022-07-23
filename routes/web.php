@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\webController\infoLogController;
+use App\Http\Controllers\WebController\info_log_Controller;
 use App\Http\Controllers\WebController\Setting_mainController;
 use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\WebController;
@@ -28,5 +28,5 @@ Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSe
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
 
 
-Route::get('/infoLog/{accountId}', [infoLogController::class, 'index'])->name('InfoLog');
+Route::get('/infoLog/{accountId}', [info_log_Controller::class, 'index'])->name('InfoLog');
 
