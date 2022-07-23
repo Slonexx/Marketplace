@@ -27,7 +27,6 @@ class Setting_mainController extends Controller
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
-        $setBackground = array();
 
         $Organization = $Setting->Organization;
         if ($Organization != null) {
@@ -52,7 +51,13 @@ class Setting_mainController extends Controller
         if ($Project == null) $Project = "0";
 
         $CheckCreatProduct = $Setting->CheckCreatProduct;
-        if ($CheckCreatProduct == null) $CheckCreatProduct = "0";
+        if ($CheckCreatProduct == null) $CheckCreatProduct = "1";
+
+        $APPROVED_BY_BANK = $Setting->APPROVED_BY_BANK;
+        $ACCEPTED_BY_MERCHANT = $Setting->ACCEPTED_BY_MERCHANT;
+        $COMPLETED = $Setting->COMPLETED;
+        $CANCELLED = $Setting->CANCELLED;
+        $RETURNED = $Setting->RETURNED;
 
 
 
@@ -78,12 +83,7 @@ class Setting_mainController extends Controller
 
 
 
-        foreach ($Body as $item){
-            $color = $item->color;
-            foreach ($colorMC as $itemcolormc=>$indexcolor){
-                if ($color == $itemcolormc) $setBackground[] = $indexcolor;
-            }
-        }
+
 
 
         $Client->setRequestUrl($url_organization);
@@ -101,7 +101,6 @@ class Setting_mainController extends Controller
 
 
         return view('web.Setting_main',['Body' => $Body,
-            "setBackground" => $setBackground,
             "Body_organization" => $Body_organization,
             "Body_saleschannel" => $Body_saleschannel,
             "Body_project" => $Body_project,
@@ -113,8 +112,11 @@ class Setting_mainController extends Controller
             "Saleschannel" => $Saleschannel,
             "Project" => $Project,
             "CheckCreatProduct" => $CheckCreatProduct,
-
-
+            "APPROVED_BY_BANK" => $APPROVED_BY_BANK,
+            "ACCEPTED_BY_MERCHANT" => $ACCEPTED_BY_MERCHANT,
+            "COMPLETED" => $COMPLETED,
+            "CANCELLED" => $CANCELLED,
+            "RETURNED" => $RETURNED,
             "message" => null,
             "apiKey" => $TokenMoySklad,
             'accountId' => $accountId,

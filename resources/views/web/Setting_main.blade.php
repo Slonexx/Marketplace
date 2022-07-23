@@ -107,7 +107,7 @@
                                     @if($Document == "2")
                                         <option value="0">Не создавать</option>
                                         <option value="1">Отгрузка</option>
-                                        <option selected value="2">Отгрузка + счет-фактура выданный</option>
+                                        <option selected value="2">Отгрузка и счет-фактура выданный</option>
                                     @endif
                             </select>
                         </div>
@@ -120,101 +120,32 @@
                             <P class="col-sm-5 col-form-label"> Выберите расчетный счет: </P>
                             <div class="col-sm-7">
 
-                                @if ($PaymentAccount == "0")
-                                    @if($Organization == "0")
-                                        @foreach($Body_organization as $row)
-                                            <div class="some"  id="some_{{  $row->id }}"  style="display:none;">
-                                                @php
-                                                    $id = $row->id;
-                                                    $array_element = [];
-                                                    $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
-                                                    $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
-                                                    $Body_accounts = $clinet->requestGet()->rows;
-
-                                                    if (array_key_exists(0, $Body_accounts)) {
-                                                        foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
-                                                    else { $array_element = [ 0 => "Нету Расчетного счета"];
-                                                    }
-                                                @endphp
-                                                <select name="PaymentAccount" class="form-select text-black">
-                                                    <option selected></option>
-                                                    @foreach ($array_element as $array_element_item)
-                                                        <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        @php
-                                            $id = $Organization->id;
-                                            $array_element = [];
-                                            $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
-                                            $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
-                                            $Body_accounts = $clinet->requestGet()->rows;
-
-                                            if (array_key_exists(0, $Body_accounts)) {
-                                                foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
-                                            else { $array_element = [ 0 => "Нету Расчетного счета"];
-                                            }
-                                        @endphp
-                                        <select name="PaymentAccount" class="form-select text-black">
-                                            @if($PaymentAccount == "0")
-                                                <option selected></option>
-                                            @endif
-                                            @foreach ($array_element as $array_element_item)
-                                                @if($PaymentAccount == $array_element_item )
-                                                    <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                @else <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                @endif
-
-                                            @endforeach
-                                        </select>
-                                    @endif
-                                @else
                                     @foreach($Body_organization as $row)
+                                        @if($Organization->id == $row->id)
+                                            @php $Style_display = "" @endphp
+                                        @else @php $Style_display = "display:none" @endphp
+                                        @endif
+                                        <div class="some"  id="some_{{  $row->id }}"  style="{{$Style_display}}">
                                             @php
-                                            if ($Organization->id == $row->id){$style = "";}
-                                            else    $style = "display:none";
+                                                $id = $row->id;
+                                                $array_element = [];
+                                                $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
+                                                $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
+                                                $Body_accounts = $clinet->requestGet()->rows;
+
+                                                if (array_key_exists(0, $Body_accounts)) {
+                                                    foreach ($Body_accounts as $item) { array_push($array_element, $item->accountNumber); } }
+                                                else { $array_element = [ 0 => "Нету Расчетного счета"];
+                                                }
                                             @endphp
-
-                                            <div class="some"  id="some_{{  $row->id }}"  style="{{$style}}">
-                                                @php
-                                                    $id = $row->id;
-                                                    $array_element = [];
-                                                    $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
-                                                    $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
-                                                    $Body_accounts = $clinet->requestGet()->rows;
-
-                                                    if (array_key_exists(0, $Body_accounts)) {
-                                                        foreach ($Body_accounts as $item => $value) {
-                                                            if ($PaymentAccount == $value->accountNumber) {$PaymentAccountNamber = $item; }
-                                                            array_push($array_element, $value->accountNumber);
-                                                        }
-                                                    }
-                                                    else { $array_element = [ 0 => "Нету Расчетного счета"];
-                                                    }
-                                                @endphp
-
-                                                {{--@if($Organization->id == $row->id)
-                                                    <select name="PaymentAccountOld" class="form-select text-black">
-                                                        @foreach ($array_element as $array_element_item)
-                                                            @if($PaymentAccount == $array_element_item)
-                                                            <option selected value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                            @else <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                @else--}}
-                                                <select name="PaymentAccount" class="form-select text-black">
-                                                            <option selected></option>
+                                            <select name="PaymentAccount" class="form-select text-black">
+                                                <option selected></option>
                                                 @foreach ($array_element as $array_element_item)
-                                                        <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
-                                                   @endforeach
-                                                </select>
-                                               {{-- @endif--}}
-                                            </div>
+                                                    <option value="{{$array_element_item}}"> {{ $array_element_item }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     @endforeach
-                                @endif
 
                             </div>
                         </div>
@@ -298,24 +229,21 @@
 
                         <div class="col-sm-7 ">
                             <select name="CheckCreatProduct" class="form-select text-black">
-
-
-                                @if($CheckCreatProduct == "0")
-                                    <option value="1" selected>По артикулу</option>
+                                @if($CheckCreatProduct == "1")
+                                    <option selected value="1">По артикулу</option>
                                     <option value="2">По названию</option>
                                     <option value="3">По артикулу и названию</option>
                                 @endif
-                                @if($CheckCreatProduct == "1")
-                                        <option value="1" >По артикулу</option>
-                                        <option value="2"selected>По названию</option>
+                                @if($CheckCreatProduct == "2")
+                                        <option value="1">По артикулу</option>
+                                        <option selected value="2">По названию</option>
                                         <option value="3">По артикулу и названию</option>
                                 @endif
-                                @if($CheckCreatProduct == "2")
-                                        <option value="1" >По артикулу</option>
+                                @if($CheckCreatProduct == "3")
+                                        <option value="1">По артикулу</option>
                                         <option value="2">По названию</option>
-                                        <option value="3" selected>По артикулу и названию</option>
+                                        <option selected value="3">По артикулу и названию</option>
                                 @endif
-
                             </select>
                         </div>
 
@@ -341,11 +269,13 @@
 
                         <div class="col-sm-8 ">
                             <select name="APPROVED_BY_BANK" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
+                                @if($APPROVED_BY_BANK == null)
+                                    <option selected>Статус МойСклад</option>
+                                @else <option value="{{$APPROVED_BY_BANK}}" selected>{{$APPROVED_BY_BANK}}</option>
+                                @endif
                                 @foreach($Body as $bodyItem => $dat)
-                                        <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
-                                                value="{{ $dat->name }}"> {{ ($dat->name) }}
-                                        </option>
+                                        @if($dat->name != $APPROVED_BY_BANK) <option value="{{ $dat->name }}"> {{ ($dat->name) }} </option>
+                                        @endif
                                 @endforeach
                             </select>
                         </div>
@@ -362,12 +292,16 @@
 
                         <div class="col-sm-8 ">
                             <select name="ACCEPTED_BY_MERCHANT" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
+
+                                @if($ACCEPTED_BY_MERCHANT == null)
+                                    <option selected>Статус МойСклад</option>
+                                @else <option value="{{$ACCEPTED_BY_MERCHANT}}" selected>{{$ACCEPTED_BY_MERCHANT}}</option>
+                                @endif
                                 @foreach($Body as $bodyItem => $dat)
-                                    <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
-                                    value="{{ $dat->name }}"> {{ ($dat->name) }}
-                                    </option>
+                                    @if($dat->name != $ACCEPTED_BY_MERCHANT) <option value="{{ $dat->name }}"> {{ ($dat->name) }} </option>
+                                    @endif
                                 @endforeach
+
                             </select>
                         </div>
                     </div>
@@ -383,12 +317,16 @@
 
                         <div class="col-sm-8 ">
                             <select name="COMPLETED" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
+
+                                @if($COMPLETED == null)
+                                    <option selected>Статус МойСклад</option>
+                                @else <option value="{{$COMPLETED}}" selected>{{$COMPLETED}}</option>
+                                @endif
                                 @foreach($Body as $bodyItem => $dat)
-                                    <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
-                                    value="{{ $dat->name }}"> {{ ($dat->name) }}
-                                    </option>
+                                    @if($dat->name != $COMPLETED) <option value="{{ $dat->name }}"> {{ ($dat->name) }} </option>
+                                    @endif
                                 @endforeach
+
                             </select>
                         </div>
                     </div>
@@ -404,12 +342,16 @@
 
                         <div class="col-sm-8 ">
                             <select name="CANCELLED" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
+
+                                @if($CANCELLED == null)
+                                    <option selected>Статус МойСклад</option>
+                                @else <option value="{{$CANCELLED}}" selected>{{$CANCELLED}}</option>
+                                @endif
                                 @foreach($Body as $bodyItem => $dat)
-                                    <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
-                                    value="{{ $dat->name }}"> {{ ($dat->name) }}
-                                    </option>
+                                    @if($dat->name != $CANCELLED) <option value="{{ $dat->name }}"> {{ ($dat->name) }} </option>
+                                    @endif
                                 @endforeach
+
                             </select>
                         </div>
                     </div>
@@ -425,12 +367,17 @@
 
                         <div class="col-sm-8 ">
                             <select name="RETURNED" class="form-select text-black">
-                                <?php $i = 0; ?> <option selected>Статус МойСклад</option>
+                                <option selected>Статус МойСклад</option>
+
+                                @if($RETURNED == null)
+                                    <option selected>Статус МойСклад</option>
+                                @else <option value="{{$RETURNED}}" selected>{{$RETURNED}}</option>
+                                @endif
                                 @foreach($Body as $bodyItem => $dat)
-                                    <option data-icon="fa-solid fa-square-full" style="color: {{ $setBackground[$i] }}" <?php $i++;?>
-                                    value="{{ $dat->name }}"> {{ ($dat->name) }}
-                                    </option>
+                                    @if($dat->name != $RETURNED) <option value="{{ $dat->name }}"> {{ ($dat->name) }} </option>
+                                    @endif
                                 @endforeach
+
                             </select>
                         </div>
                     </div>
