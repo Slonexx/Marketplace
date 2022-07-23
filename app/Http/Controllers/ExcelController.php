@@ -45,8 +45,10 @@ class ExcelController extends Controller
             $isHaveBrand = false;
             $isHaveCheckToAdd = false;
             $checkedMetaToAdd = null;
+            $isAddedToKaspi = false;
             foreach($row->attributes as $attribute){
                 //print_r($attribute);
+
                 if($attribute->name == "brand (KASPI)"){
                     $product['brand'] = $attribute->value;
                     $isHaveBrand = true;
@@ -55,9 +57,17 @@ class ExcelController extends Controller
                         $isHaveCheckToAdd = true;
                         $checkedMetaToAdd = $attribute->meta;
                     }
+                }elseif($attribute->name == 'Опубликован на Kaspi'){
+                   if($attribute->value == 1) {
+                        $isAddedToKaspi = true;
+                   }
                 } else {
                     break;
                 }
+            }
+
+            if($isAddedToKaspi == true){
+                 continue;
             }
 
             if($isHaveBrand == false || $isHaveCheckToAdd == false){

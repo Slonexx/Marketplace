@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 
 class SalesChannelController extends Controller
 {
-    public function getSaleChannel($apiKey)
+    public function getSaleChannel($saleChannelName,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel?search=Kaspi Shop";
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel?search=".$saleChannelName;
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;
         foreach($json->rows as $row){
-            if ($row->name == 'Kaspi Shop'){
+            if ($row->name == $saleChannelName){
                  $foundedMeta = [
                     "meta" => [
                         "href" => $row->meta->href,
@@ -27,17 +27,16 @@ class SalesChannelController extends Controller
             }
         }
         if (is_null($foundedMeta) == true){
-            return $this->createSaleChannel($apiKey);
+            return $this->createSaleChannel($saleChannelName,$apiKey);
         } else return $foundedMeta;
     }
 
-    public function createSaleChannel($apiKey)
+    public function createSaleChannel($saleChannelName,$apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
         $client = new ApiClientMC($uri,$apiKey);
         $saleChannel = [
-            "name" => "Kaspi Shop",
-            "description" => "Marketplace Kaspi-shop",
+            "name" => $saleChannelName,
             "type" => "MARKETPLACE",
         ];
         $createdMeta = $client->requestPost($saleChannel)->meta;

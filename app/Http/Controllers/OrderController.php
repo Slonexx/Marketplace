@@ -61,7 +61,17 @@ class OrderController extends Controller
                 $client->setRequestUrl($uri);
                 $jsonProduct2 = $client->requestGet(true);
                 //dd($jsonProduct2);
-                $entry['product'] = $jsonProduct2->data->attributes;
+                if($jsonProduct2->data == null){
+                    $product_ = [
+                        "code" => $jsonProduct1->data->attributes->code,
+                        "name" => $jsonProduct1->data->attributes->name,
+                        "manufacturer" => "",
+                    ];
+                    $entry['product'] = (object) $product_;
+                } else {
+                    $entry['product'] = $jsonProduct2->data->attributes;
+                }
+                
 
                 $uri = $row2->relationships->deliveryPointOfService->links->related;
                 $client->setRequestUrl($uri);
@@ -117,11 +127,27 @@ class OrderController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
-            'payment' => 'required|boolean',
+            'payment_option' => 'required|integer',
+            'demand_option' => 'required|integer',
             'state' => 'required|string',
             'fdate' => 'required|string',
             'sdate' => 'required|string',
+            'organization_id' => 'required|string',
+            'project_name' => 'sometimes|required|string',
+            'sale_channel_name' => 'sometimes|required|string',
+            'organization_account_number' => 'sometimes|required|string',
         ]);
+
+        $paymentOption = $request->payment_option;
+        $demandOption = $request->demand_option;
+
+        $organization_name = app(OrganizationController::class)->getOrganizationNameById($request->organization_id,$request->tokenMs);
+        $project_name = $request->project_name;
+        $sale_channel_name = $request->sale_channel_name;
+        $organization_account = [
+            "organization_id" => $request->organization_id,
+            "number_account" => $request->organization_account_number,
+        ];
 
         $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
         $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
@@ -137,12 +163,19 @@ class OrderController extends Controller
 
         $count = 0;
         foreach ($orders as $order) {
-            $formattedOrder = $this->mapOrderToAdd($order,$request->tokenMs);
+            $formattedOrder = $this->mapOrderToAdd(
+                $order,
+                $sale_channel_name,
+                $project_name,
+                $organization_name,
+                $organization_account,
+                $request->tokenMs
+             );
             $createdOrder = $client->requestPost($formattedOrder);
             $orderStatus = $order['status'];
             $this->setPositions($createdOrder->id,$orderStatus,$order['entries'],$request->tokenMs);
             app(DocumentController::class)->initDocuments($order['entries'],$orderStatus,$createdOrder->meta,
-            $request->payment,$formattedOrder,$request->tokenMs);
+            $paymentOption,$demandOption,$formattedOrder,$request->tokenMs);
             $count++;
         }
 
@@ -151,7 +184,9 @@ class OrderController extends Controller
         ]);
     }
 
-    private function mapOrderToAdd($order,$apiKey)
+    private function mapOrderToAdd(
+        $order,$sale_channel_name,$project_name,
+        $organization_name,$organization_account,$apiKey)
     {
             //$formattedOrders = [];
             $formattedOrder = null;
@@ -161,13 +196,19 @@ class OrderController extends Controller
                 $formattedOrder['shipmentAddressFull'] = ["addInfo" => $address];
             }
             $formattedOrder['agent'] = $this->getAgent($order['customer'], $address,$apiKey);
-            $formattedOrder['organization'] = app(OrganizationController::class)->getKaspiOrganization($apiKey);
+            $formattedOrder['organization'] = app(OrganizationController::class)->getKaspiOrganization($organization_name,$apiKey);
             $formattedOrder['rate'] = [
                 "currency" => app(CurrencyController::class)->getKzCurrency($apiKey),
             ];
             $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
             $formattedOrder['externalCode'] = $order['id'];
-            $formattedOrder['state'] = $this->getState($order['status'],$apiKey);
+
+            $statusFromMs = $this->getState($order['status'],$apiKey);
+
+            if($statusFromMs != null){
+                $formattedOrder['state'] = $statusFromMs;
+            }
+            
 
             $info = "https://kaspi.kz/merchantcabinet/#/orders/details/".$order['code'];
             $formattedOrder['description'] = "Order code: ".$order['code'].". More info: ".$info;
@@ -180,7 +221,20 @@ class OrderController extends Controller
                     "value" => $attributes["value"],
                 ],
             ];
-            $formattedOrder['salesChannel'] = app(SalesChannelController::class)->getSaleChannel($apiKey);
+
+            if($sale_channel_name != null) {
+                $formattedOrder['salesChannel'] = app(SalesChannelController::class)->getSaleChannel($sale_channel_name,$apiKey);
+            }
+
+            if($project_name != null){
+                $formattedOrder['project'] = app(ProjectController::class)->getProject($project_name,$apiKey);
+            }
+
+            if($organization_account["number_account"] != null){
+                $formattedOrder['organizationAccount'] = app(OrganizationController::class)
+                ->getOrganizationAccountByNumber($organization_account["organization_id"],
+                $organization_account["number_account"],$apiKey);
+            }
             //$formattedOrder['positions'] = $this->getPositions($order['entries'],$apiKey);
             //array_push($formattedOrders, $formattedOrder);
 
@@ -203,14 +257,19 @@ class OrderController extends Controller
     private function getState($status,$apiKey)
     {
        $meta = app(StateController::class)->getState($status,$apiKey);
-       $res = [
-            "meta" => [
-                "href" => $meta->href,
-                "type" => $meta->type,
-                "mediaType" => $meta->mediaType,
-            ],
-        ];
-        return $res;
+
+        if($meta == null){
+            return null;
+        } else {
+            $res = [
+                "meta" => [
+                    "href" => $meta->href,
+                    "type" => $meta->type,
+                    "mediaType" => $meta->mediaType,
+                ],
+            ];
+            return $res;
+        }
     }
     
     private function setPositions($orderId,$orderStatus,$entries,$apiKey)
@@ -281,11 +340,27 @@ class OrderController extends Controller
         $request->validate([
             'tokenKaspi' => 'required|string',
             'tokenMs' => 'required|string',
-            'payment' => 'required|boolean',
+            'payment_option' => 'required|integer',
+            'demand_option' => 'required|integer',
             'state' => 'required|string',
             'fdate' => 'required|string',
             'sdate' => 'required|string',
+            'organization_id' => 'required|string',
+            'project_name' => 'sometimes|required|string',
+            'sale_channel_name' => 'required|string',
+            'organization_account_number' => 'sometimes|required|string',
         ]);
+
+        $paymentOption = $request->payment_option;
+        $demandOption = $request->demand_option;
+
+        $organization_name = app(OrganizationController::class)->getOrganizationNameById($request->organization_id,$request->tokenMs);
+        $project_name = $request->project_name;
+        $sale_channel_name = $request->sale_channel_name;
+        $organization_account = [
+            "organization_id" => $request->organization_id,
+            "number_account" => $request->organization_account_number,
+        ];
 
         $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
         $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
@@ -304,13 +379,24 @@ class OrderController extends Controller
             foreach($ordersFromMs as $orderMs){
                 if($orderKaspi['id'] == $orderMs['externalCode']) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
+                        
                         $metaState = app(StateController::class)->getState($orderKaspi['status'],$request->tokenMs);
-                        $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
-                        $formattedOrder = $this->mapOrderToAdd($orderKaspi,$request->tokenMs);
+                        if($metaState != null){
+                            $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
+                        }
+                        
+                        $formattedOrder = $this->mapOrderToAdd(
+                            $orderKaspi,
+                            $sale_channel_name,
+                            $project_name,
+                            $organization_name,
+                            $organization_account,
+                            $request->tokenMs
+                         );
                         app(DocumentController::class)->createDocuments(
                             $orderMs['payments'], $orderMs['demands'],
                             $orderKaspi['entries'],$orderKaspi['status'],
-                            $orderMs['meta'],$request->payment,
+                            $orderMs['meta'],$paymentOption,$demandOption,
                             $formattedOrder,$request->tokenMs
                         );
                         if($orderMs['positions'] != null){

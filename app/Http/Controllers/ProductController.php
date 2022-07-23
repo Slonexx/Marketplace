@@ -37,6 +37,11 @@ class ProductController extends Controller
                             "name" => "Добавлять товар на Kaspi",
                             "value" => true,
                         ],
+                        2 => [
+                            "meta" => app(ProductAttributesController::class)->getAttribute("Опубликован на Kaspi",$apiKeyMs),
+                            "name" => "Опубликован на Kaspi",
+                            "value" => true,
+                        ]
                     ];
 
                     $product['salePrices'] = [
@@ -60,25 +65,50 @@ class ProductController extends Controller
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$apiKey);
         $jsonProducts = $client->requestGet();
-        $productsFromMs = [];
+        $productsFromMsOpt1 = [];
+        $productsFromMsOpt2 = [];
+        
         $count = 0;
         foreach($jsonProducts->rows as $key=>$row){
-            $productsFromMs[$count] = $row->article;
+            $productsFromMsOpt1[$count] = $row->article;
+            $productsFromMsOpt2[$count] = $row->name;
             $count++;
         }
         //dd($productsFromMs);
-        return $productsFromMs;
+        return [
+            'articles' => $productsFromMsOpt1,
+            'names' => $productsFromMsOpt2,
+        ];
     }
 
-    public function getNotAddedProducts($tokenMs,$tokenKaspi, $urlKaspi) 
+    public function getNotAddedProducts($tokenMs,$tokenKaspi, $urlKaspi, $option) 
     {
        $productsFromKaspi = $this->getKaspiProducts($tokenKaspi,$tokenMs, $urlKaspi);
        $productsFromMs = $this->getMsProducts($tokenMs);
        $notAddedProducts = [];
        foreach($productsFromKaspi as $product){
-            if(in_array($product['article'],$productsFromMs) == false){
-                array_push($notAddedProducts, $product);
+            switch ($option) {
+                case 2:
+                    if(in_array($product['article'],$productsFromMs["articles"]) == false){
+                        array_push($notAddedProducts, $product);
+                    }
+                    break;
+                case 1:
+                    if(in_array($product['name'],$productsFromMs["names"]) == false){
+                        array_push($notAddedProducts, $product);
+                    }
+                    break;
+                case 3:
+                    if(
+                        in_array($product['name'],$productsFromMs["names"]) == false
+                        &&
+                        in_array($product['article'],$productsFromMs["articles"]) == false
+                    ){
+                        array_push($notAddedProducts, $product);
+                    }
+                    break;
             }
+            
        }
        return $notAddedProducts;
     }
@@ -90,6 +120,7 @@ class ProductController extends Controller
             'state' => 'required|string',
             'fdate' => 'required|string',
             'sdate' => 'required|string',
+            'option' => 'required|integer',
         ]);
 
         $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
@@ -99,7 +130,7 @@ class ProductController extends Controller
         $request->state."&filter[orders][creationDate][\$ge]=".
         $fdate."&filter[orders][creationDate][\$le]=".$sdate;
         
-        $products = $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi,$urlKaspi);
+        $products = $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi,$urlKaspi,$request->option);
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$request->tokenMs);
