@@ -17,15 +17,12 @@
         </div>
 
 
-        @if ($errors->any())
-        <div class="row mb-3 g-3 align-items-center">
-            <div class="alert alert-success alert-dismissible fade show in text-center "> {{ $message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-
-            </div>
-        </div>
+        @if (\Session::has('success'))
+            @include('alerts')
         @endif
-
+        @if (\Session::has('error'))
+            @include('alerts')
+        @endif
 
 
             <form action=" {{  route('Setting_Send' , ['accountId' => $accountId] ) }} " method="post">
@@ -439,6 +436,10 @@
                 </div>
             </form>
     </div>
+
+
+
+
 
 @endsection
 

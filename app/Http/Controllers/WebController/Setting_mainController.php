@@ -106,11 +106,10 @@ class Setting_mainController extends Controller
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
         if ($MessageKaspi["StatusCode"] == 200 ) {
             $message = $this->updateSetting($accountId, $Setting);
-            return Redirect::back()->withErrors(["message"=> $message]);
+            return Redirect::back()->with('success', $message);
         } else {
-            return Redirect::back()->withErrors(["message"=> $MessageKaspi["API"]]);
+            return Redirect::back()->with('error', $MessageKaspi["API"]);
         }
-
 
 
 
