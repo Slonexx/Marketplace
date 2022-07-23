@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\WebController;
 
 use App\Http\Controllers\ApiClientMC;
+use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ExportProductController extends Controller
 {
     public function index($accountId){
-        return view('web.exportProduct', ['accountId' => $accountId]);
+
+        $Setting = new getSettingVendorController($accountId);
+        $TokenMoySklad = $Setting->TokenMoySklad;
+
+        $Count = $this->getProductCount($TokenMoySklad);
+
+        return view('web.exportProduct', ['accountId' => $accountId, 'Count'=> $Count, "TokenMoySklad"=>$TokenMoySklad]);
     }
 
     public function getProductCount($apiKey)
@@ -23,7 +30,7 @@ class ExportProductController extends Controller
             $flagCheckNotPublish = false;
             if(property_exists($row, 'attributes')){
                  foreach($row->attributes as $attrib){
-                    if( $attrib->name == 'Добавлять товар на Kaspi' 
+                    if( $attrib->name == 'Добавлять товар на Kaspi'
                         && $attrib->type == 'boolean' && $attrib->value == 1)
                     {
                         $flagAddToKaspi = true;

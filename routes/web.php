@@ -24,3 +24,4 @@ Route::get('/Whatsapp/{accountId}', [WhatsappController::class, 'Index'])->name(
 Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
 
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
+
