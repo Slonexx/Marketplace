@@ -33,7 +33,7 @@ class AgentController extends Controller
             "legalLastName" => $customer->lastName,
             "legalFirstName" => $customer->firstName,
             "actualAddress" => $address,
-            "phone" => $customer->cellPhone,
+            "phone" => "+7".$customer->cellPhone,
             "companyType" => "individual",
             "attributes" => [
                 0 => [
