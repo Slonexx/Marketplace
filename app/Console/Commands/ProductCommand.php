@@ -55,10 +55,10 @@ class ProductCommand extends Command
 
                 //здесь настройки
 
-                InfoLogModel::create([
-                    'accountId' => $settings->accountId,
-                    'message' => $log,
-                ]);
+                // InfoLogModel::create([
+                //     'accountId' => $settings->accountId,
+                //     'message' => $log,
+                // ]);
 
                 try {
 
@@ -73,7 +73,7 @@ class ProductCommand extends Command
                                 'sdate' => $today,
                                 'option' => $settings->CheckCreatProduct,
                             ])->throw();
-                        $logSt = "Kaspi State:".$state." ".$response->body()."\n";
+                            $logSt = "Состояние заказа из Kaspi:".$state." ".$response->object()->message."\n";
                         print_r($logSt);
 
                         InfoLogModel::create([

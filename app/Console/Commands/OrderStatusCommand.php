@@ -56,10 +56,10 @@ class OrderStatusCommand extends Command
              $log = "Update orders status... ".$tenDaysBefore."|".$today."\n";
              print_r($log);
 
-             InfoLogModel::create([
-                'accountId' => $settings->accountId,
-                'message' => $log,
-            ]);
+            //  InfoLogModel::create([
+            //     'accountId' => $settings->accountId,
+            //     'message' => $log,
+            // ]);
 
              try {
 
@@ -80,7 +80,7 @@ class OrderStatusCommand extends Command
                         'sale_channel_name' => $settings->Saleschannel,
                         'organization_account_number' => $settings->PaymentAccount,
                     ])->throw();
-                    $logSt = "Kaspi State:".$state." ".$response->body()."\n";
+                    $logSt = "Состояние заказа из Kaspi:".$state." ".$response->object()->message."\n";
                      print_r($logSt);
 
                      InfoLogModel::create([
