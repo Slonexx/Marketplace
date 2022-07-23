@@ -281,12 +281,12 @@ class OrderController extends Controller
         app(PositionController::class)->setPositions($orderId,$orderStatus,$entries,$apiKey);
     }
 
-    private function getOrdersKaspiWithStatus($apiKey, $urlKaspi)
+    private function getOrdersKaspiWithStatus($accountId,$apiKey, $urlKaspi)
     {
         $ordersFromKaspi = $this->getOrdersFromKaspi($apiKey,$urlKaspi);
         //dd($jsonAllOrders);
         foreach($ordersFromKaspi as $row => $k){
-            $st['statusOrder'] = app(StatusController::class)->getStatusName($k['status']);
+            $st['statusOrder'] = app(StatusController::class)->getStatusName($accountId,$k['status']);
            // array_push($ordersFromKaspi[$row],$st['statusOrder']);
            $ordersFromKaspi[$row] = $k+$st;
         }
@@ -375,7 +375,7 @@ class OrderController extends Controller
         $request->state."&filter[orders][creationDate][\$ge]=".
         $fdate."&filter[orders][creationDate][\$le]=".$sdate;
 
-        $ordersFromKaspi = $this->getOrdersKaspiWithStatus($request->tokenKaspi, $urlKaspi);
+        $ordersFromKaspi = $this->getOrdersKaspiWithStatus($accountId,$request->tokenKaspi, $urlKaspi);
         $ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
 
         //dd($ordersFromKaspi);
