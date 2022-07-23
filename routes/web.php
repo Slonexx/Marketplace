@@ -4,9 +4,10 @@ use App\Http\Controllers\WebController\Setting_mainController;
 use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\WebController;
 use App\Http\Controllers\WebController\WhatsappController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController\ExportProductController;
 use App\Http\Controllers\webController\infoLogController;
+use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/', [WebController::class, 'index']);
