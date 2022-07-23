@@ -33,14 +33,14 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-        $att = new CreateProductAttController();
-        $att->createAttributes($TokenMoySklad);
+        $Product= new CreateProductAttController();
+        $Product->createAttributes($TokenMoySklad);
 
-        $att = new CreateOrdertAttController();
-        $att->createAttributes($TokenMoySklad);
+        $Agent= new CreateAgentAttController();
+        $Agent->createAttributes($TokenMoySklad);
 
-        $att = new CreateAgentAttController();
-        $att->createAttributes($TokenMoySklad);
+        $Ordert= new CreateOrdertAttController();
+        $Ordert->createAttributes($TokenMoySklad);
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
