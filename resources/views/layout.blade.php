@@ -11,6 +11,7 @@
                 <a href="{{  route('Index', ['accountId' => $accountId] ) }}">Главная </a>
                 <a href="{{  route('Setting_Main', ['accountId' => $accountId] ) }}">Настройки </a>
                 <a href="{{  route('ExportProduct', ['accountId' => $accountId] ) }}">Отправить товар </a>
+                <a href="{{  route('InfoLog', ['accountId' => $accountId] ) }}">Логи</a>
             </div>
             <div class="">
                 <button class="dropdown-btn">Помощь
