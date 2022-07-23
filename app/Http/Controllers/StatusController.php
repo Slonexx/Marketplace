@@ -24,6 +24,8 @@ class StatusController extends Controller
     {
         $status = null;
 
+        //Настройка статусов нужны тут
+
         switch ($status_Kaspi) {
             case 'APPROVED_BY_BANK':
               $status = "Новый";

@@ -8,6 +8,7 @@ class CheckSettingsController extends Controller
 {
     public function haveSettings()
     {
+        //Проверка есть ли необходимые найстройки
         return true;
     }
 }
