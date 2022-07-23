@@ -173,10 +173,6 @@ class Setting_mainController extends Controller
 
         $app->persist();
 
-        $TokenMoySklad = $Setting->TokenMoySklad;
-        $att = new AttributeController();
-        $att->createAllAttributes($TokenMoySklad);
-
         $message = "Настройки сохранились";
         return $message;
     }
