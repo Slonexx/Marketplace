@@ -20,30 +20,8 @@
         @if (\Session::has('success'))
             @include('alerts')
         @endif
-        @if (\Session::has('error'))
-            <div id="myModal" class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"> Вопрос <i class="fa-solid fa-circle-question text-danger"></i></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Вы уверены, что хотите сохранить настройки интеграции ? </p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Закрыть</button>
-                            <button type="submit" class="btn btn-outline-success">Сохранить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <script type="text/javascript">
-                $(window).on('load',function(){
-                    $('#myModal').modal('show');
-                });
-            </script>
+        @if(session()->has('error'))
+            @include('alerts')
         @endif
 
 
