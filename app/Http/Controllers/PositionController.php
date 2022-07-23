@@ -87,7 +87,7 @@ class PositionController extends Controller
                         1 => [
                             "meta" => app(ProductAttributesController::class)->getAttribute("Добавлять товар на Kaspi",$apiKey),
                             "name" => "Добавлять товар на Kaspi",
-                            "value" => true,
+                            "value" => false,
                         ],
                         2 => [
                             "meta" => app(ProductAttributesController::class)->getAttribute("Опубликован на Kaspi",$apiKey),

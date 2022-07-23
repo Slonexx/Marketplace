@@ -35,7 +35,7 @@ class ProductController extends Controller
                         1 => [
                             "meta" => app(ProductAttributesController::class)->getAttribute("Добавлять товар на Kaspi",$apiKeyMs),
                             "name" => "Добавлять товар на Kaspi",
-                            "value" => true,
+                            "value" => false,
                         ],
                         2 => [
                             "meta" => app(ProductAttributesController::class)->getAttribute("Опубликован на Kaspi",$apiKeyMs),
