@@ -23,6 +23,8 @@ class info_log_Controller extends Controller
             }
         }
 
+        array_reverse($array_log);
+        array_reverse($array_log_created_at);
 
 
 
