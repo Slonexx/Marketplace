@@ -19,7 +19,10 @@ class Setting_mainController extends Controller
 
 
 
-       if($request->has('error')) {if( $request->error != "0" ) $error = $request->error;}
+       if($request->has('error')) {
+           if( $request->error != "0" ) $error = $request->error;
+           else $error = "0" ;
+       }
         else $error = "0" ;
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
