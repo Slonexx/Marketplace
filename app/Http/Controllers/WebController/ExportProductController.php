@@ -19,14 +19,22 @@ class ExportProductController extends Controller
         $jsonProducts = $client->requestGet();
         $count = 0;
         foreach($jsonProducts->rows as $row){
+            $flagAddToKaspi = false;
+            $flagCheckNotPublish = false;
             if(property_exists($row, 'attributes')){
                  foreach($row->attributes as $attrib){
                     if( $attrib->name == 'Добавлять товар на Kaspi' 
                         && $attrib->type == 'boolean' && $attrib->value == 1)
                     {
-                        $count++;
+                        $flagAddToKaspi = true;
+                    } elseif ($attrib->name == 'Опубликован на Kaspi' 
+                    && $attrib->type == 'boolean' && $attrib->value == 0) {
+                        $flagCheckNotPublish = true;
                     }
                 }
+            }
+            if($flagAddToKaspi == true && $flagCheckNotPublish == true){
+                $count++;
             }
         }
         return $count;

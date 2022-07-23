@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\InfoLogModel;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\CheckSettingsController;
@@ -48,6 +49,11 @@ class OrderStatusCommand extends Command
              $log = "Update orders status... ".$tenDaysBefore."|".$today."\n";
              print_r($log);
 
+             InfoLogModel::create([
+                'accountId' => 'fdhadkfdsd',
+                'message' => $log,
+            ]);
+
              try {
 
                  $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
@@ -68,10 +74,22 @@ class OrderStatusCommand extends Command
                     ])->throw();
                     $logSt = "Kaspi State:".$state." ".$response->body()."\n";
                      print_r($logSt);
+
+                     InfoLogModel::create([
+                        'accountId' => 'fdhadkfdsd',
+                        'message' => $logSt,
+                    ]);
+
                  }
 
              } catch (\Throwable $th) {
                 $this->error($th->getMessage());
+
+                InfoLogModel::create([
+                    'accountId' => 'fdhadkfdsd',
+                    'message' => $th->getMessage(),
+                ]);
+
              }
 
         }

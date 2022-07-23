@@ -33,7 +33,7 @@ class AgentController extends Controller
             "legalLastName" => $customer->lastName,
             "legalFirstName" => $customer->firstName,
             "actualAddress" => $address,
-            "phone" => "+7".$customer->cellPhone,
+            "phone" => "8".$customer->cellPhone,
             "companyType" => "individual",
             "attributes" => [
                 0 => [
@@ -43,6 +43,7 @@ class AgentController extends Controller
                 ],
             ],
         ];
+        //dd($agent);
         return $client->requestPost($agent)->meta;
     }
 
