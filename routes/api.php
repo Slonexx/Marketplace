@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\CheckSettingsController;
 use App\Http\Controllers\Config\Vendor\VendorEndpointController;
 use \App\Http\Controllers\Config\DeleteVendorApiController;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ Route::get('excelProducts/{TokenMoySklad}', [ExcelController::class,'getProducts
 
 Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 
+Route::get('checkSettings', [CheckSettingsController::class, 'haveSettings']);
 
 Route::get('DeleteVendorApi/{appId}/{accountId}', [DeleteVendorApiController::class, 'Delete'])->name('Delete');
 
