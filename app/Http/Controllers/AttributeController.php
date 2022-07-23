@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -59,7 +60,8 @@ class AttributeController extends Controller
                 }
             }
             if($foundedAttrib == false){
-                $client->requestPost($body);
+                $clientPost = new ApiClientMC($uri, $apiKey);
+                $clientPost->requestPost($body);
             }
         }
 
@@ -111,7 +113,8 @@ class AttributeController extends Controller
         }
 
         if($foundedAttrib == false){
-            $client->requestPost($body);
+            $clientPost = new ApiClientMC($uri, $apiKey);
+            $clientPost->requestPost($body);
         }
     }
 
@@ -160,7 +163,8 @@ class AttributeController extends Controller
         }
 
         if($foundedAttrib == false){
-            $client->requestPost($body);
+            $clientPost = new ApiClientMC($uri, $apiKey);
+            $clientPost->requestPost($body);
         }
     }
 

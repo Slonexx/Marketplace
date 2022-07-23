@@ -33,6 +33,8 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
+        $att = new AttributeController();
+        $att->createAllAttributes($TokenMoySklad);
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
