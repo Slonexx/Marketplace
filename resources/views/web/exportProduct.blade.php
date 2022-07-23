@@ -3,8 +3,41 @@
 @section('content')
 
     <div class="content p-4 mt-2 bg-white text-Black rounded">
-        <h2 class=" text-black"> <i class="fa-solid fa-circle-plus text-orange"></i> Отправить товар на Kaspi </h2>
-       {{-- <div class="alert  alert-warning alert-dismissible fade show">
+
+        <div class="row">
+            <div class="col-sm-8">
+                <h2 class=" text-black"> <i class="fa-solid fa-circle-plus text-orange"></i> Отправить товар на Kaspi </h2>
+            </div>
+            <div class="col-sm-4 d-flex justify-content-end text-black btnP" data-bs-toggle="modal" data-bs-target="#modal">
+                <button type="submit" class="btn btn-light">Показать инструкцию ?</button>
+            </div>
+            <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Инструкция по отправленю товаров в Kaspi </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mt-3">1. Выберите товар и поставьте галочку под пунктом (Добавлять товар на Kaspi)</p>
+                            <p>2. Перейдите в приложение Магазин Kaspi.kz</p>
+                            <p>3. В меню выберите (Отправить товар)</p>
+                            <p>4. Нажмите на кнопку (Cкачать Excel)</p>
+                            <p>5. Откройте свой кабинет Kaspi продовца</p>
+                            <p>6. В меню выберите Товары→Загрузить прайс лист</p>
+                            <p>7. В открывшемся окне выберите (Загрузить файл вручную) и вставтьте ранее скаченый файл</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        {{-- <div class="alert  alert-warning alert-dismissible fade show">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>--}}
         <br>
@@ -37,17 +70,11 @@
             });
         </script>
 
-            {{--<div class="">
-                <h5>Инструкция по отправленю товара в магазин Kaspi</h5>
-                <p class="mt-3">1. Выберите товар и поставьте галочку под пунктом (Добавлять товар на Kaspi)</p>
-                <p>2. Перейдите в приложение МоегоСклада Магазин Kaspi.kz</p>
-                <p>3. В меню выберите (Отправить товар)</p>
-                <p>4. Нажмите на кнопку (Cкачать Excel)</p>
-                <p>5. Откройте свой кабинет Kaspi продовца</p>
-                <p>6. В меню выберите Товары->Загрузить прайс лист</p>
-                <p>7. В открывшемся окне выберите (Загрузить файл вручную) и вставтьте ранее скаченый файл</p>
-            </div>--}}
             <div class="">
+
+
+                <br>
+
                <form action=" {{  route('ExcelProducts' , ['TokenMoySklad' => $TokenMoySklad] ) }} " method="get">
                   <div class="row">
                       <div class="col-sm-8">Количество товаров которые можно отправить в Магазин Kaspi: {{$Count}} </div>

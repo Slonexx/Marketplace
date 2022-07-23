@@ -101,9 +101,7 @@ class ExcelController extends Controller
             $today = date("Y-m-d H:i:s");
             return Excel::download($export, 'products'.$today.'.xlsx');
         } else {
-            return response([
-                'message' => '0 products exported!'
-            ]);
+            return redirect()->back();
         }
 
     }
