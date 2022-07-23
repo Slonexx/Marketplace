@@ -15,7 +15,12 @@ use Illuminate\Support\Facades\Session;
 
 class Setting_mainController extends Controller
 {
-    public function index($accountId){
+    public function index(Request $request, $accountId){
+
+
+
+       if($request->has('error')) $error = $request->error;
+        else $error = "0" ;
 
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
@@ -61,8 +66,6 @@ class Setting_mainController extends Controller
         $RETURNED = $Setting->RETURNED;
 
 
-
-
         $Client->setRequestUrl($url_organization);
         $Body_organization = $Client->requestGet()->rows;
 
@@ -94,9 +97,10 @@ class Setting_mainController extends Controller
             "COMPLETED" => $COMPLETED,
             "CANCELLED" => $CANCELLED,
             "RETURNED" => $RETURNED,
-            "message" => null,
             "apiKey" => $TokenMoySklad,
             'accountId' => $accountId,
+
+            'error' => $error,
         ]);
 
     }
@@ -111,9 +115,10 @@ class Setting_mainController extends Controller
         } else {
             /*$_SESSION["error"] = $MessageKaspi["API"];
             return Redirect::back()->with('error', $MessageKaspi["API"]);*/
-            return Redirect::back()->withErrors(['password' => ['Invalid Username or Password']]);
+            $request->request->add(["error"=>$MessageKaspi["API"]]);
+            return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>$MessageKaspi["API"] ]);
         }
-
+/*->withErrors(['password' => ['Invalid Username or Password']]);*/
 
 
     }

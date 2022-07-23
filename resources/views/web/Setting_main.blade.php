@@ -25,9 +25,14 @@
         @endif--}}
 
 
-        @error('password')
-            ОШИБКАААААААААААААААА
-        @enderror
+
+        @if($error != "0")
+            <div class="alert alert-danger alert-dismissible fade show in text-center " role="alert">  {{  $error  }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+
 
         <form action=" {{  route('Setting_Send' , ['accountId' => $accountId] ) }} " method="post">
             @csrf <!-- {{ csrf_field() }} -->
