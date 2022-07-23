@@ -16,19 +16,21 @@ class InfoLogModelObserver
     public function created(InfoLogModel $infoLogModel)
     {
         //$count = InfoLogModel::count();
-        
+
         $accountIds = InfoLogModel::all('accountId');
 
         foreach($accountIds as $accountId){
+
             $query = InfoLogModel::query();
-            $logs = $query->where('accountId',$accountId)->get();
+            $logs = $query->where('accountId',$accountId->accountId)->get();
             if(count($logs) > 20){
                 DB::table('info_log_models')
-                ->where('accountId',$accountId)
-                ->orderBy('created_at', 'ASC')
-                ->limit(1)
-                ->delete();
+                    ->where('accountId','=',$accountId->accountId)
+                    ->orderBy('created_at', 'ASC')
+                    ->limit(1)
+                    ->delete();
             }
+
         }
 
         // if($count > 200){
