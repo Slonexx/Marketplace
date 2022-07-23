@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class info_log_Controller extends Controller
 {
     public function index($accountId){
-        dd($accountId);
+
         $category = InfoLogModel::all();
         //
 
