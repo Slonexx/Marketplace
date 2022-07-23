@@ -146,7 +146,7 @@ class AttributeController extends Controller
         ];
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
-        $client->setRequestUrl($uri);
+        $this->client->setRequestUrl($uri);
         $json = $client->requestGet();
         $foundedAttrib = false;
 
