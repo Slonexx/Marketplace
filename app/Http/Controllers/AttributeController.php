@@ -7,20 +7,17 @@ use Illuminate\Http\Request;
 class AttributeController extends Controller
 {
 
-    public function createAllAttributes(Request $request)
+    public function createAllAttributes($TokenMoySklad)
     {
-        $request->validate([
-            'tokenMs' => 'required|string',
-        ]);
 
-        $this->createProductAttributes($request->tokenMs);
-        $this->createOrderAttributes($request->tokenMs);
-        $this->createAgentAttributes($request->tokenMs);
+        $this->createProductAttributes($TokenMoySklad);
+        $this->createOrderAttributes($TokenMoySklad);
+        $this->createAgentAttributes($TokenMoySklad);
     }
 
     private function createProductAttributes($apiKey)
     {
-        
+
         $bodyAttributes = [
             0 => [
                 "name" => "brand (KASPI)",
@@ -60,7 +57,7 @@ class AttributeController extends Controller
             }
         }
 
-        
+
     }
 
     private function createOrderAttributes($apiKey)
@@ -93,7 +90,7 @@ class AttributeController extends Controller
             "type" => "customentity",
             "required" => false,
         ];
-        
+
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
         $client->setRequestUrl($uri);
         $json = $client->requestGet();
