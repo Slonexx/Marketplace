@@ -14,17 +14,17 @@
         <h1 class=" text-black">  <i class="fas fa-book-open text-orange"></i> Инструкция</h1>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6 text-black">
+                    <div class="col-sm-12 text-black">
                         <p> В меню слева находится кнопка Настройки.</p>
                         <p>1. Необходимо вставить токен Kaspi в соответствующее поле. Токен Kaspi находится в кабинете Kaspi продавца - Настройки - Токен API. Если токена нет, то нажмите Сгенерировать токен.</p>
                         <p>2. Выбрать на какую организацию МоегоСклада будет приходить заказ </p>
                         <p>3. Выбрать какие типы документов будут создаваться (Отгрузка, Счёт-фактура). Документы создаются на статусах Завершён, Отменён, Возвращён. </p>
                     </div>
-                    <div class="col-sm-6">
+                    {{--<div class="col-sm-6">
                         <div class="embed-responsive embed-responsive-16by9 ">
                             <iframe width="560" height="315" src="https://www.youtube.com/embed/iBlyGEGOPcI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
-                    </div>
+                    </div>--}}
                     <div class="text-black">
                         <p> 3.1 Не создавать - не будут создаваться никакие документы. </p>
                         <p>    3.2 Отгрузка - будет создаваться документ Отгрузка из Заказа покупателя.</p>
