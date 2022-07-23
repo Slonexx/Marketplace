@@ -80,7 +80,7 @@ class OrderStatusCommand extends Command
                         'sale_channel_name' => $settings->Saleschannel,
                         'organization_account_number' => $settings->PaymentAccount,
                     ])->throw();
-                    $logSt = "Состояние заказа из Kaspi:".$state." ".$response->object()->message."\n";
+                    $logSt = "Состояние заказа из Kaspi:".$state." ".json_decode($response->body())->message."\n";
                      print_r($logSt);
 
                      InfoLogModel::create([

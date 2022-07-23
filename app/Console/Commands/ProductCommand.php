@@ -73,7 +73,7 @@ class ProductCommand extends Command
                                 'sdate' => $today,
                                 'option' => $settings->CheckCreatProduct,
                             ])->throw();
-                            $logSt = "Состояние заказа из Kaspi:".$state." ".$response->object()->message."\n";
+                            $logSt = "Состояние заказа из Kaspi:".$state." ".json_decode($response->body())->message."\n";
                         print_r($logSt);
 
                         InfoLogModel::create([
