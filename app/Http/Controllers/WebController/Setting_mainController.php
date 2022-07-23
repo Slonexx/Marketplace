@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 class Setting_mainController extends Controller
 {
     public function index($accountId){
+
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
         $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
@@ -108,7 +109,9 @@ class Setting_mainController extends Controller
             $message = $this->updateSetting($accountId, $Setting);
             return Redirect::back()->with('success', $message);
         } else {
-            return back()->with('error', $MessageKaspi["API"]);
+            /*$_SESSION["error"] = $MessageKaspi["API"];
+            return Redirect::back()->with('error', $MessageKaspi["API"]);*/
+            return Redirect::back()->withErrors(['password' => ['Invalid Username or Password']]);
         }
 
 

@@ -17,15 +17,21 @@
         </div>
 
 
-        @if (\Session::has('success'))
+        {{--@if (\Session::has('success'))
             @include('alerts')
         @endif
         @if(session()->has('error'))
             @include('alerts')
-        @endif
+        @endif--}}
 
 
-            <form action=" {{  route('Setting_Send' , ['accountId' => $accountId] ) }} " method="post">
+        @error('password')
+        <div class="alert alert-danger alert-dismissible fade show in text-center " role="alert">  {{ $message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @enderror
+
+        <form action=" {{  route('Setting_Send' , ['accountId' => $accountId] ) }} " method="post">
             @csrf <!-- {{ csrf_field() }} -->
                 <div class="mb-3 row">
                     <label for="TokenKaspi" class="col-sm-2 col-form-label"> <i class="text-danger">*</i> Токен Kaspi </label>
