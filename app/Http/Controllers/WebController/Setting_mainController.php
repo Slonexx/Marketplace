@@ -13,6 +13,8 @@ use App\Http\Controllers\KaspiApiClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
 class Setting_mainController extends Controller
 {
@@ -41,7 +43,14 @@ class Setting_mainController extends Controller
             'form_params' => [
                 'tokenMs' => $TokenMoySklad,
             ]
-        ]);
+        ])->then(
+            function (ResponseInterface $res) {
+                //echo $res->getStatusCode() . "\n";
+            },
+            function (RequestException $e) {
+                dd($e);
+            }
+        );
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
