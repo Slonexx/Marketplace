@@ -50,7 +50,7 @@ class Setting_mainController extends Controller
             function (RequestException $e) {
                 dd($e);
             }
-        );
+        )->wait();
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
