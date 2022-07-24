@@ -15,6 +15,7 @@ class AttributeController extends Controller
 
         $request->validate([
             'tokenMs' => 'required|string',
+            'accountId' => 'required|string',
         ]);
 
         $TokenMoySklad = $request->tokenMs;
@@ -27,6 +28,11 @@ class AttributeController extends Controller
         //}catch(ClientException $e){
            // dd($e);
         //}
+
+        return response([
+            "message" => 'Set required attributes!',
+            "accountId" => $request->accountId,
+        ]);
 
     }
 

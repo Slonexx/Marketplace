@@ -10,11 +10,13 @@ use App\Http\Controllers\Config\Lib\cfg;
 use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\KaspiApiClient;
+use App\Models\InfoLogModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Http;
 
 class Setting_mainController extends Controller
 {
@@ -38,19 +40,15 @@ class Setting_mainController extends Controller
         // $att = new AttributeController();
         // $att->createAllAttributes($TokenMoySklad);
         $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
-        $client_Asycn = new \GuzzleHttp\Client();
-        $client_Asycn->postAsync($urlAttributes,[
-            'form_params' => [
-                'tokenMs' => $TokenMoySklad,
-            ]
-        ])->then(
-            function (ResponseInterface $res) {
-                //echo $res->getStatusCode() . "\n";
-            },
-            function (RequestException $e) {
-                dd($e);
-            }
-        )->wait();
+        Http::async()->post($urlAttributes,[
+            'tokenMs' => $TokenMoySklad,
+            'accountId' => $accountId,
+        ])->then(function($response){
+            InfoLogModel::create([
+                'accountId' => json_decode($response->body())->accountId,
+                'message' => json_decode($response->body())->message,
+            ]);
+        });
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
