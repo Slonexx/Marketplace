@@ -26,7 +26,6 @@ class ApiClientMC {
         //     $accept = "application/json";
         // }
         $headers = [
-            //'Accept' => $accept,
             'Authorization' => $this->apiKey,
         ];
         $client = new Client();
@@ -40,7 +39,6 @@ class ApiClientMC {
 
     public function requestPost($body){
         $headers = [
-            //'Accept' => $accept,
             'Authorization' => $this->apiKey,
             'Content-Type' => 'application/json',
         ];
@@ -58,7 +56,6 @@ class ApiClientMC {
 
     public function requestPut($body){
         $headers = [
-            //'Accept' => $accept,
             'Authorization' => $this->apiKey,
             'Content-Type' => 'application/json',
         ];

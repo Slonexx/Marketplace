@@ -33,8 +33,15 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-        $att = new AttributeController();
-        $att->createAllAttributes($TokenMoySklad);
+        // $att = new AttributeController();
+        // $att->createAllAttributes($TokenMoySklad);
+        $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
+        $client_Asycn = new \GuzzleHttp\Client();
+        $client_Asycn->postAsync($urlAttributes,[
+            'form_params' => [
+                'tokenMs' => $TokenMoySklad,
+            ]
+        ]);
 
 
         $Client = new ApiClientMC($url, $TokenMoySklad);

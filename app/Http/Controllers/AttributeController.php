@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\ClientException;
+use Illuminate\Http\Client\HttpClientException;
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
 {
 
-    private ApiClientMC $client;
-
-    public function createAllAttributes($TokenMoySklad)
+    public function createAllAttributes(Request $request)
     {
-        $this->client = new ApiClientMC("",$TokenMoySklad);
 
-        $this->createProductAttributes($TokenMoySklad);
-        $this->createOrderAttributes($TokenMoySklad);
-        $this->createAgentAttributes($TokenMoySklad);
+        $request->validate([
+            'tokenMs' => 'required|string',
+        ]);
+
+        $TokenMoySklad = $request->tokenMs;
+
+
+        //try{
+            $this->createProductAttributes($TokenMoySklad);
+            $this->createOrderAttributes($TokenMoySklad);
+            $this->createAgentAttributes($TokenMoySklad);
+        //}catch(ClientException $e){
+           // dd($e);
+        //}
+
+        
     }
 
     private function createProductAttributes($apiKey)
@@ -44,9 +56,8 @@ class AttributeController extends Controller
 
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes";
-        //$client = new ApiClientMC($uri, $apiKey);
-        $this->client->setRequestUrl($uri);
-        $json = $this->client->requestGet();
+        $client = new ApiClientMC($uri, $apiKey);
+        $json = $client->requestGet();
 
         foreach($bodyAttributes as $body){
             $foundedAttrib = false;
@@ -57,7 +68,7 @@ class AttributeController extends Controller
                 }
             }
             if($foundedAttrib == false){
-                $this->client->requestPost($body);
+                $client->requestPost($body);
             }
         }
 
@@ -67,9 +78,8 @@ class AttributeController extends Controller
     private function createOrderAttributes($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
-        //$client = new ApiClientMC($uri, $apiKey);
-        $this->client->setRequestUrl($uri);
-        $json = $this->client->requestGet();
+        $client = new ApiClientMC($uri, $apiKey);
+        $json = $client->requestGet();
 
         $customEntityMeta = null;
         foreach($json->customEntities as $customEntity){
@@ -81,44 +91,54 @@ class AttributeController extends Controller
 
         if($customEntityMeta == null){
             app(CustomEntityController::class)->createCustomEntity($apiKey,"Способ доставки",["Доставка","Самовывоз"]);
+            $json = $client->requestGet();
+        }
             foreach($json->customEntities as $customEntity){
                 if( $customEntity->name == 'Способ доставки'){
                     $customEntityMeta = $customEntity->meta;
                     break;
+               }
+           }
+
+           if($customEntityMeta != null){
+                    $body = [
+                    "customEntityMeta" => [
+                      "href" => $customEntityMeta->href,
+                      "type" => $customEntityMeta->type,
+                      "mediaType" => $customEntityMeta->mediaType,
+                    ],
+                    "name" => "Способ доставки",
+                    "type" => "customentity",
+                    "required" => false,
+                ];
+
+                $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
+                $client->setRequestUrl($uri);
+                $json = $client->requestGet();
+                $foundedAttrib = false;
+
+                foreach($json->rows as $row){
+                    if($row->name == 'Способ доставки' && $row->type == 'customentity'){
+                        $foundedAttrib = true;
+                        break;
+                    }
                 }
-            }
-        }
 
-        $body = [
-            "customEntityMeta" => $customEntityMeta,
-            "name" => "Способ доставки",
-            "type" => "customentity",
-            "required" => false,
-        ];
+                //dd($body);
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
-        $this->client->setRequestUrl($uri);
-        $json = $this->client->requestGet();
-        $foundedAttrib = false;
+                if($foundedAttrib == false){
+                    $client->requestPost($body);
+                }
+           }
 
-        foreach($json->rows as $row){
-            if($row->name == 'Способ доставки' && $row->type == 'customentity'){
-                $foundedAttrib = true;
-                break;
-            }
-        }
-
-        if($foundedAttrib == false){
-            $this->client->requestPost($body);
-        }
+        
     }
 
     private function createAgentAttributes($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
-        //$client = new ApiClientMC($uri, $apiKey);
-        $this->client->setRequestUrl($uri);
-        $json = $this->client->requestGet();
+        $client = new ApiClientMC($uri, $apiKey);
+        $json = $client->requestGet();
 
         $customEntityMeta = null;
         foreach($json->customEntities as $customEntity){
@@ -130,36 +150,45 @@ class AttributeController extends Controller
 
         if($customEntityMeta == null){
             app(CustomEntityController::class)->createCustomEntity($apiKey,"Государственное учреждение",["Да","Нет"]);
-            foreach($json->customEntities as $customEntity){
+            $json = $client->requestGet();
+        }
+
+         foreach($json->customEntities as $customEntity){
                 if( $customEntity->name == 'Государственное учреждение'){
                     $customEntityMeta = $customEntity->meta;
                     break;
                 }
+        }
+
+        if($customEntityMeta != null) {
+                $body = [
+                "customEntityMeta" => [
+                    "href" => $customEntityMeta->href,
+                    "type" => $customEntityMeta->type,
+                    "mediaType" => $customEntityMeta->mediaType,
+                ],
+                "name" => "Государственное учреждение",
+                "type" => "customentity",
+                "required" => true,
+            ];
+
+            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
+            $client->setRequestUrl($uri);
+            $json = $client->requestGet();
+            $foundedAttrib = false;
+
+            foreach($json->rows as $row){
+                if($row->name == 'Государственное учреждение' && $row->type == 'customentity'){
+                    $foundedAttrib = true;
+                    break;
+                }
+            }
+
+            if($foundedAttrib == false){
+                $client->requestPost($body);
             }
         }
-
-        $body = [
-            "customEntityMeta" => $customEntityMeta,
-            "name" => "Государственное учреждение",
-            "type" => "customentity",
-            "required" => true,
-        ];
-
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
-        $this->client->setRequestUrl($uri);
-        $json = $this->client->requestGet();
-        $foundedAttrib = false;
-
-        foreach($json->rows as $row){
-            if($row->name == 'Государственное учреждение' && $row->type == 'customentity'){
-                $foundedAttrib = true;
-                break;
-            }
-        }
-
-        if($foundedAttrib == false){
-            $this->client->requestPost($body);
-        }
+        
     }
 
 }

@@ -32,10 +32,13 @@ class StatusController extends Controller
         foreach($settings as $setting){
             if($setting->accountId == $accountId){
               $currSetting = $setting;
+              break;
             }
         }
 
-        switch ($status_Kaspi) {
+      if($currSetting != null){
+
+          switch ($status_Kaspi) {
             case 'APPROVED_BY_BANK':
               $status = $currSetting->APPROVED_BY_BANK;
             break;
@@ -55,6 +58,9 @@ class StatusController extends Controller
                     $status = $currSetting->RETURNED;
                   break;
         }
+          
+      }
+
         return $status;
     }
 }
