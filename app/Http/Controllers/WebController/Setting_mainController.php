@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
-use Illuminate\Support\Facades\Http;
 
 class Setting_mainController extends Controller
 {
@@ -40,15 +39,20 @@ class Setting_mainController extends Controller
         // $att = new AttributeController();
         // $att->createAllAttributes($TokenMoySklad);
         $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
-        Http::async()->post($urlAttributes,[
-            'tokenMs' => $TokenMoySklad,
-            'accountId' => $accountId,
-        ])->then(function($response){
-            InfoLogModel::create([
-                'accountId' => json_decode($response->body())->accountId,
-                'message' => json_decode($response->body())->message,
-            ]);
-        });
+        $client_Asycn = new \GuzzleHttp\Client();
+        $client_Asycn->postAsync($urlAttributes,[
+            'form_params' => [
+                'tokenMs' => $TokenMoySklad,
+                'accountId' => $accountId,
+            ]
+        ])->then(
+            function (ResponseInterface $res) {
+                //echo $res->getStatusCode() . "\n";
+            },
+            function (RequestException $e) {
+                
+            }
+        )->wait();
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
