@@ -43,7 +43,6 @@ class Setting_mainController extends Controller
             ]
         ]);
 
-
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
 

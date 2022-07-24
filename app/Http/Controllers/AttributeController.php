@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Client\HttpClientException;
+
 use Illuminate\Http\Request;
 
 class AttributeController extends Controller
@@ -27,10 +28,9 @@ class AttributeController extends Controller
            // dd($e);
         //}
 
-        
     }
 
-    private function createProductAttributes($apiKey)
+    public function createProductAttributes($apiKey)
     {
 
         $bodyAttributes = [
@@ -75,7 +75,7 @@ class AttributeController extends Controller
 
     }
 
-    private function createOrderAttributes($apiKey)
+    public function createOrderAttributes($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
         $client = new ApiClientMC($uri, $apiKey);
@@ -125,16 +125,14 @@ class AttributeController extends Controller
                 }
 
                 //dd($body);
-
+                
                 if($foundedAttrib == false){
                     $client->requestPost($body);
                 }
            }
-
-        
     }
 
-    private function createAgentAttributes($apiKey)
+    public function createAgentAttributes($apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
         $client = new ApiClientMC($uri, $apiKey);
@@ -188,7 +186,7 @@ class AttributeController extends Controller
                 $client->requestPost($body);
             }
         }
-        
+    
     }
 
 }

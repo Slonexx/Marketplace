@@ -20,6 +20,7 @@ class WebController extends Controller
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
 
+
         return redirect()->route('Index', ['accountId' => $accountId] );
 
     }
