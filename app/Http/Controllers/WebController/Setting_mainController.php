@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Client\Pool;
+use Illuminate\Support\Facades\Http;
 
 class Setting_mainController extends Controller
 {
@@ -58,15 +60,15 @@ class Setting_mainController extends Controller
         //     'accountId' => $accountId,
         // ]);
 
-        $Client = new ApiClientMC($url, $TokenMoySklad);
-        $Body = $Client->requestGet()->states;
+        //$Client = new ApiClientMC($url, $TokenMoySklad);
+        //$Body = $Client->requestGet()->states;
 
         $Organization = $Setting->Organization;
-        if ($Organization != null) {
-            $urlCheck = $url_organization . "/" . $Organization;
-            $Client->setRequestUrl($urlCheck);
-            $Organization = $Client->requestGet();
-        } else ($Organization = "0");
+        // if ($Organization != null) {
+        //     $urlCheck = $url_organization . "/" . $Organization;
+        //     $Client->setRequestUrl($urlCheck);
+        //     $Organization = $Client->requestGet();
+        // } else ($Organization = "0");
 
         $PaymentDocument = $Setting->PaymentDocument;
         if ($PaymentDocument == null) $PaymentDocument = "0";
@@ -93,24 +95,47 @@ class Setting_mainController extends Controller
         $RETURNED = $Setting->RETURNED;
 
 
-        $Client->setRequestUrl($url_organization);
-        $Body_organization = $Client->requestGet()->rows;
+        if($Organization != null){
+            $urlCheck = $url_organization . "/" . $Organization;
+            $responses = Http::pool(fn (Pool $pool) => [
+                $pool->as('body')->get($url),
+                $pool->as('organization')->get($urlCheck),
+                $pool->as('body_organization')->get($url_organization),
+                $pool->as('body_saleschannel')->get($url_saleschannel),
+                $pool->as('body_project')->get($url_project),
+            ]);
+            $Organization = $responses['organization'];
+        } else {
+            $Organization = "0";
+            $responses = Http::pool(fn (Pool $pool) => [
+                $pool->as('body')->get($url),
+                $pool->as('body_organization')->get($url_organization),
+                $pool->as('body_saleschannel')->get($url_saleschannel),
+                $pool->as('body_project')->get($url_project),
+            ]);
+        }
+
+        // $Client->setRequestUrl($url_organization);
+        // $Body_organization = $Client->requestGet()->rows;
 
 
 
-        $Client->setRequestUrl($url_saleschannel);
-        $Body_saleschannel = $Client->requestGet()->rows;
+        // $Client->setRequestUrl($url_saleschannel);
+        // $Body_saleschannel = $Client->requestGet()->rows;
 
 
 
-        $Client->setRequestUrl($url_project);
-        $Body_project = $Client->requestGet()->rows;
+        // $Client->setRequestUrl($url_project);
+        // $Body_project = $Client->requestGet()->rows;
 
 
-        return view('web.Setting_main',['Body' => $Body,
-            "Body_organization" => $Body_organization,
-            "Body_saleschannel" => $Body_saleschannel,
-            "Body_project" => $Body_project,
+
+
+
+        return view('web.Setting_main',['Body' => $responses['body']->states,
+            "Body_organization" => $responses['body_organization']->rows,
+            "Body_saleschannel" => $responses['body_saleschannel']->rows,
+            "Body_project" => $responses['body_project']->rows,
             "TokenKaspi" => $TokenKaspi,
             "Organization" => $Organization,
             "PaymentDocument" => $PaymentDocument,
