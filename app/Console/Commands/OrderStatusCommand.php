@@ -6,6 +6,8 @@ use App\Models\InfoLogModel;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\CheckSettingsController;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
 class OrderStatusCommand extends Command
 {
@@ -60,6 +62,22 @@ class OrderStatusCommand extends Command
             //     'accountId' => $settings->accountId,
             //     'message' => $log,
             // ]);
+
+            $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
+            $client_Asycn = new \GuzzleHttp\Client();
+            $client_Asycn->postAsync($urlAttributes,[
+                'form_params' => [
+                    'tokenMs' => $settings->TokenMoySklad,
+                     'accountId' => $settings->accountId,
+                ]
+            ])->then(
+                function (ResponseInterface $res) {
+                    //echo $res->getStatusCode() . "\n";
+                },
+                function (RequestException $e) {
+                    
+                }
+            )->wait();
 
              try {
 
