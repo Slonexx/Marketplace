@@ -17,7 +17,7 @@
             </div>
             <div class="col-sm-4 d-flex justify-content-end text-black btnP" data-bs-toggle="modal" data-bs-target="#modal">
                 
-                <button type="submit" class="btn btn-light">Показать инструкцию ?</button>
+                
             </div>
             <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
