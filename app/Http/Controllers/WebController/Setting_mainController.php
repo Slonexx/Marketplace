@@ -98,20 +98,20 @@ class Setting_mainController extends Controller
         if($Organization != null){
             $urlCheck = $url_organization . "/" . $Organization;
             $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
-                $pool->as('body')->get($url),
+                $pool->as('body')->withToken($TokenMoySklad)->get($url),
                 $pool->as('organization')->withToken($TokenMoySklad)->get($urlCheck),
-                $pool->as('body_organization')->get($url_organization),
-                $pool->as('body_saleschannel')->get($url_saleschannel),
-                $pool->as('body_project')->get($url_project),
+                $pool->as('body_organization')->withToken($TokenMoySklad)->get($url_organization),
+                $pool->as('body_saleschannel')->withToken($TokenMoySklad)->get($url_saleschannel),
+                $pool->as('body_project')->withToken($TokenMoySklad)->get($url_project),
             ]);
-            $Organization = json_decode($responses['organization']->body());
+            $Organization = $responses['organization']->object();
         } else {
             $Organization = "0";
             $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
-                $pool->as('body')->get($url),
-                $pool->as('body_organization')->get($url_organization),
-                $pool->as('body_saleschannel')->get($url_saleschannel),
-                $pool->as('body_project')->get($url_project),
+                $pool->as('body')->withToken($TokenMoySklad)->get($url),
+                $pool->as('body_organization')->withToken($TokenMoySklad)->get($url_organization),
+                $pool->as('body_saleschannel')->withToken($TokenMoySklad)->get($url_saleschannel),
+                $pool->as('body_project')->withToken($TokenMoySklad)->get($url_project),
             ]);
         }
 
@@ -129,13 +129,13 @@ class Setting_mainController extends Controller
         // $Body_project = $Client->requestGet()->rows;
 
 
-        dd($responses['organization']->object());
+        //dd($responses['organization']->object());
 
 
-        return view('web.Setting_main',['Body' => json_decode($responses['body']->body())->states,
-            "Body_organization" => json_decode($responses['body_organization']->body())->rows,
-            "Body_saleschannel" => json_decode($responses['body_saleschannel']->body())->rows,
-            "Body_project" => json_decode($responses['body_project']->body())->rows,
+        return view('web.Setting_main',['Body' => $responses['body']->object()->states,
+            "Body_organization" => $responses['body_organization']->object()->rows,
+            "Body_saleschannel" => $responses['body_saleschannel']->object()->rows,
+            "Body_project" => $responses['body_project']->object()->rows,
             "TokenKaspi" => $TokenKaspi,
             "Organization" => $Organization,
             "PaymentDocument" => $PaymentDocument,
