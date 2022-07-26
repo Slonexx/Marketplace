@@ -3,7 +3,13 @@
 @section('content')
 
     <div class="content p-4 mt-2 bg-white text-Black rounded">
-
+                            <p class="mt-3">1. Выберите товар и поставьте галочку под пунктом (Добавлять товар на Kaspi)</p>
+                            <p>2. Перейдите в приложение Магазин Kaspi.kz</p>
+                            <p>3. В меню выберите (Отправить товар)</p>
+                            <p>4. Нажмите на кнопку (Скачать Excel)</p>
+                            <p>5. Откройте свой кабинет Kaspi продавца</p>
+                            <p>6. В меню выберите Товары→Загрузить прайс-лист</p>
+                            <p>7. В открывшемся окне выберите (Загрузить файл вручную) и вставтьте ранее скаченый файл</p>
         <div class="row">
             <div class="col-sm-8">
                 <h2 class=" text-black"> <i class="fa-solid fa-circle-plus text-orange"></i> Отправить товар на Kaspi </h2>
@@ -19,13 +25,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p class="mt-3">1. Выберите товар и поставьте галочку под пунктом (Добавлять товар на Kaspi)</p>
-                            <p>2. Перейдите в приложение Магазин Kaspi.kz</p>
-                            <p>3. В меню выберите (Отправить товар)</p>
-                            <p>4. Нажмите на кнопку (Скачать Excel)</p>
-                            <p>5. Откройте свой кабинет Kaspi продавца</p>
-                            <p>6. В меню выберите Товары→Загрузить прайс-лист</p>
-                            <p>7. В открывшемся окне выберите (Загрузить файл вручную) и вставтьте ранее скаченый файл</p>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Ok</button>
