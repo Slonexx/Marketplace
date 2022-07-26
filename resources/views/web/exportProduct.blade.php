@@ -65,9 +65,9 @@
         </div>
 
         <script type="text/javascript">
-            $(window).on('load',function(){
-                $('#myModal').modal('show');
-            });
+            // $(window).on('load',function(){
+            //     $('#myModal').modal('show');
+            // });
         </script>
 
             <div class="">
