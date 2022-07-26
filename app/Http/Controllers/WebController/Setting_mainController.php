@@ -99,7 +99,7 @@ class Setting_mainController extends Controller
             $urlCheck = $url_organization . "/" . $Organization;
             $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
                 $pool->as('body')->get($url),
-                $pool->as('organization')->get($urlCheck),
+                $pool->as('organization')->withToken($TokenMoySklad)->get($urlCheck),
                 $pool->as('body_organization')->get($url_organization),
                 $pool->as('body_saleschannel')->get($url_saleschannel),
                 $pool->as('body_project')->get($url_project),
