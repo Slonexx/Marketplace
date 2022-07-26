@@ -21,7 +21,7 @@ class ProductController extends Controller
             foreach($order['entries'] as $entry){
                 $product = null;
                 //dd($entry);
-                if(array_search($entry['product']->code, $productIds) == false){
+                if(in_array($entry['product']->code, $productIds) == false){
                     $productIds[$count] = $entry['product']->code;
                     //dd($productIds[$count]);
                     $product['name'] = $entry['product']->name;
