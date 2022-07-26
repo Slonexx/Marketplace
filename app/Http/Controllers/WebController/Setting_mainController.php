@@ -39,20 +39,24 @@ class Setting_mainController extends Controller
         // $att = new AttributeController();
         // $att->createAllAttributes($TokenMoySklad);
         $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
-        $client_Asycn = new \GuzzleHttp\Client();
-        $client_Asycn->postAsync($urlAttributes,[
-            'form_params' => [
-                'tokenMs' => $TokenMoySklad,
-                'accountId' => $accountId,
-            ]
-        ])->then(
-            function (ResponseInterface $res) {
-                //echo $res->getStatusCode() . "\n";
-            },
-            function (RequestException $e) {
+        // $client_Asycn = new \GuzzleHttp\Client();
+        // $client_Asycn->postAsync($urlAttributes,[
+        //     'form_params' => [
+        //         'tokenMs' => $TokenMoySklad,
+        //         'accountId' => $accountId,
+        //     ]
+        // ])->then(
+        //     function (ResponseInterface $res) {
+        //         //echo $res->getStatusCode() . "\n";
+        //     },
+        //     function (RequestException $e) {
                 
-            }
-        )->wait();
+        //     }
+        // )->wait();
+        $this->curl_post_async($urlAttributes,[
+            'tokenMs' => $TokenMoySklad,
+            'accountId' => $accountId,
+        ]);
 
         $Client = new ApiClientMC($url, $TokenMoySklad);
         $Body = $Client->requestGet()->states;
@@ -128,6 +132,29 @@ class Setting_mainController extends Controller
 
     }
 
+    public function curl_post_async($url, $params)
+    {
+        $post_string = http_build_query($params);
+    
+        $parts=parse_url($url);
+    
+        $fp = fsockopen($parts['host'], 
+            isset($parts['port'])?$parts['port']:80, 
+            $errno, $errstr, 30);
+    
+        //pete_assert(($fp!=0), "Couldn't open a socket to ".$url." (".$errstr.")");(optional)
+    
+        $out = "POST ".$parts['path']." HTTP/1.1\r\n";
+        $out.= "Host: ".$parts['host']."\r\n";
+        $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
+        $out.= "Content-Length: ".strlen($post_string)."\r\n";
+        $out.= "Connection: Close\r\n\r\n";
+        if (isset($post_string)) $out.= $post_string;
+    
+        fwrite($fp, $out);
+        fclose($fp);
+    }
+
     public function postFormSetting(Request $request, $accountId){
         $Setting = $request;
 
@@ -143,7 +170,7 @@ class Setting_mainController extends Controller
             $request->request->add(["error"=>$MessageKaspi["API"]]);
             return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>$MessageKaspi["API"] ]);
         }
-/*->withErrors(['password' => ['Invalid Username or Password']]);*/
+        /*->withErrors(['password' => ['Invalid Username or Password']]);*/
 
 
     }
