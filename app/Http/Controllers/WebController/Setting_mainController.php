@@ -97,7 +97,7 @@ class Setting_mainController extends Controller
 
         if($Organization != null){
             $urlCheck = $url_organization . "/" . $Organization;
-            $responses = Http::pool(fn (Pool $pool) => [
+            $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
                 $pool->as('body')->get($url),
                 $pool->as('organization')->get($urlCheck),
                 $pool->as('body_organization')->get($url_organization),
@@ -107,7 +107,7 @@ class Setting_mainController extends Controller
             $Organization = json_decode($responses['organization']->body());
         } else {
             $Organization = "0";
-            $responses = Http::pool(fn (Pool $pool) => [
+            $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
                 $pool->as('body')->get($url),
                 $pool->as('body_organization')->get($url_organization),
                 $pool->as('body_saleschannel')->get($url_saleschannel),
@@ -129,7 +129,7 @@ class Setting_mainController extends Controller
         // $Body_project = $Client->requestGet()->rows;
 
 
-        dd($responses['organization']->json());
+        //dd($responses['organization']->json());
 
 
         return view('web.Setting_main',['Body' => json_decode($responses['body']->body())->states,
