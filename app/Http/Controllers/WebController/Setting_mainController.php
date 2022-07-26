@@ -104,7 +104,7 @@ class Setting_mainController extends Controller
                 $pool->as('body_saleschannel')->get($url_saleschannel),
                 $pool->as('body_project')->get($url_project),
             ]);
-            $Organization = $responses['organization'];
+            $Organization = $responses['organization']->json();
         } else {
             $Organization = "0";
             $responses = Http::pool(fn (Pool $pool) => [
@@ -132,10 +132,10 @@ class Setting_mainController extends Controller
 
 
 
-        return view('web.Setting_main',['Body' => $responses['body']->states,
-            "Body_organization" => $responses['body_organization']->rows,
-            "Body_saleschannel" => $responses['body_saleschannel']->rows,
-            "Body_project" => $responses['body_project']->rows,
+        return view('web.Setting_main',['Body' => $responses['body']->json()->states,
+            "Body_organization" => $responses['body_organization']->json()->rows,
+            "Body_saleschannel" => $responses['body_saleschannel']->json()->rows,
+            "Body_project" => $responses['body_project']->json()->rows,
             "TokenKaspi" => $TokenKaspi,
             "Organization" => $Organization,
             "PaymentDocument" => $PaymentDocument,
