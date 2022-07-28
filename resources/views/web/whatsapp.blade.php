@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-
+    <div class="headfull">
     <div class="content p-4 mt-2 bg-white text-black rounded">
         <h2 align="center">Написать в WhatsApp
             <i class="fa-brands fa-whatsapp text-success"></i>
@@ -46,5 +46,11 @@
 
         </div>
     </div>
-
+</div>
     @endsection
+
+<style>
+    .headfull {
+        height: 720px;
+    }
+</style>

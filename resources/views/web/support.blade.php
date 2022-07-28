@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <div class="headfull">
     <div class="content content p-4 mt-2 bg-white text-Black rounded">
         <h2 align="center">
             <i class="fa-solid fa-envelope text-orange"></i>
@@ -71,4 +72,13 @@
         </div>
     </div>
 
+    </div>
+
 @endsection
+
+<style>
+    .headfull {
+        height: 720px;
+    }
+</style>
+
