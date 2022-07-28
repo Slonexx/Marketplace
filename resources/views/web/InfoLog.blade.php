@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-
+    <div class="headfull">
     <div class="content p-4 mt-2 bg-white text-black rounded">
         <h2 align="center">Логирование
             <i class="fas fa-user-secret"></i>
@@ -27,4 +27,12 @@
 
         </div>
     </div>
+
+    </div>
 @endsection
+
+<style>
+    .headfull {
+        height: auto;
+    }
+</style>
