@@ -33,6 +33,6 @@
 
 <style>
     .headfull {
-        height: 1024px;
+        height: 720px;
     }
 </style>
