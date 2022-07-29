@@ -87,7 +87,6 @@ class AppInstanceContoller
             $app =  json_decode($unser);
         }
 
-        dd($app);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
@@ -102,7 +101,8 @@ class AppInstanceContoller
     public function setAppToClassAppInstance($json){
         $this->appId = $json->appId;
         $this->accountId = $json->accountId;
-        $this->TokenMoySklad = $json->TokenMoySklad;
+        //$this->TokenMoySklad = $json->TokenMoySklad;
+        $this->TokenMoySklad = "a9580e1e4754a15a33cb565f573f62e3eda24d3f";
         $this->TokenKaspi = $json->TokenKaspi;
         $this->Organization = $json->Organization;
         $this->PaymentDocument = $json->PaymentDocument;

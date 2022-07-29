@@ -138,7 +138,7 @@ class Setting_mainController extends Controller
         // $Body_project = $Client->requestGet()->rows;
 
 
-        dd($responses);
+        //dd($responses);
 
 
         return view('web.Setting_main',['Body' => $responses['body']->object()->states,
