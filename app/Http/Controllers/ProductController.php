@@ -70,7 +70,12 @@ class ProductController extends Controller
         
         $count = 0;
         foreach($jsonProducts->rows as $key=>$row){
-            $productsFromMsOpt1[$count] = $row->article;
+            if(property_exists($row, 'article') == true){
+                $productsFromMsOpt1[$count] = $row->article;
+            } else {
+                $productsFromMsOpt1[$count] = "";
+            }
+            
             $productsFromMsOpt2[$count] = $row->name;
             $count++;
         }
