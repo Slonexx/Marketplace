@@ -80,7 +80,7 @@ class AppInstanceContoller
     }
 
     static function load($appId, $accountId): AppInstanceContoller {
-        $data = @file_get_contents(public_path().'/Config/' . "data/$appId.$accountId.json");
+        $data = @file_get_contents('https://vetmobile.kz/Config/' . "data/$appId.$accountId.json");
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
