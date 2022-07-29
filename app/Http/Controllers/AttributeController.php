@@ -131,7 +131,7 @@ class AttributeController extends Controller
                 }
 
                 //dd($body);
-                
+
                 if($foundedAttrib == false){
                     $client->requestPost($body);
                 }
@@ -192,7 +192,7 @@ class AttributeController extends Controller
                 $client->requestPost($body);
             }
         }
-    
+
     }
 
 }
