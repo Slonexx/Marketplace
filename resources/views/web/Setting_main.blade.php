@@ -401,8 +401,6 @@
 
                         <div class="col-sm-8 ">
                             <select name="RETURNED" class="form-select text-black">
-                                <option selected>Статус МойСклад</option>
-
                                 @if($RETURNED == null)
                                     <option selected>Статус МойСклад</option>
                                 @else <option value="{{$RETURNED}}" selected>{{$RETURNED}}</option>
