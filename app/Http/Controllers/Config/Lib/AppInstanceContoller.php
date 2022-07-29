@@ -80,7 +80,7 @@ class AppInstanceContoller
     }
 
     static function load($appId, $accountId): AppInstanceContoller {
-        $data = @file_get_contents(self::buildFilename($appId, $accountId));
+        $data = @file_get_contents(public_path().'/Config/' . "data/$appId.$accountId.json");
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
