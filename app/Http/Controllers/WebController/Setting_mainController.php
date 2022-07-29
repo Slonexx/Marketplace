@@ -44,7 +44,7 @@ class Setting_mainController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
-
+        dd($Setting);
         // $att = new AttributeController();
         // $att->createAllAttributes($TokenMoySklad);
     //     $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
