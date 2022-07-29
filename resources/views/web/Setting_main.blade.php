@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="mb-3 row">
-                        <P class="col-sm-5 col-form-label"> Выберите какой тип платёжного документа: </P>
+                        <P class="col-sm-5 col-form-label"> Выберите какой тип платежного документа создават: </P>
                         <div class="col-sm-7">
                             <select name="PaymentDocument" class="form-select text-black evidence-select" >
                                 @if($PaymentDocument == "0")
