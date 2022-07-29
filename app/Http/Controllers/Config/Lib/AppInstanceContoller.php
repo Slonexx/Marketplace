@@ -86,7 +86,7 @@ class AppInstanceContoller
             $unser = json_encode( unserialize($data) );
             $app =  json_decode($unser);
         }
-
+        dd($data);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
