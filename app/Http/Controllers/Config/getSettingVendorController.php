@@ -35,7 +35,7 @@ class getSettingVendorController extends Controller
         $cfg = new cfg();
 
         $appId = $cfg->appId;
-
+        dd($cfg);
         $app = AppInstanceContoller::loadApp($appId, $accountId);
 
         $this->appId = $app->appId;

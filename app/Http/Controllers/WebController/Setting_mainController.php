@@ -43,7 +43,6 @@ class Setting_mainController extends Controller
 
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
-        dd($Setting);
         $TokenKaspi = $Setting->TokenKaspi;
 
         // $att = new AttributeController();
