@@ -42,8 +42,7 @@ class Setting_mainController extends Controller
         $url_store = "https://online.moysklad.ru/api/remap/1.2/entity/store";
 
         $Setting = new getSettingVendorController($accountId);
-        //$TokenMoySklad = $Setting->TokenMoySklad;
-        $TokenMoySklad = "66a1a962da7e380f45d3d0ee73d910483e579a0a";
+        $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
         // $att = new AttributeController();
