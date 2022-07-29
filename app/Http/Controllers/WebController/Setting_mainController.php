@@ -29,6 +29,12 @@ class Setting_mainController extends Controller
        }
         else $error = "0" ;
 
+        if($request->has('success')) {
+            if( $request->success != "0" ) $success = $request->success;
+            else $success = "0" ;
+        }
+        else $success = "0" ;
+
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
         $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
@@ -153,6 +159,7 @@ class Setting_mainController extends Controller
             'accountId' => $accountId,
 
             'error' => $error,
+            'success'=> $success,
         ]);
 
     }
