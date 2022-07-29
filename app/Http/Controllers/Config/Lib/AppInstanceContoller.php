@@ -71,7 +71,6 @@ class AppInstanceContoller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-        dd($dir . "data/$appId.$accountId.json");
         return $dir . "data/$appId.$accountId.json";
     }
 
@@ -80,14 +79,14 @@ class AppInstanceContoller
     }
 
     static function load($appId, $accountId): AppInstanceContoller {
-        $data = @file_get_contents('https://vetmobile.kz/Config/' . "data/$appId.$accountId.json");
+        $data = @file_get_contents(self::buildFilename($appId, $accountId));
         if ($data === false) {
             $app = new AppInstanceContoller($appId, $accountId);
         } else {
             $unser = json_encode( unserialize($data) );
             $app =  json_decode($unser);
         }
-        dd($data);
+
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
