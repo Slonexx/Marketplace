@@ -31,6 +31,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+        @if($success != "0")
+            <div class="alert alert-success alert-dismissible fade show in text-center " role="alert">  {{  $error  }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
 
 

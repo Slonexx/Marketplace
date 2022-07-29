@@ -52,7 +52,7 @@ class Setting_mainController extends Controller
     //             //echo $res->getStatusCode() . "\n";
     //         },
     //         function (RequestException $e) {
-                
+
     //         }
     //     );
         // $this->curl_post_async($urlAttributes,[
@@ -160,22 +160,22 @@ class Setting_mainController extends Controller
     // public function curl_post_async($url, $params)
     // {
     //     $post_string = http_build_query($params);
-    
+
     //     $parts=parse_url($url);
-    
-    //     $fp = fsockopen($parts['host'], 
-    //         isset($parts['port'])?$parts['port']:80, 
+
+    //     $fp = fsockopen($parts['host'],
+    //         isset($parts['port'])?$parts['port']:80,
     //         $errno, $errstr, 30);
-    
+
     //     //pete_assert(($fp!=0), "Couldn't open a socket to ".$url." (".$errstr.")");(optional)
-    
+
     //     $out = "POST ".$parts['path']." HTTP/1.1\r\n";
     //     $out.= "Host: ".$parts['host']."\r\n";
     //     $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
     //     $out.= "Content-Length: ".strlen($post_string)."\r\n";
     //     $out.= "Connection: Close\r\n\r\n";
     //     if (isset($post_string)) $out.= $post_string;
-    
+
     //     fwrite($fp, $out);
     //     fclose($fp);
     // }
@@ -187,8 +187,9 @@ class Setting_mainController extends Controller
         $MessageKaspi = $this->saveApiKey($TokenKaspi);
         if ($MessageKaspi["StatusCode"] == 200 ) {
             $request->request->add(["error"=>"0"]);
+            $request->request->add(["success"=>"Настройки сохранились"]);
             $message = $this->updateSetting($accountId, $Setting);
-            return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>"0" ]);
+            return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>"0", "success"=>"Настройки сохранились" ]);
         } else {
             /*$_SESSION["error"] = $MessageKaspi["API"];
             return Redirect::back()->with('error', $MessageKaspi["API"]);*/
