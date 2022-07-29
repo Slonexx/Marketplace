@@ -71,7 +71,6 @@ class AppInstanceContoller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-        return "/var/www/vhosts/marketplace.vetmobile.kz/public/Config/data/$appId.$accountId.json";
         return $dir . "data/$appId.$accountId.json";
     }
 
