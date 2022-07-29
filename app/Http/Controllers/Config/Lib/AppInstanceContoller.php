@@ -88,7 +88,7 @@ class AppInstanceContoller
         }
 
 
-        //dd($app->accessToken);
+        dd($data);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
