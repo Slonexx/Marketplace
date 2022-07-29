@@ -71,7 +71,7 @@ class AppInstanceContoller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-        return "https://marketplace.vetmobile.kz/Config/data/$appId.$accountId.json";
+        dd($dir . "data/$appId.$accountId.json");
         return $dir . "data/$appId.$accountId.json";
     }
 
@@ -87,7 +87,7 @@ class AppInstanceContoller
             $unser = json_encode( unserialize($data) );
             $app =  json_decode($unser);
         }
-        dd($app);
+        dd($data);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
