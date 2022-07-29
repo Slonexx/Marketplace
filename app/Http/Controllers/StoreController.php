@@ -7,9 +7,9 @@ use App\Http\Controllers\ApiClientMC;
 
 class StoreController extends Controller
 {
-    public function getKaspiStore($apiKey)
+    public function getKaspiStore($storeName,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/store?search=KASPI";
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/store?search=".$storeName;
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;
@@ -26,16 +26,16 @@ class StoreController extends Controller
             break;
         }
         if (is_null($foundedMeta) == true){
-            return $this->createStore($apiKey);
+            return $this->createStore($storeName,$apiKey);
         } else return $foundedMeta;
     }
 
-    public function createStore($apiKey)
+    public function createStore($storeName,$apiKey)
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/store";
         $client = new ApiClientMC($uri,$apiKey);
         $store = [
-            "name" => "KASPI",
+            "name" => $storeName,
         ];
         $createdMeta = $client->requestPost($store)->meta;
 

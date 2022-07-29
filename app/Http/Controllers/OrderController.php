@@ -137,9 +137,10 @@ class OrderController extends Controller
             'project_name' => 'sometimes|nullable|string',
             'sale_channel_name' => 'sometimes|nullable|string',
             'organization_account_number' => 'sometimes|nullable|string',
+            'store_name' => 'required|string',
         ]);
 
-
+        $storeName = $request->store_name;
         $accountId = $request->accountId;
         $paymentOption = $request->payment_option;
         $demandOption = $request->demand_option;
@@ -167,6 +168,7 @@ class OrderController extends Controller
         $count = 0;
         foreach ($orders as $order) {
             $formattedOrder = $this->mapOrderToAdd(
+                $storeName,
                 $accountId,
                 $order,
                 $sale_channel_name,
@@ -189,6 +191,7 @@ class OrderController extends Controller
     }
 
     private function mapOrderToAdd(
+        $storeName,
         $accountId,$order,$sale_channel_name,$project_name,
         $organization_name,$organization_account,$apiKey)
     {
@@ -204,7 +207,7 @@ class OrderController extends Controller
             $formattedOrder['rate'] = [
                 "currency" => app(CurrencyController::class)->getKzCurrency($apiKey),
             ];
-            $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($apiKey);
+            $formattedOrder['store'] = app(StoreController::class)->getKaspiStore($storeName,$apiKey);
             $formattedOrder['externalCode'] = $order['id'];
 
             $statusFromMs = $this->getState($accountId,$order['status'],$apiKey);
@@ -354,8 +357,10 @@ class OrderController extends Controller
             'project_name' => 'sometimes|nullable|string',
             'sale_channel_name' => 'sometimes|nullable|string',
             'organization_account_number' => 'sometimes|nullable|string',
+            'store_name' => 'required|string',
         ]);
 
+        $storeName = $request->store_name;
         $accountId = $request->accountId;
         $paymentOption = $request->payment_option;
         $demandOption = $request->demand_option;
@@ -392,6 +397,7 @@ class OrderController extends Controller
                         }
                         
                         $formattedOrder = $this->mapOrderToAdd(
+                            $storeName,
                             $accountId,
                             $orderKaspi,
                             $sale_channel_name,
