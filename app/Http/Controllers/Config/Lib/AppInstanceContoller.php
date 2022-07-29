@@ -71,6 +71,7 @@ class AppInstanceContoller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
+        return "https://marketplace.vetmobile.kz/Config/data/$appId.$accountId.json";
         return $dir . "data/$appId.$accountId.json";
     }
 
@@ -101,8 +102,7 @@ class AppInstanceContoller
     public function setAppToClassAppInstance($json){
         $this->appId = $json->appId;
         $this->accountId = $json->accountId;
-        //$this->TokenMoySklad = $json->TokenMoySklad;
-        $this->TokenMoySklad = "a9580e1e4754a15a33cb565f573f62e3eda24d3f";
+        $this->TokenMoySklad = $json->TokenMoySklad;
         $this->TokenKaspi = $json->TokenKaspi;
         $this->Organization = $json->Organization;
         $this->PaymentDocument = $json->PaymentDocument;
