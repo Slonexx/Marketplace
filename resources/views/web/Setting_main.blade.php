@@ -75,7 +75,7 @@
 
 
                     <div class="mb-3 row">
-                        <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавть: </P>
+                        <P class="col-sm-5 col-form-label"> Выберите какой тип документов создавать: </P>
                         <div class="col-sm-7">
                             <select name="Document" class="form-select text-black" >
                                 @if($Document == "0")
