@@ -31,12 +31,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        @if($success != "0")
-            <div class="alert alert-success alert-dismissible fade show in text-center " role="alert">  {{  $success  }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-
 
 
         <form action=" {{  route('Setting_Send' , ['accountId' => $accountId] ) }} " method="post">
@@ -432,9 +426,10 @@
                     <div class="alert alert-success alert-dismissible fade show in text-center " role="alert">  {{  $success  }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
+                    <hr class="href_padding">
                 @endif
 
-                <hr class="href_padding">
+
 
 
                 <div class='d-flex justify-content-end text-black btnP' >
