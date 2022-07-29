@@ -257,7 +257,7 @@
                         <p class="col-sm-5 col-form-label">
                             <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover6"
                             data-toggle="popover" data-placement="right" data-trigger="focus"
-                            data-content="Выбор проверки при создание товара (С Kaspi в МойСклад)"></button>
+                            data-content="Выбор проверки при создании товара (С Kaspi в МойСклад)"></button>
                             Выберите способ проверки товаров: </p>
 
                         <script> $('.myPopover6').popover(); </script>

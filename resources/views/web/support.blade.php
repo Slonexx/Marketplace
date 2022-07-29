@@ -18,7 +18,7 @@
 
 
                     <div class="form-group row ">
-                        <label for="TokenKaspi" class="col-form-label ">Введите Имя</label>
+                        <label for="TokenKaspi" class="col-form-label ">Введите имя</label>
                         <div class="col-sm-12">
                             <input type="text" name="name" placeholder="Введите имя, фамилию" id="name" class="form-control form-control-orange"
                                    required maxlength="100" value="{{ old('name') ?? '' }}">
