@@ -424,10 +424,10 @@
 
 
                 <div class='d-flex justify-content-end text-black btnP' >
-                    <p class="btn btn-outline-dark textHover" data-bs-toggle="modal" data-bs-target="#modal">
-                     <i class="fa-solid fa-arrow-down-to-arc"></i> Сохранить </p>
+                    <button class="btn btn-outline-dark textHover" data-bs-toggle="modal" data-bs-target="#modal">
+                     <i class="fa-solid fa-arrow-down-to-arc"></i> Сохранить </button>
                 </div>
-                <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                {{--<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -443,7 +443,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
             </form>
     </div>
 
