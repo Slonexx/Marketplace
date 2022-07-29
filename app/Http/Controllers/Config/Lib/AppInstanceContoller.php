@@ -71,7 +71,7 @@ class AppInstanceContoller
 
     private static function buildFilename($appId, $accountId) {
         $dir = public_path().'/Config/';
-        return $dir . "data/$appId.$accountId.json";
+        dd($dir . "data/$appId.$accountId.json");
     }
 
     static function loadApp($appId, $accountId): AppInstanceContoller {
@@ -88,7 +88,6 @@ class AppInstanceContoller
         }
 
 
-        dd($data);
         $_SESSION['currentAppInstance'] = $data;
 
         $AppInstance = new AppInstanceContoller($app->appId, $app->accountId);
