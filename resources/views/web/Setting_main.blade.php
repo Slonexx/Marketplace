@@ -289,7 +289,11 @@
                     <div class="col-sm-7">
                         <select name="Store" class="form-select text-black " >
                             @foreach($Body_store as $Body_store_item)
+                                @if ( $Store == $Body_store_item->name )
+                                    <option selected value="{{ $Body_store_item->name }}"> {{ ($Body_store_item->name) }} </option>
+                                @else
                                     <option value="{{ $Body_store_item->name }}"> {{ ($Body_store_item->name) }} </option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

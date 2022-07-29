@@ -95,6 +95,9 @@ class Setting_mainController extends Controller
         $CheckCreatProduct = $Setting->CheckCreatProduct;
         if ($CheckCreatProduct == null) $CheckCreatProduct = "1";
 
+        $Store = $Setting->Store;
+        if ($Store == null) $Store = "0";
+
         $APPROVED_BY_BANK = $Setting->APPROVED_BY_BANK;
         $ACCEPTED_BY_MERCHANT = $Setting->ACCEPTED_BY_MERCHANT;
         $COMPLETED = $Setting->COMPLETED;
@@ -154,6 +157,7 @@ class Setting_mainController extends Controller
             "Saleschannel" => $Saleschannel,
             "Project" => $Project,
             "CheckCreatProduct" => $CheckCreatProduct,
+            "Store" => $Store,
             "APPROVED_BY_BANK" => $APPROVED_BY_BANK,
             "ACCEPTED_BY_MERCHANT" => $ACCEPTED_BY_MERCHANT,
             "COMPLETED" => $COMPLETED,
