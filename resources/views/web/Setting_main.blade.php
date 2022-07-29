@@ -32,7 +32,7 @@
             </div>
         @endif
         @if($success != "0")
-            <div class="alert alert-success alert-dismissible fade show in text-center " role="alert">  {{  $error  }}
+            <div class="alert alert-success alert-dismissible fade show in text-center " role="alert">  {{  $success  }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -424,6 +424,15 @@
                 </div>
 
 
+
+                <hr class="href_padding">
+
+
+                @if($success != "0")
+                    <div class="alert alert-success alert-dismissible fade show in text-center " role="alert">  {{  $success  }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
                 <hr class="href_padding">
 
