@@ -22,7 +22,7 @@
                             Написать на почту</a>
                         <a  href={{  route('whatsapp', ['accountId' => $accountId] ) }} >
                             <i class="fa-brands fa-whatsapp"></i>
-                            Написать в WhatsApp </a>
+                            Написать на WhatsApp </a>
                     </div>
             </div>
 

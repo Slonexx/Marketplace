@@ -3,7 +3,7 @@
 @section('content')
     <div class="headfull">
     <div class="content p-4 mt-2 bg-white text-black rounded">
-        <h2 align="center">Написать в WhatsApp
+        <h2 align="center">Написать на WhatsApp
             <i class="fa-brands fa-whatsapp text-success"></i>
         </h2>
 
