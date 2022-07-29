@@ -39,6 +39,7 @@ class Setting_mainController extends Controller
         $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
         $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
         $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
+        $url_store = "https://online.moysklad.ru/api/remap/1.2/entity/store";
 
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
@@ -109,6 +110,7 @@ class Setting_mainController extends Controller
                 $pool->as('body_organization')->withToken($TokenMoySklad)->get($url_organization),
                 $pool->as('body_saleschannel')->withToken($TokenMoySklad)->get($url_saleschannel),
                 $pool->as('body_project')->withToken($TokenMoySklad)->get($url_project),
+                $pool->as('body_store')->withToken($TokenMoySklad)->get($url_store),
             ]);
             $Organization = $responses['organization']->object();
         } else {
@@ -118,6 +120,7 @@ class Setting_mainController extends Controller
                 $pool->as('body_organization')->withToken($TokenMoySklad)->get($url_organization),
                 $pool->as('body_saleschannel')->withToken($TokenMoySklad)->get($url_saleschannel),
                 $pool->as('body_project')->withToken($TokenMoySklad)->get($url_project),
+                $pool->as('body_store')->withToken($TokenMoySklad)->get($url_store),
             ]);
         }
 
@@ -142,6 +145,7 @@ class Setting_mainController extends Controller
             "Body_organization" => $responses['body_organization']->object()->rows,
             "Body_saleschannel" => $responses['body_saleschannel']->object()->rows,
             "Body_project" => $responses['body_project']->object()->rows,
+            "Body_store" => $responses['body_store']->object()->rows,
             "TokenKaspi" => $TokenKaspi,
             "Organization" => $Organization,
             "PaymentDocument" => $PaymentDocument,
@@ -226,6 +230,8 @@ class Setting_mainController extends Controller
         else $app->Project = $Setting->Project;
 
         $app->CheckCreatProduct = $Setting->CheckCreatProduct;
+
+        $app->Store = $Setting->Store;
 
         if ($Setting->APPROVED_BY_BANK == "Статус МойСклад") $app->APPROVED_BY_BANK = null;
         else $app->APPROVED_BY_BANK = $Setting->APPROVED_BY_BANK;

@@ -17,6 +17,7 @@ class AppInstanceContoller {
     var $Saleschannel;
     var $Project;
     var $CheckCreatProduct;
+    var $Store;
     var $APPROVED_BY_BANK;
     var $ACCEPTED_BY_MERCHANT;
     var $COMPLETED;
@@ -104,6 +105,7 @@ class AppInstanceContoller {
         $this->Document = $json->Document;
         $this->PaymentAccount = $json->PaymentAccount;
         $this->CheckCreatProduct = $json->CheckCreatProduct;
+        $this->Store = $json->Store;
         $this->APPROVED_BY_BANK = $json->APPROVED_BY_BANK;
         $this->ACCEPTED_BY_MERCHANT = $json->ACCEPTED_BY_MERCHANT;
         $this->COMPLETED = $json->COMPLETED;

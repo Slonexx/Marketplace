@@ -23,6 +23,7 @@ class AppInstanceContoller
     var $Saleschannel;
     var $Project;
     var $CheckCreatProduct;
+    var $Store;
     var $APPROVED_BY_BANK;
     var $ACCEPTED_BY_MERCHANT;
     var $COMPLETED;

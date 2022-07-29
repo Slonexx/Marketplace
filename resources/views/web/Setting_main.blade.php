@@ -284,6 +284,17 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <P class="col-sm-5 col-form-label"> Выберите на какой склад создавать заказ: </P>
+                    <div class="col-sm-7">
+                        <select name="Store" class="form-select text-black " >
+                            @foreach($Body_store as $Body_store_item)
+                                    <option value="{{ $Body_store_item->name }}"> {{ ($Body_store_item->name) }} </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
 
 
                 <hr class="href_padding">

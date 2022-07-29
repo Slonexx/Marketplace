@@ -21,6 +21,7 @@ class getSettingVendorController extends Controller
     var $Saleschannel;
     var $Project;
     var $CheckCreatProduct;
+    var $Store;
     var $APPROVED_BY_BANK;
     var $ACCEPTED_BY_MERCHANT;
     var $COMPLETED;
@@ -48,6 +49,7 @@ class getSettingVendorController extends Controller
         $this->Saleschannel = $app->Saleschannel;
         $this->Project = $app->Project;
         $this->CheckCreatProduct = $app->CheckCreatProduct;
+        $this->Store = $app->Store;
         $this->APPROVED_BY_BANK = $app->APPROVED_BY_BANK;
         $this->ACCEPTED_BY_MERCHANT = $app->ACCEPTED_BY_MERCHANT;
         $this->COMPLETED = $app->COMPLETED;
@@ -57,6 +59,14 @@ class getSettingVendorController extends Controller
 
         return $app;
 
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStore()
+    {
+        return $this->Store;
     }
 
     public function getSetting(){
