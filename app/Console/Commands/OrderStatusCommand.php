@@ -63,7 +63,7 @@ class OrderStatusCommand extends Command
             //     'message' => $log,
             // ]);
 
-            $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
+            $urlAttributes = "https://marketplace.vetmobile.kz/api/setAttributes";
             $client_Asycn = new \GuzzleHttp\Client();
             $client_Asycn->postAsync($urlAttributes,[
                 'form_params' => [
@@ -84,7 +84,7 @@ class OrderStatusCommand extends Command
                  $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
 
                  foreach($kaspiAllStates as $state){
-                    $response = Http::post('https://smartkaspi.kz/api/orderStatus',[
+                    $response = Http::post('https://marketplace.vetmobile.kz/api/orderStatus',[
                         'tokenKaspi' => $settings->TokenKaspi,
                         'tokenMs' => $settings->TokenMoySklad,
                         'accountId' => $settings->accountId,
