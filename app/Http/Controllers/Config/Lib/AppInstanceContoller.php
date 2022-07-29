@@ -110,6 +110,7 @@ class AppInstanceContoller
         $this->Document = $json->Document;
         $this->PaymentAccount = $json->PaymentAccount;
         $this->CheckCreatProduct = $json->CheckCreatProduct;
+        $this->Store = $json->Store;
         $this->APPROVED_BY_BANK = $json->APPROVED_BY_BANK;
         $this->ACCEPTED_BY_MERCHANT = $json->ACCEPTED_BY_MERCHANT;
         $this->COMPLETED = $json->COMPLETED;
