@@ -213,7 +213,7 @@
                 <hr class="href_padding">
 
                 <div class="mb-3 row">
-                    <P class="col-sm-5 col-form-label"> Выберите проект: </P>
+                    <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
                     <div class="col-sm-7">
                         <select name="Saleschannel" class="form-select text-black " >
                             @if ($Saleschannel == "0")
@@ -231,7 +231,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <P class="col-sm-5 col-form-label"> Выберите канал продаж: </P>
+                    <P class="col-sm-5 col-form-label"> Выберите проект: </P>
                     <div class="col-sm-7">
                         <select name="Project" class="form-select text-black " >
                             @if ($Project == "0")
