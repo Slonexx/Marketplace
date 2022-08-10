@@ -89,18 +89,18 @@ class AttributeController extends Controller
 
         $customEntityMeta = null;
         foreach($json->customEntities as $customEntity){
-            if( $customEntity->name == 'Способ доставки'){
+            if( $customEntity->name == 'Способ доставки (Kaspi)'){
                 $customEntityMeta = $customEntity->meta;
                 break;
             }
         }
 
         if($customEntityMeta == null){
-            app(CustomEntityController::class)->createCustomEntity($apiKey,"Способ доставки",["Доставка","Самовывоз"]);
+            app(CustomEntityController::class)->createCustomEntity($apiKey,"Способ доставки (Kaspi)",["Доставка","Самовывоз"]);
             $json = $client->requestGet();
         }
             foreach($json->customEntities as $customEntity){
-                if( $customEntity->name == 'Способ доставки'){
+                if( $customEntity->name == 'Способ доставки (Kaspi)'){
                     $customEntityMeta = $customEntity->meta;
                     break;
                }
@@ -113,7 +113,7 @@ class AttributeController extends Controller
                       "type" => $customEntityMeta->type,
                       "mediaType" => $customEntityMeta->mediaType,
                     ],
-                    "name" => "Способ доставки",
+                    "name" => "Способ доставки (Kaspi)",
                     "type" => "customentity",
                     "required" => false,
                 ];
@@ -124,7 +124,7 @@ class AttributeController extends Controller
                 $foundedAttrib = false;
 
                 foreach($json->rows as $row){
-                    if($row->name == 'Способ доставки' && $row->type == 'customentity'){
+                    if($row->name == 'Способ доставки (Kaspi)' && $row->type == 'customentity'){
                         $foundedAttrib = true;
                         break;
                     }
@@ -146,19 +146,19 @@ class AttributeController extends Controller
 
         $customEntityMeta = null;
         foreach($json->customEntities as $customEntity){
-            if( $customEntity->name == 'Государственное учреждение'){
+            if( $customEntity->name == 'Государственное учреждение (Kaspi)'){
                 $customEntityMeta = $customEntity->meta;
                 break;
             }
         }
 
         if($customEntityMeta == null){
-            app(CustomEntityController::class)->createCustomEntity($apiKey,"Государственное учреждение",["Да","Нет"]);
+            app(CustomEntityController::class)->createCustomEntity($apiKey,"Государственное учреждение (Kaspi)",["Да","Нет"]);
             $json = $client->requestGet();
         }
 
          foreach($json->customEntities as $customEntity){
-                if( $customEntity->name == 'Государственное учреждение'){
+                if( $customEntity->name == 'Государственное учреждение (Kaspi)'){
                     $customEntityMeta = $customEntity->meta;
                     break;
                 }
@@ -171,9 +171,9 @@ class AttributeController extends Controller
                     "type" => $customEntityMeta->type,
                     "mediaType" => $customEntityMeta->mediaType,
                 ],
-                "name" => "Государственное учреждение",
+                "name" => "Государственное учреждение (Kaspi)",
                 "type" => "customentity",
-                "required" => true,
+                "required" => false,
             ];
 
             $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
@@ -182,7 +182,7 @@ class AttributeController extends Controller
             $foundedAttrib = false;
 
             foreach($json->rows as $row){
-                if($row->name == 'Государственное учреждение' && $row->type == 'customentity'){
+                if($row->name == 'Государственное учреждение (Kaspi)' && $row->type == 'customentity'){
                     $foundedAttrib = true;
                     break;
                 }

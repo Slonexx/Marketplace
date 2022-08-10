@@ -43,7 +43,7 @@ class AgentController extends Controller
             "attributes" => [
                 0 => [
                     "meta" => $attributes["meta"],
-                    "name" => "Государственное учреждение",
+                    "name" => "Государственное учреждение (Kaspi)",
                     "value" => $attributes["value"],
                 ],
             ],

@@ -33,7 +33,7 @@ class OrderAttributesController extends Controller
         $searchVal = null;
         foreach($json->rows as $row)
         {
-            if($row->name == "Способ доставки")
+            if($row->name == "Способ доставки (Kaspi)")
             {
                 $foundedMeta = $row->meta;
                 $searchVal = $this->searchDeliveryVal($row->customEntityMeta->href,$state);

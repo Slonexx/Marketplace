@@ -17,7 +17,7 @@ class AgentAttributesController extends Controller
         $searchVal = null;
         foreach($json->rows as $row)
         {
-            if($row->name == "Государственное учреждение")
+            if($row->name == "Государственное учреждение (Kaspi)")
             {
                 $foundedMeta = $row->meta;
                 $searchVal = $this->searchGosVal($row->customEntityMeta->href);
