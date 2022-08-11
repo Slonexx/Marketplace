@@ -22,8 +22,12 @@ class OrderAttributesController extends Controller
                 $state = "Доставка";
                 break;
             default:
-                $state = "Самовывоз";
+                $state = "";
                 break;
+        }
+
+        if($state == ""){
+            return null;
         }
 
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";

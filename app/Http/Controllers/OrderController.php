@@ -71,12 +71,15 @@ class OrderController extends Controller
                 } else {
                     $entry['product'] = $jsonProduct2->data->attributes;
                 }
-                
 
-                $uri = $row2->relationships->deliveryPointOfService->links->related;
-                $client->setRequestUrl($uri);
-                $jsonAddress = $client->requestGet(true);
-                $entry['address'] = $jsonAddress->data->attributes->address;
+                if(property_exists($row->attributes, 'deliveryAddress') == true){
+                    $entry['address'] = $row->attributes->deliveryAddress->formattedAddress;
+                } else {
+                    $uri = $row2->relationships->deliveryPointOfService->links->related;
+                    $client->setRequestUrl($uri);
+                    $jsonAddress = $client->requestGet(true);
+                    $entry['address'] = $jsonAddress->data->attributes->address->formattedAddress;
+                }
 
                 array_push($entriesOfOrder, $entry);
             }
@@ -115,6 +118,7 @@ class OrderController extends Controller
         foreach($ordersFromKaspi as $order){
             //dd($order["id"]);
             if (in_array($order["id"],$ordersFromMs) == false) {
+               array_push($ordersFromMs,$order["id"]);
                array_push($notAddedOrders,$order);
             }
         }
@@ -139,6 +143,8 @@ class OrderController extends Controller
             'organization_account_number' => 'sometimes|nullable|string',
             'store_name' => 'required|string',
         ]);
+
+        set_time_limit(3600);
 
         $storeName = $request->store_name;
         $accountId = $request->accountId;
@@ -199,7 +205,8 @@ class OrderController extends Controller
             $formattedOrder = null;
             $address = null;
             foreach ($order['entries'] as $entry) {
-                $address = $entry['address']->formattedAddress;
+                //dd($order['entries']);
+                $address = $entry['address'];
                 $formattedOrder['shipmentAddressFull'] = ["addInfo" => $address];
             }
             $formattedOrder['agent'] = $this->getAgent($order['customer'], $address,$apiKey);
@@ -221,13 +228,15 @@ class OrderController extends Controller
             $formattedOrder['description'] = "Order code: ".$order['code'].". More info: ".$info;
 
             $attributes = app(OrderAttributesController::class)->getAttributeDelivery($order['state'],$apiKey);
-            $formattedOrder['attributes'] = [
-                0 => [
-                    "meta" => $attributes["meta"],
-                    "name" => "Способ доставки",
-                    "value" => $attributes["value"],
-                ],
-            ];
+            if($attributes != null){
+                $formattedOrder['attributes'] = [
+                    0 => [
+                        "meta" => $attributes["meta"],
+                        "name" => "Способ доставки",
+                        "value" => $attributes["value"],
+                    ],
+                ];
+            }
 
             if($sale_channel_name != null) {
                 $formattedOrder['salesChannel'] = app(SalesChannelController::class)->getSaleChannel($sale_channel_name,$apiKey);

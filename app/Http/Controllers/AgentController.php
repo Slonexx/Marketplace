@@ -33,8 +33,17 @@ class AgentController extends Controller
         substr($cellPhone, 2, 3),
         substr($cellPhone, 5, 3),
         substr($cellPhone, 8));
+
+        $customerName = null;
+
+        if($customer->name == null){
+            $customerName = $customer->firstName." ".$customer->lastName;
+        } else {
+            $customerName = $customer->name;
+        }
+
         $agent = [
-            'name' => $customer->name,
+            'name' => $customerName,
             "legalLastName" => $customer->lastName,
             "legalFirstName" => $customer->firstName,
             "actualAddress" => $address,
