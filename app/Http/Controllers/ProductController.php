@@ -128,6 +128,8 @@ class ProductController extends Controller
             'option' => 'required|integer',
         ]);
 
+        set_time_limit(3600);
+
         $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
         $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
 

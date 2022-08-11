@@ -369,6 +369,8 @@ class OrderController extends Controller
             'store_name' => 'required|string',
         ]);
 
+        set_time_limit(3600);
+
         $storeName = $request->store_name;
         $accountId = $request->accountId;
         $paymentOption = $request->payment_option;
