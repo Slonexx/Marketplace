@@ -61,6 +61,27 @@ class StatusController extends Controller
           
       }
 
+      // switch ($status_Kaspi) {
+      //         case 'APPROVED_BY_BANK':
+      //           $status = "Новый";
+      //         break;
+      //         case 'ACCEPTED_BY_MERCHANT':
+      //           $status = "Подтвержден";
+      //         break;
+      //         case 'CANCELLED':
+      //             case 'CANCELLING':
+      //           $status = "Отменен";
+      //         break;
+      //         case 'COMPLETED':
+      //           $status = "Доставлен";
+      //         break;
+      //         case 'KASPI_DELIVERY_RETURN_REQUESTED':
+      //           case 'RETURN_ACCEPTED_BY_MERCHANT':
+      //             case 'RETURNED':
+      //                 $status = "Возврат";
+      //               break;
+      // }
+
         return $status;
     }
 }

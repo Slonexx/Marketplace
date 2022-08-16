@@ -54,12 +54,12 @@ class PositionController extends Controller
 
     public function searchProduct($product,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?search=".$product->code;
+        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$product->code;
         $client = new ApiClientMC($uri,$apiKey);
         $res = $client->requestGet();
 
         if($res->meta->size == 0){
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?search=".$product->name;
+            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".$product->name;
             $client->setRequestUrl($uri);
             $res = $client->requestGet();
         }

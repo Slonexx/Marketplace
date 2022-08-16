@@ -8,6 +8,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\PriceTypeController;
 use App\Http\Controllers\ProductAttributesController;
+use Illuminate\Http\Client\Pool;
+use Illuminate\Support\Facades\Http;
 
 class ProductController extends Controller
 {
@@ -89,26 +91,36 @@ class ProductController extends Controller
     public function getNotAddedProducts($tokenMs,$tokenKaspi, $urlKaspi, $option) 
     {
        $productsFromKaspi = $this->getKaspiProducts($tokenKaspi,$tokenMs, $urlKaspi);
-       $productsFromMs = $this->getMsProducts($tokenMs);
+       //$productsFromMs = $this->getMsProducts($tokenMs);
+       //dd($productsFromKaspi);
        $notAddedProducts = [];
        foreach($productsFromKaspi as $product){
             switch ($option) {
                 case 2:
-                    if(in_array($product['article'],$productsFromMs["articles"]) == false){
+                    // if(in_array($product['article'],$productsFromMs["articles"]) == false){
+                    //     array_push($notAddedProducts, $product);
+                    // }
+                    if($this->searchProductMs($product['article'],null,$tokenMs) == false){
                         array_push($notAddedProducts, $product);
                     }
                     break;
                 case 1:
-                    if(in_array($product['name'],$productsFromMs["names"]) == false){
+                    // if(in_array($product['name'],$productsFromMs["names"]) == false){
+                    //     array_push($notAddedProducts, $product);
+                    // }
+                    if($this->searchProductMs(null,$product['name'],$tokenMs) == false){
                         array_push($notAddedProducts, $product);
                     }
                     break;
                 case 3:
-                    if(
-                        in_array($product['name'],$productsFromMs["names"]) == false
-                        &&
-                        in_array($product['article'],$productsFromMs["articles"]) == false
-                    ){
+                    // if(
+                    //     in_array($product['name'],$productsFromMs["names"]) == false
+                    //     &&
+                    //     in_array($product['article'],$productsFromMs["articles"]) == false
+                    // ){
+                    //     array_push($notAddedProducts, $product);
+                    // }
+                    if($this->searchProductMs($product['article'],$product['name'],$tokenMs) == false){
                         array_push($notAddedProducts, $product);
                     }
                     break;
@@ -116,6 +128,32 @@ class ProductController extends Controller
             
        }
        return $notAddedProducts;
+    }
+
+    public function searchProductMs($article,$name,$apiKey)
+    {
+         $urlArticle = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article;
+         $urlName = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".$name;
+
+        if($article != null && $name != null){
+            $responses = Http::withToken($apiKey)->pool(fn (Pool $pool) => [
+                $pool->as('article')->withToken($apiKey)->get($urlArticle),
+                $pool->as('name')->withToken($apiKey)->get($urlName),
+            ]);
+            return (
+                $responses['article']->object()->meta->size > 0
+                &&
+                $responses['name']->object()->meta->size > 0
+            );
+        } elseif($article != null && $name == null){
+            $client = new ApiClientMC($urlArticle,$apiKey);
+            $json = $client->requestGet();
+            return ($json->meta->size > 0);
+        } elseif($article == null && $name != null){
+            $client = new ApiClientMC($urlName,$apiKey);
+            $json = $client->requestGet();
+            return ($json->meta->size > 0);
+        } else return false;
     }
 
     public function insertProducts(Request $request) {

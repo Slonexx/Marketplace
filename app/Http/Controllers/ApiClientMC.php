@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class ApiClientMC {
 
@@ -47,9 +48,16 @@ class ApiClientMC {
             'headers' => $headers,
         ]);
 
-        $res = $client->post($this->uri,[
+
+       // try {
+            $res = $client->post($this->uri,[
             'body' => json_encode($body),
-        ]);
+            ]);
+       // } catch (ClientException $e) {
+         //   dd($e->getMessage());
+       // }
+
+        
 
         return json_decode($res->getBody());
     }

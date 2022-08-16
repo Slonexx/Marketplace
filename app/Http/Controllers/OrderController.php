@@ -110,20 +110,33 @@ class OrderController extends Controller
 
     public function getOrdersNotInserted($tokenMs,$tokenKaspi, $urlKaspi)
     {
+        //$ordersFromMs = $this->getOrdersFromMS($tokenMs);
+        //dd($ordersFromMs);
         $ordersFromKaspi = $this->getOrdersFromKaspi($tokenKaspi, $urlKaspi);
+        //dd($ordersFromKaspi);
         //app(ProductController::class)->insertProducts($tokenMs,$ordersFromKaspi);
-        $ordersFromMs = $this->getOrdersFromMS($tokenMs);
         
         $notAddedOrders = [];
         foreach($ordersFromKaspi as $order){
             //dd($order["id"]);
-            if (in_array($order["id"],$ordersFromMs) == false) {
-               array_push($ordersFromMs,$order["id"]);
-               array_push($notAddedOrders,$order);
+            // if (in_array($order["id"],$ordersFromMs) == false) {
+            //    array_push($ordersFromMs,$order["id"]);
+            //    array_push($notAddedOrders,$order);
+            // }
+            if($this->searchOrdersMs($order['id'],$tokenMs) == false){
+                array_push($notAddedOrders,$order);
             }
         }
-
+        //dd($notAddedOrders);
         return $notAddedOrders;
+    }
+
+    public function searchOrdersMs($orderIdKaspi,$apiKey)
+    {
+        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderIdKaspi;
+        $client = new ApiClientMC($url,$apiKey);
+        $json = $client->requestGet();
+        return ($json->meta->size > 0);
     }
 
     public function insertOrders(Request $request)
@@ -146,6 +159,15 @@ class OrderController extends Controller
 
         set_time_limit(3600);
 
+        $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
+        $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
+
+        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
+        $request->state."&filter[orders][creationDate][\$ge]=".
+        $fdate."&filter[orders][creationDate][\$le]=".$sdate;
+
+        $orders = $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi,$urlKaspi);
+
         $storeName = $request->store_name;
         $accountId = $request->accountId;
         $paymentOption = $request->payment_option;
@@ -158,16 +180,7 @@ class OrderController extends Controller
             "organization_id" => $request->organization_id,
             "number_account" => $request->organization_account_number,
         ];
-
-        $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
-        $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
-
-        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
-        $request->state."&filter[orders][creationDate][\$ge]=".
-        $fdate."&filter[orders][creationDate][\$le]=".$sdate;
-
-        $orders = $this->getOrdersNotInserted($request->tokenMs,$request->tokenKaspi,$urlKaspi);
-
+        
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$request->tokenMs);
 
@@ -344,6 +357,42 @@ class OrderController extends Controller
         return $ordersFromMs;
     }
 
+    public function searchOrderMsWithStatus($orderId, $apiKey)
+    {
+        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderId;
+        $client = new ApiClientMC($url,$apiKey);
+        $json = $client->requestGet();
+        if ($json->meta->size == 0) return null;
+        else {
+            foreach ($json->rows as $key => $row) {
+                $status = $this->getStatusNameByMeta($row->state->meta->href,$apiKey);
+                $order['id'] = $row->id;
+                $order["externalCode"] =  $row->externalCode;
+                $order['meta'] = $row->meta;
+                $order["status"] = $status;
+                if (property_exists($row,'positions') == true) {
+                    $order['positions'] = $row->positions;
+                } else {
+                    $order['positions'] = null;
+                }
+                
+                if(property_exists($row,'payments') == true){
+                    $order['payments'] = $row->payments;
+                } else {
+                    $order['payments'] = null;
+                }
+    
+                if(property_exists($row,'demands') == true){
+                    $order['demands'] = $row->demands;
+                } else {
+                    $order['demands'] = null;
+                }
+                break;
+            }
+            return $order;
+        }
+    }
+
     private function getStatusNameByMeta($uri,$apiKey)
     {
         $client = new ApiClientMC($uri,$apiKey);
@@ -392,14 +441,16 @@ class OrderController extends Controller
         $fdate."&filter[orders][creationDate][\$le]=".$sdate;
 
         $ordersFromKaspi = $this->getOrdersKaspiWithStatus($accountId,$request->tokenKaspi, $urlKaspi);
-        $ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
+        //$ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
 
         //dd($ordersFromKaspi);
 
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
-            foreach($ordersFromMs as $orderMs){
-                if($orderKaspi['id'] == $orderMs['externalCode']) {
+            //foreach($ordersFromMs as $orderMs){
+                //if($orderKaspi['id'] == $orderMs['externalCode']) {
+                    $orderMs = $this->searchOrderMsWithStatus($orderKaspi['id'],$request->tokenMs);
+                if($orderMs != null) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
                         
                         $metaState = app(StateController::class)->getState($accountId,$orderKaspi['status'],$request->tokenMs);
@@ -444,7 +495,7 @@ class OrderController extends Controller
                         $count++;
                     }
                 }
-            }
+            //}
         }
 
         return response([
