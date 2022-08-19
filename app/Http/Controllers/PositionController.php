@@ -59,7 +59,7 @@ class PositionController extends Controller
         $res = $client->requestGet();
 
         if($res->meta->size == 0){
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".$product->name;
+            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".urlencode($product->name);
             $client->setRequestUrl($uri);
             $res = $client->requestGet();
         }

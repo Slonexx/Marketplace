@@ -96,7 +96,7 @@ class ProductController extends Controller
        $notAddedProducts = [];
        foreach($productsFromKaspi as $product){
             switch ($option) {
-                case 2:
+                case 1:
                     // if(in_array($product['article'],$productsFromMs["articles"]) == false){
                     //     array_push($notAddedProducts, $product);
                     // }
@@ -104,7 +104,7 @@ class ProductController extends Controller
                         array_push($notAddedProducts, $product);
                     }
                     break;
-                case 1:
+                case 2:
                     // if(in_array($product['name'],$productsFromMs["names"]) == false){
                     //     array_push($notAddedProducts, $product);
                     // }
@@ -132,24 +132,19 @@ class ProductController extends Controller
 
     public function searchProductMs($article,$name,$apiKey)
     {
-         $urlArticle = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article;
-         $urlName = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".$name;
-
         if($article != null && $name != null){
-            $responses = Http::withToken($apiKey)->pool(fn (Pool $pool) => [
-                $pool->as('article')->withToken($apiKey)->get($urlArticle),
-                $pool->as('name')->withToken($apiKey)->get($urlName),
-            ]);
-            return (
-                $responses['article']->object()->meta->size > 0
-                &&
-                $responses['name']->object()->meta->size > 0
-            );
+            $urlArticleName = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article
+            .";name=".urlencode($name);
+            $client = new ApiClientMC($urlArticleName,$apiKey);
+            $json = $client->requestGet();
+            return ($json->meta->size > 0);
         } elseif($article != null && $name == null){
+            $urlArticle = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article;
             $client = new ApiClientMC($urlArticle,$apiKey);
             $json = $client->requestGet();
             return ($json->meta->size > 0);
         } elseif($article == null && $name != null){
+             $urlName = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".urlencode($name);
             $client = new ApiClientMC($urlName,$apiKey);
             $json = $client->requestGet();
             return ($json->meta->size > 0);
