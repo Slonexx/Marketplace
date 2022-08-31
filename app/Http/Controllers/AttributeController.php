@@ -88,6 +88,7 @@ class AttributeController extends Controller
         $json = $client->requestGet();
 
         $customEntityMeta = null;
+        if (property_exists($json, 'customEntities'))
         foreach($json->customEntities as $customEntity){
             if( $customEntity->name == 'Способ доставки (Kaspi)'){
                 $customEntityMeta = $customEntity->meta;
