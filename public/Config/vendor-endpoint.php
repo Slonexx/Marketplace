@@ -36,7 +36,7 @@ switch ($method) {
     case 'GET':
         break;
     case 'DELETE':
-        $url = 'https://smartrekassa.kz/delete/'.$accountId;
+        $url = 'https://dev.smartkaspi.kz/delete/'.$accountId;
         $install = file_get_contents($url);
 
         $replyStatus = false;
