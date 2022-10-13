@@ -18,20 +18,21 @@
             </div> <br>
             <div class="toc-list-h1">
                 <a class="mt-2 mb-2" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главная </a>
-                <a href="{{  route('Setting_Main', ['accountId' => $accountId] ) }}">Настройки </a>
-                <a href="{{  route('ExportProduct', ['accountId' => $accountId] ) }}">Отправить товар </a>
-                <a href="{{  route('InfoLog', ['accountId' => $accountId] ) }}">Логи</a>
+                <button class="dropdown-btn">Настройки <i class="fa fa-caret-down"></i> </button>
+                <div class="dropdown-container">
+                    <a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Основное </a>
+                </div>
+                <a href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправить товар </a>
             </div>
             <div class="">
                 <button class="dropdown-btn">Помощь
                     <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-container">
-                        <a href={{  route('support', ['accountId' => $accountId] ) }}>
-                            <i class="fa-solid fa-at"></i>
-                            Написать на почту</a>
-                        <a  href={{  route('whatsapp', ['accountId' => $accountId] ) }} >
-                            <i class="fa-brands fa-whatsapp"></i>
-                            Написать на WhatsApp </a>
+                        <a target="_blank" href="https://smartkaspi.bitrix24.site/contact/">
+                            <i class="fa-solid fa-address-book"></i>
+                            Контакты </a>
+                        <a target="_blank" href="https://api.whatsapp.com/send/?phone=77232400545&text=" >
+                            <i class="fa-brands fa-whatsapp"></i> Написать на WhatsApp </a>
                     </div>
             </div>
 

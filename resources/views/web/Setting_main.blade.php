@@ -1,11 +1,17 @@
-<?php session_start(); ?>
 @extends('layout')
 
 @section('content')
 
+    <div class="p-4 mx-1 mt-1 bg-white rounded py-3">
 
-    <div class="content p-4 mt-2 bg-white text-Black rounded">
-        <h2 align="center">Основные настройки <i class="fa-solid fa-gears text-orange"></i> </h2>
+        <div class="row gradient rounded p-2 pb-2">
+            <div class="col-10">
+                <div class="mx-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
+                    <span class="text-black"> Настройки &#8594; основное </span>
+                </div>
+            </div>
+        </div>
+
         <div>
             <p> Настройки интеграции <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover"
                                              data-toggle="popover" data-placement="right" data-trigger="focus"
