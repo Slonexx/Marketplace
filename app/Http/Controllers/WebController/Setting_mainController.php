@@ -45,37 +45,7 @@ class Setting_mainController extends Controller
         $TokenMoySklad = $Setting->TokenMoySklad;
         $TokenKaspi = $Setting->TokenKaspi;
 
-        // $att = new AttributeController();
-        // $att->createAllAttributes($TokenMoySklad);
-    //     $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
-    //     $client_Asycn = new \GuzzleHttp\Client();
-    //    $promise = $client_Asycn->postAsync($urlAttributes,[
-    //         'form_params' => [
-    //             'tokenMs' => $TokenMoySklad,
-    //             'accountId' => $accountId,
-    //         ]
-    //     ])->then(
-    //         function (ResponseInterface $res) {
-    //             //echo $res->getStatusCode() . "\n";
-    //         },
-    //         function (RequestException $e) {
-
-    //         }
-    //     );
-        // $this->curl_post_async($urlAttributes,[
-        //     'tokenMs' => $TokenMoySklad,
-        //     'accountId' => $accountId,
-        // ]);
-
-        //$Client = new ApiClientMC($url, $TokenMoySklad);
-        //$Body = $Client->requestGet()->states;
-
         $Organization = $Setting->Organization;
-        // if ($Organization != null) {
-        //     $urlCheck = $url_organization . "/" . $Organization;
-        //     $Client->setRequestUrl($urlCheck);
-        //     $Organization = $Client->requestGet();
-        // } else ($Organization = "0");
 
         $PaymentDocument = $Setting->PaymentDocument;
         if ($PaymentDocument == null) $PaymentDocument = "0";
@@ -127,22 +97,6 @@ class Setting_mainController extends Controller
             ]);
         }
 
-        // $Client->setRequestUrl($url_organization);
-        // $Body_organization = $Client->requestGet()->rows;
-
-
-
-        // $Client->setRequestUrl($url_saleschannel);
-        // $Body_saleschannel = $Client->requestGet()->rows;
-
-
-
-        // $Client->setRequestUrl($url_project);
-        // $Body_project = $Client->requestGet()->rows;
-
-
-        //dd($responses);
-
 
         return view('web.Setting_main',['Body' => $responses['body']->object()->states,
             "Body_organization" => $responses['body_organization']->object()->rows,
@@ -172,29 +126,6 @@ class Setting_mainController extends Controller
 
     }
 
-    // public function curl_post_async($url, $params)
-    // {
-    //     $post_string = http_build_query($params);
-
-    //     $parts=parse_url($url);
-
-    //     $fp = fsockopen($parts['host'],
-    //         isset($parts['port'])?$parts['port']:80,
-    //         $errno, $errstr, 30);
-
-    //     //pete_assert(($fp!=0), "Couldn't open a socket to ".$url." (".$errstr.")");(optional)
-
-    //     $out = "POST ".$parts['path']." HTTP/1.1\r\n";
-    //     $out.= "Host: ".$parts['host']."\r\n";
-    //     $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
-    //     $out.= "Content-Length: ".strlen($post_string)."\r\n";
-    //     $out.= "Connection: Close\r\n\r\n";
-    //     if (isset($post_string)) $out.= $post_string;
-
-    //     fwrite($fp, $out);
-    //     fclose($fp);
-    // }
-
     public function postFormSetting(Request $request, $accountId){
         $Setting = $request;
 
@@ -206,12 +137,10 @@ class Setting_mainController extends Controller
             $message = $this->updateSetting($accountId, $Setting);
             return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>"0", "success"=>"Настройки сохранились" ]);
         } else {
-            /*$_SESSION["error"] = $MessageKaspi["API"];
-            return Redirect::back()->with('error', $MessageKaspi["API"]);*/
             $request->request->add(["error"=>$MessageKaspi["API"]]);
             return redirect()->route("Setting_Main", ["accountId" => $accountId, "error"=>$MessageKaspi["API"] ]);
         }
-        /*->withErrors(['password' => ['Invalid Username or Password']]);*/
+
 
 
     }

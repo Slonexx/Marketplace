@@ -21,13 +21,13 @@ class AttributeController extends Controller
         $TokenMoySklad = $request->tokenMs;
 
 
-        //try{
+        try{
             $this->createProductAttributes($TokenMoySklad);
             $this->createOrderAttributes($TokenMoySklad);
             $this->createAgentAttributes($TokenMoySklad);
-        //}catch(ClientException $e){
+        }catch(ClientException $e){
            // dd($e);
-        //}
+        }
 
         return response([
             "message" => 'Set required attributes!',

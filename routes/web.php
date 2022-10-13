@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\Data\deleteController;
 use App\Http\Controllers\Web\indexController;
 use App\Http\Controllers\WebController\info_log_Controller;
 use App\Http\Controllers\WebController\Setting_mainController;
@@ -29,3 +31,6 @@ Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index
 
 Route::get('/infoLog/{accountId}', [info_log_Controller::class, 'index'])->name('InfoLog');
 
+
+Route::get('/setAttributes', [AttributeController::class, 'createAllAttributes']);
+Route::get('/delete/{accountId}', [deleteController::class, 'delete']);

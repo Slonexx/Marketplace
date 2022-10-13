@@ -30,12 +30,15 @@ switch ($method) {
             $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
             $app->persist();
         }
+        $url = 'https://dev.smartkaspi.kz/setAttributes?tokenMs=' .$accessToken . '?accountId='. $accountId;
+        $install = file_get_contents($url);
         break;
     case 'GET':
         break;
     case 'DELETE':
-        $app->deleteAnway();
-        //$app->delete();
+        $url = 'https://smartrekassa.kz/delete/'.$accountId;
+        $install = file_get_contents($url);
+
         $replyStatus = false;
         break;
 }
