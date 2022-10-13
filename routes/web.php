@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\indexController;
 use App\Http\Controllers\WebController\info_log_Controller;
 use App\Http\Controllers\WebController\Setting_mainController;
 use App\Http\Controllers\WebController\SupportController;
@@ -8,13 +9,11 @@ use App\Http\Controllers\WebController\WhatsappController;
 use App\Http\Controllers\WebController\ExportProductController;
 use Illuminate\Support\Facades\Route;
 
-
-
-Route::get('/', [WebController::class, 'index']);
-
 Route::get('/Check/{accountId}', [\App\Http\Controllers\Config\CheckC::class, 'index'])->name('Check');
 
-Route::get('/{accountId}', [WebController::class, 'show'])->name("Index");
+
+Route::get('/', [indexController::class, 'index']);
+Route::get('/{accountId}', [indexController::class, 'indexShow'])->name("Index");
 
 Route::get('/Setting/{accountId}', [Setting_mainController::class, 'index'])->name("Setting_Main");
 Route::post('/SettingSend/{accountId}', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");

@@ -5,10 +5,19 @@
 
 <div class="page">
         <div class="sidenav">
+            <div class="p-2 gradient ">
+                <div class="row text-white">
+                    <div class="col-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/ru/a/aa/Logo_of_Kaspi_bank.png" width="35" height="35"  alt="">
+                    </div>
+                    <div class="mt-1 col-10">
+                        <label class="s-min-16"> reKassa </label>
+                    </div>
 
-
+                </div>
+            </div> <br>
             <div class="toc-list-h1">
-                <a href="{{  route('Index', ['accountId' => $accountId] ) }}">Главная </a>
+                <a class="mt-2 mb-2" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главная </a>
                 <a href="{{  route('Setting_Main', ['accountId' => $accountId] ) }}">Настройки </a>
                 <a href="{{  route('ExportProduct', ['accountId' => $accountId] ) }}">Отправить товар </a>
                 <a href="{{  route('InfoLog', ['accountId' => $accountId] ) }}">Логи</a>
