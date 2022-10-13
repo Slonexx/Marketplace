@@ -30,7 +30,7 @@ switch ($method) {
             $app->status = AppInstanceContoller::SETTINGS_REQUIRED;
             $app->persist();
         }
-        $url = 'https://dev.smartkaspi.kz/setAttributes?tokenMs=' .$accessToken . '&accountId='. $accountId;
+        $url = 'https://dev.smartkaspi.kz/setAttributes/' .$accountId . '/'.$accessToken;
         $install = file_get_contents($url);
         break;
     case 'GET':

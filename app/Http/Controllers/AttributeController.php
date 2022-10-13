@@ -10,9 +10,16 @@ use Illuminate\Http\Request;
 class AttributeController extends Controller
 {
 
+    public function setAttributes(Request $request, $accountId, $tokenMs){
+        $request->merge([
+            'tokenMs' => $accountId,
+            'accountId' => $tokenMs,
+        ]);
+        $this->createAllAttributes($request);
+    }
+
     public function createAllAttributes(Request $request)
     {
-
         $request->validate([
             'tokenMs' => 'required|string',
             'accountId' => 'required|string',
@@ -26,7 +33,7 @@ class AttributeController extends Controller
             $this->createOrderAttributes($TokenMoySklad);
             $this->createAgentAttributes($TokenMoySklad);
         }catch(ClientException $e){
-           // dd($e);
+            dd($e->getMessage());
         }
 
         return response([

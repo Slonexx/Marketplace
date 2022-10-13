@@ -22,7 +22,7 @@ Route::get('categories',[ProductPropertyController::class,'getAllCategories']);
 Route::get('values', [ProductPropertyController::class,'getValuesByPropertyCategory']);
 Route::get('excelProducts/{TokenMoySklad}', [ExcelController::class,'getProductsExcel'])->name('ExcelProducts');
 
-
+Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 
 Route::get('checkSettings', [SettingController::class, 'getSettings']);
 Route::get('checkSettings2', [CheckSettingsController::class, 'haveSettings']);
