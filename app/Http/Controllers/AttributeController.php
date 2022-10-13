@@ -12,8 +12,8 @@ class AttributeController extends Controller
 
     public function setAttributes(Request $request, $accountId, $tokenMs){
         $request->merge([
-            'tokenMs' => $accountId,
-            'accountId' => $tokenMs,
+            'tokenMs' => $tokenMs,
+            'accountId' => $accountId,
         ]);
         $this->createAllAttributes($request);
     }
