@@ -28,7 +28,7 @@ class indexController extends Controller
 
     public function indexShow($accountId, Request $request){
         $isAdmin = $request->isAdmin;
-        return view("main.index" , [
+        return view("web.index" , [
             'accountId' => $accountId,
             'isAdmin' => $isAdmin,
         ] );

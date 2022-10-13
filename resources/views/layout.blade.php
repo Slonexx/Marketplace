@@ -8,10 +8,10 @@
             <div class="p-2 gradient ">
                 <div class="row text-white">
                     <div class="col-2">
-                        <img src="https://upload.wikimedia.org/wikipedia/ru/a/aa/Logo_of_Kaspi_bank.png" width="35" height="35"  alt="">
+                        <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
                     </div>
                     <div class="mt-1 col-10">
-                        <label class="s-min-16"> reKassa </label>
+                        <label class="s-min-16 text-black"> Магазин Kaspi.kz </label>
                     </div>
 
                 </div>
@@ -47,6 +47,11 @@
 
 
 <style>
+
+    .head-full {
+        height: 720px;
+    }
+
     body {
         font-family: 'Helvetica', 'Arial', sans-serif;
         color: #444444;
@@ -54,12 +59,13 @@
         background-color: #FAFAFA;
     }
 
-    .alertheight{
-        text-align: center;
-        float: right;
-        position: relative;
-        margin-right: auto;
-        width: 25%;
+    .s-min-16 {
+        font-size: 16px;
+    }
+
+    .gradient{
+        background-color: #FFE53B;
+        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
     }
 
     /* Фиксированный боковых навигационных ссылок, полной высоты */
@@ -70,7 +76,7 @@
         z-index: 1;
         top: 0;
         left: 0;
-        background-color: #111;
+        background-color: #eaeaea;
         overflow-x: hidden;
         padding-top: 20px;
     }
@@ -80,7 +86,7 @@
         padding: 6px 8px 6px 16px;
         text-decoration: none;
         font-size: 16px;
-        color: #bebebe;
+        color: #343434;
         display: block;
         border: none;
         background: none;
@@ -92,9 +98,9 @@
 
     /* При наведении курсора мыши */
     .sidenav a:hover, .dropdown-btn:hover {
-        background-color: #ffffff;
-        border-radius: 20px;
-        color: orange;
+        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+        border-radius: 10px 10px 0px 0px;
+        color: #000000;
     }
 
     /* Основное содержание */
@@ -105,18 +111,16 @@
     }
     /* Добавить активный класс для кнопки активного выпадающего списка */
     .active {
-        background-color: #5d5d5d;
-
+        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
         margin-right: 50px;
-        border-radius: 8px;
-        color: #e59300;
+        border-radius: 10px 10px 0px 0px;
+        color: #000000;
     }
 
     /* Выпадающий контейнер (по умолчанию скрыт). Необязательно: добавьте более светлый цвет фона и некоторые левые отступы, чтобы изменить дизайн выпадающего содержимого */
     .dropdown-container {
         display: none;
-        background-color: #262626;
-
+        background-color: #d5d5d5;
         padding: 5px;
     }
 
@@ -132,28 +136,9 @@
     .text-orange{
         color: orange;
     }
-
-    .btn-new:hover{
-        border-color: white !important
+    .transparent{
+        border: none !important;
     }
-    .btn-new:focus{
-        border-color: white !important;
-        color: orange !important;
-    }
-    .form-control-orange:focus{
-        background-color: white;
-        border-color: black;
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(255, 77, 0, 0.16);
-    }
-
-    .btnP p:hover {
-        color: orange;
-    }
-    .btnP button:hover {
-        color: orange;
-    }
-
 </style>
 
 <script>

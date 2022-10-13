@@ -14,7 +14,7 @@
 
 <div class="row gradient rounded p-2">
     <div class="col-12 text-center">
-        <div class="mx-2"> <img src="https://upload.wikimedia.org/wikipedia/ru/a/aa/Logo_of_Kaspi_bank.png" width="50" height="50"  alt="">
+        <div class="mx-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="50" height="50"  alt="">
             <span class="text-white"> Данная интеграция находиться в МоемСкладе </span>
         </div>
     </div>
@@ -31,9 +31,8 @@
     }
 
     .gradient{
-        /* background: rgb(145,0,253);
-         background: linear-gradient(34deg, rgba(145,0,253,1) 0%, rgba(232,0,141,1) 100%);*/
-        background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(14,174,87,1) 0%, rgba(12,116,117,1) 90% );
+        background-color: #FFE53B;
+        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
     }
 
 </style>
