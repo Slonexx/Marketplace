@@ -18,16 +18,11 @@ class customerorderEditController extends Controller
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
 
-        $Workers = new getWorkerID($employee->id);
-
         $entity = 'counterparty';
-
-
 
         return view( 'widget.customerorder', [
             'accountId' => $accountId,
             'entity' => $entity,
-            'worker' => $Workers->access,
         ] );
     }
 }

@@ -12,7 +12,7 @@
 
         window.addEventListener("message", function(event) {
             const receivedMessage = event.data;
-            workerAccess();
+            //workerAccess();
             if (receivedMessage.name === 'Open') {
                 Global_object_Id = receivedMessage.objectId;
                 let params = {
