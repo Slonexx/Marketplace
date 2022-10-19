@@ -12,24 +12,24 @@
                 </div>
             </div>
             <div class="toc-list-h1">
-                <a class="mt-2 mb-2" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главное </a>
+                <a class="mt-2 mb-1" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главное </a>
                 @if ( request()->isAdmin == null )
                 @else
                     @if( request()->isAdmin == 'ALL')
                         <button class="dropdown-btn">Настройки <i class="fa fa-caret-down"></i> </button>
                         <div class="dropdown-container">
                             {{--<a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Старые настройки </a>--}}
-                            <a class="mt-2 mb-2" href="/Setting/main/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Интеграция </a>
-                            <a class="mt-2 mb-2" href="/Setting/order/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Заказы </a>
-                            <a class="mt-2 mb-2" href="/Setting/add/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Дополнительные настройки </a>
-                            <button class="mt-2 dropdown-btn"> Фискализация <i class="fa fa-caret-down"></i></button>
+                            <a href="/Setting/main/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Интеграция </a>
+                            <a class="mt-1" href="/Setting/order/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Заказы </a>
+                            <a class="mt-1" href="/Setting/add/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Дополнительные настройки </a>
+                            <button class="mt-1 dropdown-btn"> Фискализация <i class="fa fa-caret-down"></i></button>
                                 <div class="dropdown-container">
-                                    <a class="mt-2" href="/Setting/info/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Информация </a>
-                                    <a class="mt-2" href="/Setting/Device/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Кассовый аппарат </a>
-                                    <a class="mt-2" href="/Setting/Document/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Документ </a>
+                                    <a class="mt-1" href="/Setting/info/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Информация </a>
+                                    <a class="mt-1" href="/Setting/Device/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Кассовый аппарат </a>
+                                    <a class="mt-1" href="/Setting/Document/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Документ </a>
                                 </div>
                         </div>
-                        <a href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
+                        <a class="mt-1 mb-1" href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
                     @endif
                 @endif
             </div>
@@ -37,10 +37,10 @@
                 <button class="dropdown-btn">Помощь
                     <i class="fa fa-caret-down"></i></button>
                     <div class="dropdown-container">
-                        <a target="_blank" href="https://smartkaspi.bitrix24.site/contact/">
+                        <a class="mt-1" target="_blank" href="https://smartkaspi.bitrix24.site/contact/">
                             <i class="fa-solid fa-address-book"></i>
                             Контакты </a>
-                        <a target="_blank" href="https://api.whatsapp.com/send/?phone=77232400545&text=" >
+                        <a class="mt-1" target="_blank" href="https://api.whatsapp.com/send/?phone=77232400545&text=" >
                             <i class="fa-brands fa-whatsapp"></i> Написать на WhatsApp </a>
                     </div>
             </div>

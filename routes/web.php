@@ -3,6 +3,8 @@
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Config\CheckC;
 use App\Http\Controllers\Data\deleteController;
+use App\Http\Controllers\Popup\demandController;
+use App\Http\Controllers\Popup\fiscalizationController;
 use App\Http\Controllers\Web\getSetting\addController;
 use App\Http\Controllers\Web\getSetting\DeviceController;
 use App\Http\Controllers\Web\getSetting\DocumentController;
@@ -45,9 +47,18 @@ Route::post('/Setting/Device/{accountId}', [postDeviceController::class, 'postDe
 Route::get('/Setting/Document/{accountId}', [DocumentController::class, 'getDocument'])->name('getDocument');
 Route::post('/Setting/Document/{accountId}', [postDocumentController::class, 'postDocument']);
 
-
-
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
+
+
+Route::get('/Popup/customerorder', [fiscalizationController::class, 'fiscalizationPopup']);
+Route::get('/Popup/customerorder/show', [fiscalizationController::class, 'ShowFiscalizationPopup']);
+Route::get('/Popup/customerorder/send', [fiscalizationController::class, 'SendFiscalizationPopup']);
+Route::get('/Popup/customerorder/closeShift', [fiscalizationController::class, 'closeShiftPopup']);
+
+Route::get('/Popup/demand', [demandController::class, 'DemandPopup']);
+Route::get('/Popup/demand/show', [demandController::class, 'ShowDemandPopup']);
+Route::get('/Popup/demand/send', [demandController::class, 'SendDemandPopup']);
+
 
 //Установка и удаление приложения
 Route::get('/setAttributes/{accountId}/{tokenMs}', [AttributeController::class, 'setAttributes']);
