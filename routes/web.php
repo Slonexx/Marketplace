@@ -22,6 +22,9 @@ use App\Http\Controllers\WebController\SupportController;
 use App\Http\Controllers\WebController\WebController;
 use App\Http\Controllers\WebController\WhatsappController;
 use App\Http\Controllers\WebController\ExportProductController;
+use App\Http\Controllers\Widget\customerorder\customerorderEditController;
+use App\Http\Controllers\Widget\demandEditController;
+use App\Http\Controllers\Widget\salesreturnEditController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/Check/{accountId}', [CheckC::class, 'index'])->name('Check');
@@ -48,6 +51,13 @@ Route::get('/Setting/Document/{accountId}', [DocumentController::class, 'getDocu
 Route::post('/Setting/Document/{accountId}', [postDocumentController::class, 'postDocument']);
 
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
+
+
+Route::get('/widget/InfoAttributes/', [indexController::class, 'widgetInfoAttributes']);
+
+Route::get('/widget/customerorder', [customerorderEditController::class, 'customerorder']);
+Route::get('/widget/demand', [demandEditController::class, 'demand']);
+Route::get('/widget/salesreturn', [salesreturnEditController::class, 'salesreturn']);
 
 
 Route::get('/Popup/customerorder', [fiscalizationController::class, 'fiscalizationPopup']);
