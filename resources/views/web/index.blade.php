@@ -1,9 +1,13 @@
 @extends('layout')
 
 @section('content')
+<style>
+    .head-full {
+        height: 1080px;
+    }
+</style>
 
-
-    <div class="content p-4 mt-2 bg-white text-Black rounded">
+    <div class="content p-4 mt-2 bg-white text-Black rounded head-full">
         <div class="row gradient rounded p-2 pb-2">
             <div class="col-10">
                 <div class="mx-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
