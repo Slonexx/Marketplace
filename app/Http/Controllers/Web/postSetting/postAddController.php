@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\postSetting;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Config\Lib\AppInstanceContoller;
 use App\Http\Controllers\Config\Lib\cfg;
+use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getMainSetting;
 use App\Services\workWithBD\DataBaseService;
@@ -55,6 +56,7 @@ class postAddController extends Controller
     }
 
     private function saveBD($accountId, $app, $request){
+        $cfg = new cfg();
         try {
             $Saleschannel = $request->Saleschannel; $Project = $request->Project;
             if ($Saleschannel == "0") $Saleschannel = null; if ($Project == "0") $Project = null;
@@ -71,6 +73,10 @@ class postAddController extends Controller
             } else { $app->CANCELLED = $request->CANCELLED; }
             if ($request->RETURNED == 'Статус МойСклад') { $app->RETURNED = null;
             } else { $app->RETURNED = $request->RETURNED; }
+
+            $app->status = AppInstanceContoller::ACTIVATED;
+            $vendorAPI = new VendorApiController();
+            $vendorAPI->updateAppStatus($cfg->appId, $accountId, $app->getStatusName());
 
             $app->persist();
 
