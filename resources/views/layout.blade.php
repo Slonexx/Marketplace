@@ -18,7 +18,7 @@
                     @if( request()->isAdmin == 'ALL')
                         <button class="dropdown-btn">Настройки <i class="fa fa-caret-down"></i> </button>
                         <div class="dropdown-container">
-                            <a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Старые настройки </a>
+                            {{--<a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Старые настройки </a>--}}
                             <a class="mt-2 mb-2" href="/Setting/main/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Интеграция </a>
                             <a class="mt-2 mb-2" href="/Setting/order/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Заказы </a>
                             <a class="mt-2 mb-2" href="/Setting/add/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Дополнительные настройки </a>

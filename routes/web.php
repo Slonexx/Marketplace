@@ -28,11 +28,6 @@ Route::get('/Check/{accountId}', [CheckC::class, 'index'])->name('Check');
 Route::get('/', [indexController::class, 'index']);
 Route::get('/{accountId}/', [indexController::class, 'indexShow'])->name("Index");
 
-
-Route::get('/Setting/{accountId}', [Setting_mainController::class, 'index'])->name("Setting_Main");
-Route::post('/SettingSend/{accountId}', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
-
-
 Route::get('/Setting/main/{accountId}', [mainController::class, 'index'])->name('mainSetting');
 Route::post('/Setting/main/{accountId}', [postMainController::class, 'postMainSetting']);
 
@@ -60,10 +55,15 @@ Route::get('/delete/{accountId}', [deleteController::class, 'delete']);
 
 /*
  * Старые роуты
+
+Route::get('/Setting/{accountId}', [Setting_mainController::class, 'index'])->name("Setting_Main");
+Route::post('/SettingSend/{accountId}', [Setting_mainController::class, 'postFormSetting'])->name("Setting_Send");
+
 Route::get('/infoLog/{accountId}', [info_log_Controller::class, 'index'])->name('InfoLog');
 
 Route::get('/SupportHelp/{accountId}', [SupportController::class, 'support'])->name("support");
 Route::post('/PostSupport/{accountId}', [SupportController::class, 'supportSend'])->name("Send");
 
 Route::get('/Whatsapp/{accountId}', [WhatsappController::class, 'Index'])->name("whatsapp");
-Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");*/
+Route::post('/WhatsappSend/{accountId}', [WhatsappController::class, 'WhatsappSend'])->name("whatsapp_Send");
+*/
