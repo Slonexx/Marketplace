@@ -45,30 +45,19 @@ class KaspiApiClient {
     {
 
         $headers = [
-            'Accept' => 'application/vnd.api+json',
+            'Accept' => 'application/json',
             'X-Auth-Token' => $this->apiKey,
         ];
-
 
         $client = new Client();
 
         $res = $client->request('GET', $this->url ,[
             'headers' => $headers,
-            'http_errors' => false,
         ]);
 
         $responsecode = $res->getStatusCode();
 
-        if ($responsecode == 200) {
-            $message["API"] = "API-ключ верный!";
-        } else if ($responsecode == 401){
-            $message["API"] = "Hе верный API-ключ";
-        } else {
-            $message["API"] = "Ошибка: $responsecode";
-        }
-        $message["StatusCode"] = $responsecode;
-
-        return $message;
+        return $responsecode;
     }
 
 }

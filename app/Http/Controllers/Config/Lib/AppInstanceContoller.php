@@ -93,8 +93,6 @@ class AppInstanceContoller
 
         $AppInstance->setAppToClassAppInstance($app);
 
-        //dd($AppInstance);
-
         return $AppInstance;
     }
 

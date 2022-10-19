@@ -34,4 +34,12 @@ class indexController extends Controller
         ] );
     }
 
+
+    public function reKassaInfo($accountId, Request $request){
+        $isAdmin = $request->isAdmin;
+        return view("setting.index" , [
+            'accountId' => $accountId,
+            'isAdmin' => $isAdmin,
+        ] );
+    }
 }

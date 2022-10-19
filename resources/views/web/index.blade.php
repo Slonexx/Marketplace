@@ -2,16 +2,21 @@
 
 @section('content')
 
-    @php
-
-
-
-    @endphp
-
-
 
     <div class="content p-4 mt-2 bg-white text-Black rounded">
-        <h1 class=" text-black">  <i class="fas fa-book-open text-orange"></i> Инструкция</h1>
+        <div class="row gradient rounded p-2 pb-2">
+            <div class="col-10">
+                <div class="mx-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
+                    <span class="text-white"> Инструкция </span>
+                </div>
+            </div>
+        </div>
+        @if ( request()->isAdmin != null and request()->isAdmin != 'ALL' )
+            <div class="mt-2 alert alert-danger alert-dismissible fade show in text-center  "> Доступ к настройкам есть только у администратора
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 text-black">

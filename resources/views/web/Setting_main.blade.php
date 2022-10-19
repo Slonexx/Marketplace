@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div>
+        <div class="mt-2">
             <p> Настройки интеграции <button type="button" class="btn btn-new fa-solid fa-circle-info myPopover"
                                              data-toggle="popover" data-placement="right" data-trigger="focus"
                                              data-content="Заполните обязательные поля, чтобы начать использование интеграции!"
@@ -21,15 +21,6 @@
                 $('.myPopover').popover();
             </script>
         </div>
-
-
-        {{--@if (\Session::has('success'))
-            @include('alerts')
-        @endif
-        @if(session()->has('error'))
-            @include('alerts')
-        @endif--}}
-
 
 
         @if($error != "0")

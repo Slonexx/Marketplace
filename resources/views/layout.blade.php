@@ -5,24 +5,33 @@
 
 <div class="page">
         <div class="sidenav">
-            <div class="p-2 gradient ">
+            <div class="p-2 gradient">
                 <div class="row text-white">
-                    <div class="col-2">
-                        <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
-                    </div>
-                    <div class="mt-1 col-10">
-                        <label class="s-min-16 text-black"> Магазин Kaspi.kz </label>
-                    </div>
-
+                    <div class="col-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt=""> </div>
+                    <div class="mt-1 col-10"> <label class="s-min-16"> Магазин Kaspi.kz </label> </div>
                 </div>
-            </div> <br>
+            </div>
             <div class="toc-list-h1">
-                <a class="mt-2 mb-2" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главная </a>
-                <button class="dropdown-btn">Настройки <i class="fa fa-caret-down"></i> </button>
-                <div class="dropdown-container">
-                    <a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Основное </a>
-                </div>
-                <a href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправить товар </a>
+                <a class="mt-2 mb-2" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главное </a>
+                @if ( request()->isAdmin == null )
+                @else
+                    @if( request()->isAdmin == 'ALL')
+                        <button class="dropdown-btn">Настройки <i class="fa fa-caret-down"></i> </button>
+                        <div class="dropdown-container">
+                            <a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Старые настройки </a>
+                            <a class="mt-2 mb-2" href="/Setting/main/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Интеграция </a>
+                            <a class="mt-2 mb-2" href="/Setting/order/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Заказы </a>
+                            <a class="mt-2 mb-2" href="/Setting/add/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Дополнительные настройки </a>
+                            <button class="mt-2 dropdown-btn"> Фискализация <i class="fa fa-caret-down"></i></button>
+                                <div class="dropdown-container">
+                                    <a class="mt-2" href="/Setting/info/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Информация </a>
+                                    <a class="mt-2" href="/Setting/Device/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Кассовый аппарат </a>
+                                    <a class="mt-2" href="/Setting/Document/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Документ </a>
+                                </div>
+                        </div>
+                        <a href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
+                    @endif
+                @endif
             </div>
             <div class="">
                 <button class="dropdown-btn">Помощь
@@ -66,7 +75,7 @@
 
     .gradient{
         background-color: #FFE53B;
-        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+        background-image: linear-gradient(147deg, #ff0000 0%, #FF2525 74%);
     }
 
     /* Фиксированный боковых навигационных ссылок, полной высоты */
@@ -86,7 +95,7 @@
     .sidenav a, .dropdown-btn {
         padding: 6px 8px 6px 16px;
         text-decoration: none;
-        font-size: 16px;
+        font-size: 14px;
         color: #343434;
         display: block;
         border: none;
@@ -99,9 +108,9 @@
 
     /* При наведении курсора мыши */
     .sidenav a:hover, .dropdown-btn:hover {
-        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+        background-image: linear-gradient(147deg, #ff0000 0%, #FF2525 74%);
         border-radius: 10px 10px 0px 0px;
-        color: #000000;
+        color: #ffffff;
     }
 
     /* Основное содержание */
@@ -112,10 +121,10 @@
     }
     /* Добавить активный класс для кнопки активного выпадающего списка */
     .active {
-        background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 74%);
+        background-image: linear-gradient(147deg, #e50000 0%, #fa3d3d 74%);
         margin-right: 50px;
         border-radius: 10px 10px 0px 0px;
-        color: #000000;
+        color: #ffffff;
     }
 
     /* Выпадающий контейнер (по умолчанию скрыт). Необязательно: добавьте более светлый цвет фона и некоторые левые отступы, чтобы изменить дизайн выпадающего содержимого */
