@@ -7,7 +7,7 @@
 
         //const url = 'http://rekassa/Popup/salesreturn/show';
 
-        const url = 'https://smartrekassa.kz/Popup/salesreturn/show';
+        const url = 'https://dev.smartkaspi.kz/Popup/salesreturn/show';
         let object_Id = '';
         let accountId = '';
         let entity_type = '';
@@ -222,7 +222,7 @@
             }
 
             //let url = 'http://rekassa/Popup/demand/send';
-            let url = 'https://smartrekassa.kz/Popup/salesreturn/send';
+            let url = 'https://dev.smartkaspi.kz/Popup/salesreturn/send';
 
             if (modalShowHide === 'show'){
                 $('#downL').modal('toggle');
@@ -272,7 +272,7 @@
 
         function ShowCheck(){
             let urlrekassa = 'https://app-test.rekassa.kz/'
-            let url = 'https://smartrekassa.kz/api/ticket';
+            let url = 'https://dev.smartkaspi.kz/api/ticket';
             let params = {
                 accountId: accountId,
                 id_ticket: id_ticket,
