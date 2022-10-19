@@ -7,7 +7,7 @@
 
         //const url = 'http://rekassa/Popup/customerorder/show';
 
-        const url = 'https://dev.smartrekassa.kz/Popup/customerorder/show';
+        const url = 'https://dev.smartkaspi.kz/Popup/customerorder/show';
         let object_Id = '';
         let accountId = '';
         let entity_type = '';
@@ -200,7 +200,7 @@
                 }
             }
 
-            let url = 'https://dev.smartrekassa.kz/Popup/customerorder/send';
+            let url = 'https://dev.smartkaspi.kz/Popup/customerorder/send';
 
             if (modalShowHide === 'show'){
                 $('#downL').modal('toggle');
@@ -257,7 +257,7 @@
                 pincode: pinCode,
             };
             //let url = 'http://rekassa/Popup/customerorder/closeShift';
-            let url = 'https://dev.smartrekassa.kz/Popup/customerorder/closeShift';
+            let url = 'https://dev.smartkaspi.kz/Popup/customerorder/closeShift';
             let final = url + formatParams(params);
 
             console.log("final = " + final);
@@ -281,7 +281,7 @@
         function ShowCheck(){
             let urlrekassa = 'https://rekassa.kz/'
             //let url = 'http://rekassa/Popup/customerorder/closeShift';
-            let url = 'https://dev.smartrekassa.kz/api/ticket';
+            let url = 'https://dev.smartkaspi.kz/api/ticket';
             let params = {
                 accountId: accountId,
                 id_ticket: id_ticket,
