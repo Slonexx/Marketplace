@@ -47,7 +47,7 @@
 
         </div>
 
-        <div class="main">
+        <div class="main head-full">
                 @yield('content')
         </div>
     </div>
@@ -59,7 +59,7 @@
 <style>
 
     .head-full {
-        height: 720px;
+        height: 1000px;
     }
 
     body {
