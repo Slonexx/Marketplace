@@ -59,7 +59,7 @@
 <style>
 
     .head-full {
-        height: 1000px;
+        height: 780px;
     }
 
     body {
