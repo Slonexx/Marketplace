@@ -76,8 +76,8 @@
             console.log("← Sending" + " message: " + messageAsString);
         }
 
-        function workerAccess(){
-            let worker = {{$worker}};
+      /*  function workerAccess(){
+            let worker = ;
             if (worker === 1){
                 $('#workerAccess_yes').show();
                 $('#workerAccess_no').hide();
@@ -86,7 +86,7 @@
                 $('#workerAccess_no').show();
             }
 
-        }
+        }*/
 
     </script>
 

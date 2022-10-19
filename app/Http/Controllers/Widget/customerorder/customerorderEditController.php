@@ -13,15 +13,15 @@ class customerorderEditController extends Controller
 {
     public function customerorder(Request $request){
 
-        //$contextKey = $request->contextKey;
+        $contextKey = $request->contextKey;
         $vendorAPI = new VendorApiController();
-        //$employee = $vendorAPI->context($contextKey);
-       // $accountId = $employee->accountId;
+        $employee = $vendorAPI->context($contextKey);
+        $accountId = $employee->accountId;
 
         $entity = 'counterparty';
 
         return view( 'widget.customerorder', [
-            'accountId' => "1dd5bd55-d141-11ec-0a80-055600047495", //$accountId,
+            'accountId' => $accountId,
             'entity' => $entity,
         ] );
     }
