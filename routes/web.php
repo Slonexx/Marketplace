@@ -5,6 +5,7 @@ use App\Http\Controllers\Config\CheckC;
 use App\Http\Controllers\Data\deleteController;
 use App\Http\Controllers\Popup\demandController;
 use App\Http\Controllers\Popup\fiscalizationController;
+use App\Http\Controllers\Popup\salesreturnController;
 use App\Http\Controllers\Web\getSetting\addController;
 use App\Http\Controllers\Web\getSetting\DeviceController;
 use App\Http\Controllers\Web\getSetting\DocumentController;
@@ -68,6 +69,10 @@ Route::get('/Popup/customerorder/closeShift', [fiscalizationController::class, '
 Route::get('/Popup/demand', [demandController::class, 'DemandPopup']);
 Route::get('/Popup/demand/show', [demandController::class, 'ShowDemandPopup']);
 Route::get('/Popup/demand/send', [demandController::class, 'SendDemandPopup']);
+
+Route::get('/Popup/salesreturn', [salesreturnController::class, 'salesreturnPopup']);
+Route::get('/Popup/salesreturn/show', [salesreturnController::class, 'ShowSalesreturnPopup']);
+Route::get('/Popup/salesreturn/send', [salesreturnController::class, 'SendSalesreturnPopup']);
 
 
 //Установка и удаление приложения
