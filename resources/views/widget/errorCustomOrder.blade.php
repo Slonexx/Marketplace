@@ -20,7 +20,7 @@
             <div class="text-center">
                 <div class="p-3 mb-2 bg-danger text-white">
                     <span class="s-min-10">
-                        У вас нет доступа к данному виджету, сообщите администратору, чтоб он вам предоставил доступ
+                        Настройки фискализации не были пройдены
                         <i class="fa-solid fa-ban "></i>
                     </span>
                 </div>

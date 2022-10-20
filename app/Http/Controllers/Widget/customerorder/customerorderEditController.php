@@ -25,9 +25,11 @@ class customerorderEditController extends Controller
         $accountId = "1dd5bd55-d141-11ec-0a80-055600047495";
 
         $Devices = new getDevices($accountId);
-        if ($Devices->devices) $tmp = "yes";
-        else $tmp = "no";
-        dd($tmp);
+        if (!$Devices->devices) {
+            return view( 'widget.errorCustomOrder', [
+                'accountId' => $accountId,
+            ] );
+        }
 
 
         $entity = 'counterparty';
