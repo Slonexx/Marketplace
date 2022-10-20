@@ -75,7 +75,7 @@
         }
 
         /*function workerAccess(){
-            let worker = {{$worker}};
+            let worker = ;
             if (worker === 1){
                 $('#workerAccess_yes').show();
                 $('#workerAccess_no').hide();
