@@ -130,7 +130,7 @@ class fiscalizationController extends Controller
             'pay_type' => $pay_type,
             'positions' => $positions,
         ];
-        dd(json_encode($body));
+
         $Client = new Client();
         $url = 'https://dev.smartkaspi.kz/api/ticket';
         //$url = 'http://rekassa/api/ticket';

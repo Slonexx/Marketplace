@@ -12,7 +12,7 @@
 
         window.addEventListener("message", function(event) {
             const receivedMessage = event.data;
-            workerAccess();
+            $('#workerAccess_yes').show();
             if (receivedMessage.name === 'Open') {
                 Global_object_Id = receivedMessage.objectId;
                 let params = {
@@ -74,7 +74,7 @@
             console.log("← Sending" + " message: " + messageAsString);
         }
 
-        function workerAccess(){
+        /*function workerAccess(){
             let worker = {{$worker}};
             if (worker === 1){
                 $('#workerAccess_yes').show();
@@ -84,7 +84,7 @@
                 $('#workerAccess_no').show();
             }
 
-        }
+        }*/
 
     </script>
 

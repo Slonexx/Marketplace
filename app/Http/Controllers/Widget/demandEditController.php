@@ -15,7 +15,7 @@ class demandEditController extends Controller
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
 
-        $Workers = new getWorkerID($employee->id);
+        //$Workers = new getWorkerID($employee->id);
 
         $entity = 'demand';
 
@@ -24,7 +24,7 @@ class demandEditController extends Controller
         return view( 'widget.demand', [
             'accountId' => $accountId,
             'entity' => $entity,
-            'worker' => $Workers->access,
+            //'worker' => $Workers->access,
         ] );
     }
 }
