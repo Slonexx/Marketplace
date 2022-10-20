@@ -15,7 +15,7 @@ class salesreturnEditController extends Controller
         $employee = $vendorAPI->context($contextKey);
         $accountId = $employee->accountId;
 
-        $Workers = new getWorkerID($employee->id);
+        //$Workers = new getWorkerID($employee->id);
 
         $entity = 'salesreturn';
 
@@ -24,7 +24,7 @@ class salesreturnEditController extends Controller
         return view( 'widget.salesreturn', [
             'accountId' => $accountId,
             'entity' => $entity,
-            'worker' => $Workers->access,
+            //'worker' => $Workers->access,
         ] );
     }
 }
