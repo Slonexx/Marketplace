@@ -17,14 +17,15 @@ class demandEditController extends Controller
         $accountId = $employee->accountId;
 
         //$Workers = new getWorkerID($employee->id);
+
         $Devices = new getDevices($accountId);
         if (!$Devices->devices) {
             return view( 'widget.errorCustomOrder', [
                 'accountId' => $accountId,
             ] );
         }
-        $entity = 'demand';
 
+        $entity = 'demand';
 
 
         return view( 'widget.demand', [
