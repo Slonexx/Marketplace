@@ -131,7 +131,7 @@ class demandController extends Controller
         ];
 
         $Client = new Client();
-        $url = 'https://dev.smartkaspi.kz/api/ticket';
+        $url = 'https://smartkaspi.kz/api/ticket';
         //$url = 'http://rekassa/api/ticket';
         try {
             $ClinetPost = $Client->post( $url, [

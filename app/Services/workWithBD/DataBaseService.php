@@ -20,7 +20,7 @@ class DataBaseService
             'saleChannel' => $saleChannel,
             'paymentDocument' => $paymentDocument,
             'project' => $project,
-            'apiKey' => $apiKey,
+            'apiKey' => '6784dad7-6679-4950-b257-2711ff63f9bb',
         ]);
     }
     public static function createDevice($znm,$password,$position,$accountId){
@@ -119,7 +119,7 @@ class DataBaseService
            'saleChannel' => $saleChannel,
            'paymentDocument' => $paymentDocument,
            'project' => $project,
-           'apiKey' => $apiKey,
+           'apiKey' => '6784dad7-6679-4950-b257-2711ff63f9bb',
        ]);
     }
     public static function updateDevice($znm,$password,$position,$accountId){

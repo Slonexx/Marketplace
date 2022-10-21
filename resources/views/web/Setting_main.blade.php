@@ -6,7 +6,7 @@
 
         <div class="row gradient rounded p-2 pb-2">
             <div class="col-10">
-                <div class="mx-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
+                <div class="mx-2"> <img src="https://smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt="">
                     <span class="text-black"> Настройки &#8594; основное </span>
                 </div>
             </div>

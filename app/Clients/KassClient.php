@@ -26,7 +26,7 @@ class KassClient
         $this->password = $password;
 
         $this->client = new Client([
-            'base_uri' => 'https://api-test.rekassa.kz/api/',
+            'base_uri' => 'https://app.rekassa.kz/partner/api/',
         ]);
     }
 

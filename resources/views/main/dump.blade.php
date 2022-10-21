@@ -14,7 +14,7 @@
 
 <div class="row gradient rounded p-2">
     <div class="col-12 text-center">
-        <div class="mx-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="50" height="50"  alt="">
+        <div class="mx-2"> <img src="https://smartkaspi.kz/KaspiLogo.png" width="50" height="50"  alt="">
             <span class="text-white"> Данная интеграция находиться в МоемСкладе </span>
         </div>
     </div>

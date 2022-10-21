@@ -20,7 +20,7 @@
                     entity_type: entity_type,
                     objectId: Global_object_Id,
                 };
-                let url = 'https://dev.smartkaspi.kz/widget/InfoAttributes/';
+                let url = 'https://smartkaspi.kz/widget/InfoAttributes/';
                 let final = url + formatParams(params);
 
                 const xmlHttpRequest = new XMLHttpRequest();
