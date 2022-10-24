@@ -7,7 +7,7 @@
         <div class="sidenav">
             <div class="p-2 gradient">
                 <div class="row text-white">
-                    <div class="col-2"> <img src="https://smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt=""> </div>
+                    <div class="col-2"> <img src="https://dev.smartkaspi.kz/KaspiLogo.png" width="35" height="35"  alt=""> </div>
                     <div class="mt-1 col-10"> <label class="s-min-16"> Магазин Kaspi.kz </label> </div>
                 </div>
             </div>

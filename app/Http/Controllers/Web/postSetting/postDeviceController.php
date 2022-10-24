@@ -19,7 +19,7 @@ class postDeviceController extends Controller
     public function postDevice(Request $request, $accountId){ $isAdmin = $request->isAdmin;
         $this->createBDAccess($accountId);
         $Setting = new getSetting($accountId);
-        $apiKey = '6784dad7-6679-4950-b257-2711ff63f9bb';
+        $apiKey = 'f5ac6559-b5cd-4e0e-89e5-7fd32a6d60a5';
         $ZHM_1 = $request->ZHM_1;
         $PASSWORD_1 = $request->PASSWORD_1;
 

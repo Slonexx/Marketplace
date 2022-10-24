@@ -62,7 +62,7 @@ class ProductCommand extends Command
                 //     'message' => $log,
                 // ]);
 
-                $urlAttributes = "https://smartkaspi.kz/api/setAttributes";
+                $urlAttributes = "https://dev.smartkaspi.kz/api/setAttributes";
                 $client_Asycn = new \GuzzleHttp\Client();
                 $client_Asycn->postAsync($urlAttributes,[
                     'form_params' => [
@@ -74,7 +74,7 @@ class ProductCommand extends Command
                         //echo $res->getStatusCode() . "\n";
                     },
                     function (RequestException $e) {
-                        
+
                     }
                 )->wait();
 
@@ -83,7 +83,7 @@ class ProductCommand extends Command
                     $kaspiAllStates = ['NEW', 'SIGN_REQUIRED', 'PICKUP', 'DELIVERY', 'KASPI_DELIVERY', 'ARCHIVE'];
 
                     foreach($kaspiAllStates as $state){
-                            $response = Http::post('https://smartkaspi.kz/api/products',[
+                            $response = Http::post('https://dev.smartkaspi.kz/api/products',[
                                 'tokenKaspi' => $settings->TokenKaspi,
                                 'tokenMs' => $settings->TokenMoySklad,
                                 'state' => $state,
@@ -115,6 +115,6 @@ class ProductCommand extends Command
          }
 
 
-       
+
     }
 }

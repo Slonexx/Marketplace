@@ -60,7 +60,7 @@ class AppInstanceContoller {
     }
 
     function deleteAnway(){
-        $url = 'https://smartkaspi.kz/api/DeleteVendorApi/'.$this->appId.'/'.$this->accountId;
+        $url = 'https://dev.smartkaspi.kz/api/DeleteVendorApi/'.$this->appId.'/'.$this->accountId;
         $result = file_get_contents($url);
         $this->loginfo('Удлаение', $result);
     }
