@@ -13,9 +13,9 @@
             </div>
             <div class="toc-list-h1">
                 <a class="mt-2 mb-1" href="/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Главное </a>
-                @if ( request()->isAdmin == null )
+               {{-- @if ( request()->isAdmin == null )
                 @else
-                    @if( request()->isAdmin == 'ALL')
+                    @if( request()->isAdmin == 'ALL')--}}
                         <button class="dropdown-btn">Настройки <i class="fa fa-caret-down"></i> </button>
                         <div class="dropdown-container">
                             {{--<a href="/Setting/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Старые настройки </a>--}}
@@ -30,8 +30,8 @@
                                 </div>
                         </div>
                         <a class="mt-1 mb-1" href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
-                    @endif
-                @endif
+                   {{-- @endif
+                @endif--}}
             </div>
             <div class="">
                 <button class="dropdown-btn">Помощь
