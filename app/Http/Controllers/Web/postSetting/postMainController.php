@@ -31,7 +31,7 @@ class postMainController extends Controller
             $cfg = new cfg();
             $appId = $cfg->appId;
             $app = AppInstanceContoller::loadApp($appId, $accountId);
-            $app->TokenKaspi = $Setting->TokenKaspi;
+            $app->TokenKaspi = $TokenKASPI;
             $app->persist();
         } else {
             $message = [
