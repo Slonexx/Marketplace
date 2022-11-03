@@ -59,10 +59,10 @@
                             window.document.getElementById("ShowCheck").style.display = "block";
                             window.document.getElementById("refundCheck").style.display = "block";
                         } else {
-                            window.document.getElementById("getKKM").style.display = "block";
+                            window.document.getElementById("refundCheck").style.display = "block";
                         }
-                    } else  window.document.getElementById("getKKM").style.display = "block";
-                    window.document.getElementById("closeButtonId").style.display = "block";
+                    } else  window.document.getElementById("refundCheck").style.display = "block";
+                    /*window.document.getElementById("closeButtonId").style.display = "block";*/
                 });
                 xmlHttpRequest.open("GET", final);
                 xmlHttpRequest.send();
@@ -156,7 +156,6 @@
         function sendKKM(pay_type){
             let button_hide = '';
             if (pay_type == 'return') button_hide = 'refundCheck';
-            if (pay_type == 'sell') button_hide = 'getKKM';
 
             window.document.getElementById(button_hide).style.display = "none";
             let modalShowHide = 'show';
@@ -333,10 +332,9 @@
 
             window.document.getElementById("message").style.display = "none"
             window.document.getElementById("messageGood").style.display = "none"
-            window.document.getElementById("closeButtonId").style.display = "none"
+            /*window.document.getElementById("closeButtonId").style.display = "none"*/
 
             window.document.getElementById("refundCheck").style.display = "none"
-            window.document.getElementById("getKKM").style.display = "none"
             window.document.getElementById("ShowCheck").style.display = "none"
 
             window.document.getElementById("cash").value = ''
@@ -376,8 +374,8 @@
 
                     </div>
                     <div class="col-6">
-                        <button id="closeButtonId" type="button" class="btn btn-danger"
-                                data-bs-toggle="modal" data-bs-target="#modal" >Закрыть смену</button>
+                        {{-- <button id="closeButtonId" type="button" class="btn btn-danger"
+                                 data-bs-toggle="modal" data-bs-target="#modal" >Закрыть смену</button>--}}
                     </div>
                     <div class="col-3 text-right">
                         <button type="submit" onclick="updatePopup()" class="myButton btn "> <i class="fa-solid fa-arrow-rotate-right"></i> </button>
@@ -458,7 +456,6 @@
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <button onclick="sendKKM('return')" id="refundCheck" class="btn btn-danger">возврат</button>
-                    <button onclick="sendKKM('sell')" id="getKKM" class="btn btn-success">Отправить в ККМ</button>
                 </div>
 
                 <div class="row mt-2">
