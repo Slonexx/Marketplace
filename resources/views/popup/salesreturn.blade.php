@@ -59,9 +59,9 @@
                             window.document.getElementById("ShowCheck").style.display = "block";
                             window.document.getElementById("refundCheck").style.display = "block";
                         } else {
-                            window.document.getElementById("getKKM").style.display = "block";
+                            window.document.getElementById("refundCheck").style.display = "block";
                         }
-                    } else  window.document.getElementById("getKKM").style.display = "block";
+                    } else  window.document.getElementById("refundCheck").style.display = "block";
                     /*window.document.getElementById("closeButtonId").style.display = "block";*/
                 });
                 xmlHttpRequest.open("GET", final);
@@ -156,7 +156,6 @@
         function sendKKM(pay_type){
             let button_hide = '';
             if (pay_type == 'return') button_hide = 'refundCheck';
-            if (pay_type == 'sell') button_hide = 'getKKM';
 
             window.document.getElementById(button_hide).style.display = "none";
             let modalShowHide = 'show';
@@ -336,7 +335,6 @@
             /*window.document.getElementById("closeButtonId").style.display = "none"*/
 
             window.document.getElementById("refundCheck").style.display = "none"
-            window.document.getElementById("getKKM").style.display = "none"
             window.document.getElementById("ShowCheck").style.display = "none"
 
             window.document.getElementById("cash").value = ''
@@ -458,7 +456,6 @@
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <button onclick="sendKKM('return')" id="refundCheck" class="btn btn-danger">возврат</button>
-                    <button onclick="sendKKM('return')" id="getKKM" class="btn btn-danger">возврат</button>
                 </div>
 
                 <div class="row mt-2">
