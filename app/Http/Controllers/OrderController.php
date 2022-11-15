@@ -17,16 +17,10 @@ class OrderController extends Controller
 {
     public function getOrdersFromKaspi($apiKey, $urlKaspi)
     {
-        // $request->validate([
-        //     'tokenKaspi' => 'required|string'
-        // ]);
-
-        //$uri = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=ARCHIVE&filter[orders][creationDate][\$ge]=1657533973000&filter[orders][creationDate][\$le]=1658138773000";
-        //$apiKey = "Oiau+82MUNfcUYPQG9rEyzec3H34OwI5SQ+w6ToodIM=";
 
         $client = new KaspiApiClient($urlKaspi,$apiKey);
         $jsonAllOrders = $client->requestGet(true);
-        
+
         $ordersFromKaspi = [];
         //dd($jsonAllOrders);
         foreach($jsonAllOrders->data as $key=>$row){
@@ -115,7 +109,7 @@ class OrderController extends Controller
         $ordersFromKaspi = $this->getOrdersFromKaspi($tokenKaspi, $urlKaspi);
         //dd($ordersFromKaspi);
         //app(ProductController::class)->insertProducts($tokenMs,$ordersFromKaspi);
-        
+
         $notAddedOrders = [];
         foreach($ordersFromKaspi as $order){
             //dd($order["id"]);
@@ -180,7 +174,7 @@ class OrderController extends Controller
             "organization_id" => $request->organization_id,
             "number_account" => $request->organization_account_number,
         ];
-        
+
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$request->tokenMs);
 
@@ -235,7 +229,7 @@ class OrderController extends Controller
             if($statusFromMs != null){
                 $formattedOrder['state'] = $statusFromMs;
             }
-            
+
 
             $info = "https://kaspi.kz/merchantcabinet/#/orders/details/".$order['code'];
             $formattedOrder['description'] = "Order code: ".$order['code'].". More info: ".$info;
@@ -282,7 +276,7 @@ class OrderController extends Controller
        ];
        return $res;
     }
-  
+
     private function getState($accountId,$status,$apiKey)
     {
        $meta = app(StateController::class)->getState($accountId,$status,$apiKey);
@@ -300,20 +294,19 @@ class OrderController extends Controller
             return $res;
         }
     }
-    
+
     private function setPositions($orderId,$orderStatus,$entries,$apiKey)
     {
         app(PositionController::class)->setPositions($orderId,$orderStatus,$entries,$apiKey);
     }
 
-    private function getOrdersKaspiWithStatus($accountId,$apiKey, $urlKaspi)
+    private function getOrdersKaspiWithStatus($accountId,$apiKey, $urlKaspi): array
     {
         $ordersFromKaspi = $this->getOrdersFromKaspi($apiKey,$urlKaspi);
-        //dd($jsonAllOrders);
         foreach($ordersFromKaspi as $row => $k){
-            $st['statusOrder'] = app(StatusController::class)->getStatusName($accountId,$k['status']);
-           // array_push($ordersFromKaspi[$row],$st['statusOrder']);
-           $ordersFromKaspi[$row] = $k+$st;
+            $StatusController = new StatusController();
+            $st['statusOrder'] = $StatusController->getStatusName($accountId,$k['status']);
+            $ordersFromKaspi[$row] = $k+$st;
         }
 
         //dd($ordersFromKaspi);
@@ -321,7 +314,7 @@ class OrderController extends Controller
         return $ordersFromKaspi;
     }
 
-    private function getOrdersMsWithStatus($apiKey)
+    private function getOrdersMsWithStatus($apiKey): array
     {
         $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$apiKey);
@@ -339,7 +332,7 @@ class OrderController extends Controller
             } else {
                 $order['positions'] = null;
             }
-            
+
             if(property_exists($row,'payments') == true){
                 $order['payments'] = $row->payments;
             } else {
@@ -357,7 +350,7 @@ class OrderController extends Controller
         return $ordersFromMs;
     }
 
-    public function searchOrderMsWithStatus($orderId, $apiKey)
+    public function searchOrderMsWithStatus($orderId, $apiKey): ?array
     {
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderId;
         $client = new ApiClientMC($url,$apiKey);
@@ -375,13 +368,13 @@ class OrderController extends Controller
                 } else {
                     $order['positions'] = null;
                 }
-                
+
                 if(property_exists($row,'payments') == true){
                     $order['payments'] = $row->payments;
                 } else {
                     $order['payments'] = null;
                 }
-    
+
                 if(property_exists($row,'demands') == true){
                     $order['demands'] = $row->demands;
                 } else {
@@ -441,23 +434,19 @@ class OrderController extends Controller
         $fdate."&filter[orders][creationDate][\$le]=".$sdate;
 
         $ordersFromKaspi = $this->getOrdersKaspiWithStatus($accountId,$request->tokenKaspi, $urlKaspi);
-        //$ordersFromMs = $this->getOrdersMsWithStatus($request->tokenMs);
-
         //dd($ordersFromKaspi);
-
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
-            //foreach($ordersFromMs as $orderMs){
-                //if($orderKaspi['id'] == $orderMs['externalCode']) {
-                    $orderMs = $this->searchOrderMsWithStatus($orderKaspi['id'],$request->tokenMs);
-                if($orderMs != null) {
+            $orderMs = $this->searchOrderMsWithStatus($orderKaspi['id'],$request->tokenMs);
+            // dd($orderKaspi, $orderKaspi['statusOrder'], $orderMs['status']);
+            if($orderMs != null) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
-                        
+
                         $metaState = app(StateController::class)->getState($accountId,$orderKaspi['status'],$request->tokenMs);
                         if($metaState != null){
                             $this->changeOrderStatusMs($orderMs['id'],$metaState,$request->tokenMs);
                         }
-                        
+
                         $formattedOrder = $this->mapOrderToAdd(
                             $storeName,
                             $accountId,
@@ -495,7 +484,7 @@ class OrderController extends Controller
                         $count++;
                     }
                 }
-            //}
+
         }
 
         return response([
