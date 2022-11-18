@@ -429,16 +429,16 @@ class OrderController extends Controller
         $fdate = app(TimeFormatController::class)->getMilliseconds($request->fdate);
         $sdate =  app(TimeFormatController::class)->getMilliseconds($request->sdate);
 
-        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
+        $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=1000&filter[orders][state]=".
         $request->state."&filter[orders][creationDate][\$ge]=".
-        $fdate."&filter[orders][creationDate][\$le]=".$sdate;
-
+        $fdate."&filter[orders][deliveryType][\$le]=".$sdate;
+        //dd($urlKaspi);
         $ordersFromKaspi = $this->getOrdersKaspiWithStatus($accountId,$request->tokenKaspi, $urlKaspi);
-        //dd($ordersFromKaspi);
+
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
             $orderMs = $this->searchOrderMsWithStatus($orderKaspi['id'],$request->tokenMs);
-            //if ($orderKaspi['code'] == '225978645') dd($orderKaspi, $orderKaspi['statusOrder'], $orderMs['status']);
+            //if ($orderKaspi['code'] == '226192085') dd($orderKaspi, $orderKaspi['statusOrder'], $orderMs['status']);
             if($orderMs != null) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
 
