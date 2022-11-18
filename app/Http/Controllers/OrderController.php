@@ -438,7 +438,7 @@ class OrderController extends Controller
         $count = 0;
         foreach($ordersFromKaspi as $orderKaspi){
             $orderMs = $this->searchOrderMsWithStatus($orderKaspi['id'],$request->tokenMs);
-            // dd($orderKaspi, $orderKaspi['statusOrder'], $orderMs['status']);
+            //if ($orderKaspi['code'] == '225978645') dd($orderKaspi, $orderKaspi['statusOrder'], $orderMs['status']);
             if($orderMs != null) {
                     if($orderKaspi['statusOrder'] != $orderMs['status']){
 
