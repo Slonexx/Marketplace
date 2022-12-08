@@ -15,8 +15,8 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-  {{--  <script src="{{ asset("Config/js/uikit.js") }}"></script>
-    <link rel="stylesheet" href="{{ asset("Config/css/uikit.css") }}">--}}
+    {{--  <script src="{{ asset("Config/js/uikit.js") }}"></script>
+      <link rel="stylesheet" href="{{ asset("Config/css/uikit.css") }}">--}}
 
 
 </head>
@@ -36,6 +36,29 @@
         /* background: rgb(145,0,253);
          background: linear-gradient(34deg, rgba(145,0,253,1) 0%, rgba(232,0,141,1) 100%);*/
         background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(14,174,87,1) 0%, rgba(12,116,117,1) 90% );
+    }
+
+    body {
+        overflow: hidden;
+    }
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+    .content-container {
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex-grow: 1;
+    }
+    .buttons-container-head{
+        background-color: rgba(12, 125, 112, 0.27);
+        padding-top: 3px;
+        min-height: 3px;
+    }
+    .buttons-container {
+        padding-top: 10px;
+        min-height: 100px;
     }
 
 </style>

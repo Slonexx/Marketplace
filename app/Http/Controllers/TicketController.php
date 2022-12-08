@@ -18,14 +18,17 @@ class TicketController extends Controller
         $this->ticketService = $ticketService;
     }
 
-    public function initTicket(Request $request){
+    public function initTicket(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         $data = $request->validate([
             "accountId" => "required|string",
             "id_entity" => "required||string",
             "entity_type" => "required|string",
+
             "money_card" => "required",
             "money_cash" => "required",
             "money_mobile" => "required",
+
             "pay_type" => "required|string",
             "positions" => "required|array",
         ]);
@@ -36,7 +39,17 @@ class TicketController extends Controller
 
     }
 
-    public function getUrlTicket(Request $request){
+    public function createTicket($data): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+
+        $serviceRes =  $this->ticketService->createTicket($data);
+
+        return $serviceRes['res'];
+    }
+
+
+    public function getUrlTicket(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    {
         $data = $request->validate([
             "accountId" => "required|string",
             "id_ticket" => "required||string",
@@ -47,15 +60,15 @@ class TicketController extends Controller
     }
 
     public function cancelTicket(Request $request){
-      /*  $data = $request->validate([
-            "accountId" => "required|string",
-            "id_entity" => "required||string",
-            "entity_type" => "required|string",
-        ]);
-        //"position" => "required|integer",
-        return response(
-            $this->ticketService->cancelTicket($data)
-        );*/
+        /*  $data = $request->validate([
+              "accountId" => "required|string",
+              "id_entity" => "required||string",
+              "entity_type" => "required|string",
+          ]);
+          //"position" => "required|integer",
+          return response(
+              $this->ticketService->cancelTicket($data)
+          );*/
     }
 
 }

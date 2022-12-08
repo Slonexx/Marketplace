@@ -1,6 +1,6 @@
 
 @extends('layout')
-
+@section('item', 'link_7')
 @section('content')
 
     <div class="p-4 mx-1 mt-1 bg-white rounded py-3">
@@ -8,7 +8,7 @@
         <div class="row rekassa_gradient rounded p-2">
             <div class="col-10">
                 <div class="mx-2"> <img src="https://app.rekassa.kz/static/logo.png" width="35" height="35"  alt="">
-                    <span class="text-white"> Настройки &#8594; фискализация &#8594; документ </span>
+                    <span class="text-white"> Настройки &#8594; ReKassa &#8594; документ </span>
                 </div>
             </div>
         </div>

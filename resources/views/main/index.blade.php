@@ -1,19 +1,19 @@
 @extends('layout')
-@section('item', 'link_5')
+@section('item', 'link_1')
 @section('content')
 
-    <div class="p-4 mx-1 mt-1 bg-white rounded py-3">
+    <div class="content p-4 mt-2 bg-white text-Black rounded">
         @if ( request()->isAdmin != null and request()->isAdmin != 'ALL' )
             <div class="mt-2 alert alert-danger alert-dismissible fade show in text-center  "> Доступ к настройкам есть только у администратора
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
-            <div class="row rekassa_gradient rounded p-2 ">
-                <div class="col-10">
-                    <div class="mx-2"> <img src="https://app.rekassa.kz/static/logo.png" width="35" height="35"  alt="">
-                        <span class="text-white" style="font-size: 20px"> Возможности интеграции </span>
-                    </div>
+            <div class="row gradient rounded p-2 pb-2" style="margin-top: -1rem">
+                <div class="col-10" style="margin-top: 1.2rem"> <span class="text-white" style="font-size: 20px"> Возможности интеграции </span> </div>
+                <div class="col-2 text-center">
+                    <img src="https://smarttis.kz/Config/logo.png" width="40%"  alt="">
+                    <div class="text-white" style="font-size: 11px; margin-top: 8px"> Топ партнёр сервиса МойСклад </div>
                 </div>
             </div>
 
@@ -70,11 +70,3 @@
     </div>
 @endsection
 
-
-<style>
-    .rekassa_gradient{
-        /* background: rgb(145,0,253);
-         background: linear-gradient(34deg, rgba(145,0,253,1) 0%, rgba(232,0,141,1) 100%);*/
-        background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(14,174,87,1) 0%, rgba(12,116,117,1) 90% );
-    }
-</style>

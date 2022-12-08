@@ -6,6 +6,7 @@ use App\Http\Controllers\Data\deleteController;
 use App\Http\Controllers\Popup\demandController;
 use App\Http\Controllers\Popup\fiscalizationController;
 use App\Http\Controllers\Popup\salesreturnController;
+use App\Http\Controllers\Web\changeController;
 use App\Http\Controllers\Web\getSetting\addController;
 use App\Http\Controllers\Web\getSetting\DeviceController;
 use App\Http\Controllers\Web\getSetting\DocumentController;
@@ -53,6 +54,15 @@ Route::post('/Setting/Document/{accountId}', [postDocumentController::class, 'po
 
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
 
+
+
+
+Route::get('/kassa/change/{accountId}', [changeController::class, 'getChange']);
+Route::post('/kassa/change/{accountId}', [changeController::class, 'postChange']);
+Route::get('/kassa/get_shift_report/info/{accountId}', [changeController::class, 'getInfoIdShift']);
+
+Route::post('/kassa/get_shift_report/{accountId}', [changeController::class, 'getXReport']);
+Route::post('/kassa/get_close_report/{accountId}', [changeController::class, 'getZReport']);
 
 Route::get('/widget/InfoAttributes/', [indexController::class, 'widgetInfoAttributes']);
 

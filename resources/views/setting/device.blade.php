@@ -1,6 +1,6 @@
 
 @extends('layout')
-
+@section('item', 'link_6')
 @section('content')
 
     <script>
@@ -130,7 +130,7 @@
             <div class="row rekassa_gradient rounded p-2">
                 <div class="col-10">
                     <div class="mx-2"> <img src="https://app.rekassa.kz/static/logo.png" width="35" height="35"  alt="">
-                        <span class="text-white"> Настройки &#8594; фискализация &#8594; кассовый аппарат </span>
+                        <span class="text-white"> Настройки &#8594; ReKassa &#8594; кассовый аппарат </span>
                     </div>
                 </div>
                 <div class="col-2">
