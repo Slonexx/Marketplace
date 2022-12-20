@@ -7,19 +7,22 @@ use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getSetting;
 use App\Http\Controllers\getData\getWorkerID;
+use App\Http\Controllers\TicketController;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class demandController extends Controller
 {
-    public function demandPopup(Request $request){
+    public function demandPopup(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
 
         return view( 'popup.demand', [
 
         ] );
     }
 
-    public function ShowDemandPopup(Request $request){
+    public function ShowDemandPopup(Request $request): \Illuminate\Http\JsonResponse
+    {
         $object_Id = $request->object_Id;
         $accountId = $request->accountId;
         $Setting = new getSetting($accountId);
@@ -33,7 +36,6 @@ class demandController extends Controller
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/demand/".$object_Id;
         $Client = new MsClient($Setting->tokenMs);
         $Body = $Client->get($url);
-        $positions = $Client->get($Body->positions->meta->href)->rows;
         $attributes = null;
         if (property_exists($Body, 'attributes')){
             $attributes = [
@@ -49,28 +51,52 @@ class demandController extends Controller
         $vatEnabled = $Body->vatEnabled;
         $vat = null;
         $products = [];
+        $positions = $Client->get($Body->positions->meta->href)->rows;
 
         foreach ($positions as $id=>$item){
-
             $final = $item->price / 100 * $item->quantity;
 
-            if ($vatEnabled == true) {
-                if ($Body->vatIncluded == false) {
-                    $final = $item->price / 100 * $item->quantity;
-                    $final = $final + ( $final * ($item->vat/100) );
-                }
-            }
+            if ($vatEnabled == true) {if ($Body->vatIncluded == false) {
+                $final = $item->price / 100 * $item->quantity;
+                $final = $final + ( $final * ($item->vat/100) );
+            }}
             $uom_body = $Client->get($item->assortment->meta->href);
+
             if (property_exists($uom_body, 'uom')){
                 $propety_uom = true;
-            } else $propety_uom = false;
+                $uom = $Client->get($uom_body->uom->meta->href);
+                $uom = ['id' => $uom->code, 'name' => $uom->name];
+            } else {
 
+                if (property_exists($uom_body, 'characteristics')){
+                    $check_uom = $Client->get($uom_body->product->meta->href);
+
+                    if ( property_exists($check_uom, 'uom') ) {
+                        $propety_uom = true;
+                        $uom = $Client->get($check_uom->uom->meta->href);
+                        $uom = ['id' => $uom->code, 'name' => $uom->name];
+                    } else {
+                        $propety_uom = false;
+                        $uom = ['id' => 796, 'name' => 'шт'];
+                    }
+                } else {
+                    $propety_uom = false;
+                    $uom = ['id' => 796, 'name' => 'шт'];
+                }
+            }
+
+            $trackingCodes = false;
+            if (property_exists($item,'trackingCodes')){
+                $trackingCodes = true;
+            }
 
             $products[$id] = [
                 'position' => $item->id,
                 'propety' => $propety_uom,
                 'name' => $Client->get($item->assortment->meta->href)->name,
                 'quantity' => $item->quantity,
+                'uom' => $uom,
+                'trackingCodes' => $trackingCodes,
                 'price' => round($item->price / 100, 2) ?: 0,
                 'vatEnabled' => $item->vatEnabled,
                 'vat' => $item->vat,
@@ -97,7 +123,8 @@ class demandController extends Controller
     }
 
 
-    public function SendDemandPopup(Request $request){
+    public function SendDemandPopup(Request $request): \Illuminate\Http\JsonResponse
+    {
         $accountId = $request->accountId;
         $object_Id = $request->object_Id;
         $entity_type = $request->entity_type;
@@ -110,6 +137,10 @@ class demandController extends Controller
         if ($request->money_mobile === null) $money_mobile = 0;
         else $money_mobile = $request->money_mobile;
 
+        if ($request->total === null) $total = 0;
+        else $total = $request->total;
+
+
         $pay_type = $request->pay_type;
         $position = json_decode($request->position);
         $positions = [];
@@ -119,31 +150,26 @@ class demandController extends Controller
             }
         }
 
-        $body = [
+
+
+        $data = [
             'accountId' => $accountId,
             'id_entity' => $object_Id,
             'entity_type' => $entity_type,
+
             'money_card' => $money_card,
             'money_cash' => $money_cash,
             'money_mobile' => $money_mobile,
+
+            'total' => $total,
             'pay_type' => $pay_type,
+
             'positions' => $positions,
         ];
 
-        $Client = new Client();
-        $url = 'https://smartkaspi.kz/api/ticket';
-        //$url = 'http://rekassa/api/ticket';
         try {
-            $ClinetPost = $Client->post( $url, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'http_errors' => false,
-                ],
-                'form_params' => $body,
-            ]);
 
-            $res = json_decode($ClinetPost->getBody());
-
+            $res = app(TicketController::class)->createTicket($data);
             return response()->json($res);
 
         } catch (\Throwable $e){

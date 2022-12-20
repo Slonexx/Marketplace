@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ticket\TicketService;
 use Illuminate\Http\Request;
+use JetBrains\PhpStorm\ArrayShape;
 
 class TicketController extends Controller
 {
@@ -39,7 +40,7 @@ class TicketController extends Controller
 
     }
 
-    public function createTicket($data): \Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
+    public function createTicket($data): array
     {
 
         $serviceRes =  $this->ticketService->createTicket($data);
