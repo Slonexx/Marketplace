@@ -6,6 +6,7 @@ use App\Http\Controllers\Config\Vendor\VendorEndpointController;
 use \App\Http\Controllers\Config\DeleteVendorApiController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Web\CheckAllTokenMS;
 use App\Http\Controllers\WebHookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPropertyController;
 use App\Http\Controllers\SettingController;
+
+Route::post('CheckAllTokenMS', [CheckAllTokenMS::class,'CheckAllTokenMS']);
+
 
 Route::post('orders', [OrderController::class,'insertOrders']);
 Route::post('orderStatus',[OrderController::class,'changeOrderStatus']);
