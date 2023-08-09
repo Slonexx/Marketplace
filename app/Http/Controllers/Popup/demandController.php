@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Popup;
 
 use App\Clients\MsClient;
-use App\Http\Controllers\Config\Lib\VendorApiController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getSetting;
-use App\Http\Controllers\getData\getWorkerID;
-use App\Http\Controllers\TicketController;
-use GuzzleHttp\Client;
+
+use App\Services\ticket\TicketService;
 use Illuminate\Http\Request;
 
 class demandController extends Controller
@@ -16,9 +14,7 @@ class demandController extends Controller
     public function demandPopup(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
 
-        return view( 'popup.demand', [
-
-        ] );
+        return view( 'popup.demand', [] );
     }
 
     public function ShowDemandPopup(Request $request): \Illuminate\Http\JsonResponse
@@ -28,6 +24,11 @@ class demandController extends Controller
         $Setting = new getSetting($accountId);
 
         $json = $this->info_object_Id($object_Id, $Setting);
+
+        $payment_type = $Setting->payment_type;
+        if ($payment_type == null or $payment_type == '') $payment_type = 1;
+
+        $json['application']['payment_type'] = (int) $payment_type ;
 
         return response()->json($json);
     }
@@ -142,13 +143,16 @@ class demandController extends Controller
 
 
         $pay_type = $request->pay_type;
+
         $position = json_decode($request->position);
+
         $positions = [];
         foreach ($position as $item){
             if ($item != null){
                 $positions[] = $item;
             }
         }
+
 
 
 
@@ -167,9 +171,11 @@ class demandController extends Controller
             'positions' => $positions,
         ];
 
+        //dd($data);
+
         try {
 
-            $res = app(TicketController::class)->createTicket($data);
+            $res = app(TicketService::class)->createTicket($data);
             return response()->json($res);
 
         } catch (\Throwable $e){

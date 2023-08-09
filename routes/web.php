@@ -52,6 +52,10 @@ Route::post('/Setting/Device/{accountId}', [postDeviceController::class, 'postDe
 Route::get('/Setting/Document/{accountId}', [DocumentController::class, 'getDocument'])->name('getDocument');
 Route::post('/Setting/Document/{accountId}', [postDocumentController::class, 'postDocument']);
 
+Route::get('/Setting/Automation/{accountId}', [AutomationController::class, 'getAutomation'])->name('getAutomation');
+Route::post('/Setting/Automation/{accountId}', [postAutomationController::class, 'postAutomation']);
+
+
 Route::get('/ExportProduct/{accountId}', [ExportProductController::class, 'index'])->name('ExportProduct');
 
 
@@ -86,7 +90,7 @@ Route::get('/Popup/salesreturn/send', [salesreturnController::class, 'SendSalesr
 
 
 //Установка и удаление приложения
-Route::get('/setAttributes/{accountId}/{tokenMs}', [AttributeController::class, 'setAttributes']);
+Route::get('setAttributes/{accountId}/{tokenMs}', [AttributeController::class, 'setAllAttributesVendor']);
 Route::get('/delete/{accountId}', [deleteController::class, 'delete']);
 
 /*

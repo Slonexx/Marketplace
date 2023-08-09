@@ -6,6 +6,7 @@ use App\Clients\MsClient;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getSetting;
 use App\Http\Controllers\TicketController;
+use App\Services\ticket\TicketService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -133,7 +134,9 @@ class salesreturnController extends Controller
 
 
         $pay_type = $request->pay_type;
+
         $position = json_decode($request->position);
+
         $positions = [];
         foreach ($position as $item){
             if ($item != null){
@@ -158,9 +161,11 @@ class salesreturnController extends Controller
             'positions' => $positions,
         ];
 
+        //dd($data);
+
         try {
 
-            $res = app(TicketController::class)->createTicket($data);
+            $res = app(TicketService::class)->createTicket($data);
             return response()->json($res);
 
         } catch (\Throwable $e){

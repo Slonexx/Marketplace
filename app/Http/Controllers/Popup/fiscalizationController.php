@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Popup;
 use App\Clients\MsClient;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getSetting;
-use App\Http\Controllers\getData\getWorkerID;
-use App\Http\Controllers\TicketController;
+use App\Services\ticket\TicketService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use function MongoDB\BSON\toJSON;
 
 class fiscalizationController extends Controller
 {
@@ -29,10 +27,17 @@ class fiscalizationController extends Controller
 
         $json = $this->info_object_Id($object_Id, $Setting);
 
+        $payment_type = $Setting->payment_type;
+        if ($payment_type == null or $payment_type == '') $payment_type = 1;
+
+        $json['application']['payment_type'] = (int) $payment_type ;
+
         return response()->json($json);
     }
 
     public function info_object_Id($object_Id, getSetting $Setting){
+
+
         $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$object_Id;
         $Client = new MsClient($Setting->tokenMs);
         $Body = $Client->get($url);
@@ -107,9 +112,11 @@ class fiscalizationController extends Controller
                 'vatSum' => $Body->vatSum / 100 ,
             ];
         };
+
         return [
             'id' => $Body->id,
             'name' => $Body->name,
+            //'payment_type' => (int) $payment_type,
             'sum' => $Body->sum / 100,
             'vat' => $vat,
             'attributes' => $attributes,
@@ -167,14 +174,14 @@ class fiscalizationController extends Controller
 
         //dd($data);
 
-        try {
+        //try {
 
-            $res = app(TicketController::class)->createTicket($data);
-            return response()->json($res);
+        $res = app(TicketService::class)->createTicket($data);
+        return response()->json($res);
 
-        } catch (\Throwable $e){
-            return response()->json($e->getMessage());
-        }
+        // } catch (\Throwable $e){
+        //     return response()->json($e->getMessage());
+        //  }
     }
 
     public function closeShiftPopup(Request $request): array

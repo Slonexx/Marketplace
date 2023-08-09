@@ -7,6 +7,7 @@ use \App\Http\Controllers\Config\DeleteVendorApiController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Web\CheckAllTokenMS;
+use App\Http\Controllers\Web\WebhookMSController;
 use App\Http\Controllers\WebHookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,7 @@ Route::get('getTest', [TestController::class,'init']);
 
 
 //ReKASSA
-Route::post('attributes',[AttributeController::class,'setAllAttributes']);
+Route::post('attributes',[AttributeController::class,'setAllAttributesR']);
 
 Route::post('ticket',[TicketController::class,'initTicket']);
 
@@ -55,6 +56,10 @@ Route::post('webhook/{accountId}/customerorder',[WebHookController::class,'newOr
 Route::post('webhook/{accountId}/demand',[WebHookController::class,'newDemand']);
 
 
+
+Route::post('/webhook/customerorder/',[WebhookMSController::class, 'customerorder']);
+Route::post('/webhook/demand/',[WebhookMSController::class, 'customerorder']);
+Route::post('/webhook/salesreturn/',[WebhookMSController::class, 'customerorder']);
 
 
 

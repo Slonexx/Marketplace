@@ -10,10 +10,16 @@ class Setting extends Model
     protected $fillable = [
         'accountId',
         'tokenMs',
-        'saleChannel',
-        'paymentDocument',
-        'project',
         'apiKey',
+
+        'saleChannel',
+        'project',
+
+        'paymentDocument',
+        'payment_type',
+        'OperationCash',
+        'OperationCard',
+        'OperationMobile',
     ];
 
     use HasFactory;

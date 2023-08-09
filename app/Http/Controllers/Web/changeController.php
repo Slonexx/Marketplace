@@ -186,7 +186,7 @@ class changeController extends Controller
                         'hour' => (int) date('H')+6,
                         'minute' => (int) date('i'),
                         'second' => (int) date('s'),
-                        ],
+                    ],
                 ],
                 'operation' => $name_operations,
                 'sum' => [
@@ -208,6 +208,26 @@ class changeController extends Controller
                 'message' => json_decode($e->getResponse()->getBody()->getContents(), true),
             ]);
         }
+    }
+
+    public function getTest(Request $request, $accountId){
+        $Setting = new getSetting($accountId);
+
+        $Device = new getDevices($accountId);
+        $Device = $Device->devices;
+
+        foreach ($Device as $item){
+            $znm = $item->znm;
+            $password = $item->password;
+        }
+
+        $clientK = new KassClient($znm, $password, $Setting->apiKey);
+        $id = $clientK->getNewJwtToken()->id;
+
+        $id_ticket = '91338';
+
+        $getBody = $clientK->post('/api/crs/'.$id.'/tickets/'.$id_ticket.'/receipts', ['type'=>'PRINTER']);
+        return response()->json($getBody);
     }
 
 }

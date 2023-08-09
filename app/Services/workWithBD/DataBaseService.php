@@ -13,16 +13,24 @@ use SebastianBergmann\CodeCoverage\Driver\Selector;
 class DataBaseService
 {
 
-    public static function createSetting($accountId,$tokenMs,$apiKey,$paymentDocument,$saleChannel,$project){
+    public static function createSetting($accountId, $tokenMs, $payment_type, $paymentDocument, $saleChannel, $project, $OperationCash, $OperationCard, $OperationMobile){
         Setting::create([
             'accountId' => $accountId,
             'tokenMs' => $tokenMs,
+            'apiKey' => "6784dad7-6679-4950-b257-2711ff63f9bb",
+
             'saleChannel' => $saleChannel,
-            'paymentDocument' => $paymentDocument,
             'project' => $project,
-            'apiKey' => '6784dad7-6679-4950-b257-2711ff63f9bb',
+            'paymentDocument' => $paymentDocument,
+            'payment_type' => $payment_type,
+            'OperationCash' => $OperationCash,
+            'OperationCard' => $OperationCard,
+            'OperationMobile' => $OperationMobile,
+
+
         ]);
     }
+
     public static function createDevice($znm,$password,$position,$accountId){
         Device::create([
             'znm' => $znm,
@@ -31,6 +39,7 @@ class DataBaseService
             'position' => $position,
         ]);
     }
+
     public static function createWorker($id,$znm,$access){
         Worker::create([
             'id' => $id,
@@ -41,7 +50,8 @@ class DataBaseService
 
 
 
-    public static function showSetting($accountId){
+    public static function showSetting($accountId): array
+    {
         $find = Setting::query()->where('accountId', $accountId)->first();
         try {
             $result = $find->getAttributes();
@@ -50,14 +60,23 @@ class DataBaseService
                 "accountId" => $accountId,
                 "tokenMs" => null,
                 "apiKey" => null,
+
                 "saleChannel" => null,
-                "paymentDocument" => null,
                 "project" => null,
+
+                "paymentDocument" => null,
+                "payment_type" => null,
+                "OperationCash" => null,
+                "OperationCard" => null,
+                "OperationMobile" => null,
+
             ];
         }
         return $result;
     }
-    public static function showDeviceFirst($znm){
+
+    public static function showDeviceFirst($znm): array
+    {
         $find = Device::query()->where('znm', $znm)->first();
         try {
             $result = $find->getAttributes();
@@ -71,7 +90,9 @@ class DataBaseService
         }
         return $result;
     }
-    public static function showDevice($accountId){
+
+    public static function showDevice($accountId): array
+    {
         $Devices = [];
         $find = Device::query()->where('accountId', $accountId)->orderBy('position')->get();
 
@@ -82,7 +103,9 @@ class DataBaseService
 
         return $Devices;
     }
-    public static function showWorkerFirst($id){
+
+    public static function showWorkerFirst($id): array
+    {
 
         $find = Worker::query()->where('id', $id)->first();
         try {
@@ -96,7 +119,9 @@ class DataBaseService
         }
         return $result;
     }
-    public static function showWorkers($znm){
+
+    public static function showWorkers($znm): array
+    {
 
         $Workers = [];
         $find = Worker::query()->where('znm', $znm)->get();
@@ -110,18 +135,22 @@ class DataBaseService
 
     }
 
+    public static function updateSetting($accountId, $tokenMs, $payment_type, $paymentDocument, $saleChannel, $project, $OperationCash, $OperationCard, $OperationMobile){
+        $find = Setting::query()->where('accountId', $accountId);
+        $find->update([
+            'tokenMs' => $tokenMs,
+            'apiKey' => "6784dad7-6679-4950-b257-2711ff63f9bb",
 
-
-    public static function updateSetting($accountId,$tokenMs,$apiKey,$paymentDocument,$saleChannel,$project){
-       $find = Setting::query()->where('accountId', $accountId);
-       $find->update([
-           'tokenMs' => $tokenMs,
-           'saleChannel' => $saleChannel,
-           'paymentDocument' => $paymentDocument,
-           'project' => $project,
-           'apiKey' => '6784dad7-6679-4950-b257-2711ff63f9bb',
-       ]);
+            'saleChannel' => $saleChannel,
+            'project' => $project,
+            'paymentDocument' => $paymentDocument,
+            'payment_type' => $payment_type,
+            'OperationCash' => $OperationCash,
+            'OperationCard' => $OperationCard,
+            'OperationMobile' => $OperationMobile,
+        ]);
     }
+
     public static function updateDevice($znm,$password,$position,$accountId){
         $find = Device::query()->where('znm', $znm);
         $find->update([
@@ -131,6 +160,7 @@ class DataBaseService
         ]);
 
     }
+
     public static function updateWorker($id,$znm,$access){
         $find = Worker::query()->where('id', $id);
         $find->update([
@@ -144,10 +174,12 @@ class DataBaseService
     {
         Setting::query()->where('accountId',$accountId)->delete();
     }
+
     public static function deleteDevice($znm): void
     {
         Device::query()->where('znm',$znm)->delete();
     }
+
     public static function deleteWorker($id){
         Worker::query()->where('id',$id)->delete();
     }
@@ -225,7 +257,8 @@ class DataBaseService
         ]);
     }
 
-    public static function createAddSetting($accountId, $Project, $Saleschannel, $APPROVED_BY_BANK, $ACCEPTED_BY_MERCHANT, $COMPLETED, $CANCELLED, $RETURNED){
+    public static function createAddSetting($accountId, $Project, $Saleschannel, $APPROVED_BY_BANK, $ACCEPTED_BY_MERCHANT, $COMPLETED, $CANCELLED, $RETURNED): void
+    {
         addSetting::create([
             "accountId" => $accountId,
             "Project" => $Project,

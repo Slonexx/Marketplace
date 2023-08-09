@@ -10,31 +10,21 @@ use Illuminate\Http\Request;
 
 class postDocumentController extends Controller
 {
-    public function postDocument(Request $request, $accountId): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function postDocument(Request $request, $accountId): \Illuminate\Http\RedirectResponse
     {
         $isAdmin = $request->isAdmin;
-        $apiKey = 'f5ac6559-b5cd-4e0e-89e5-7fd32a6d60a5';
-        $app = new getSetting($accountId);
+        $Setting = new getSettingVendorController($accountId);
 
         try {
-            DataBaseService::updateSetting($accountId, $app->tokenMs, $apiKey,
-                $request->paymentDocument,null,null);
-            $message = [
-                'alert' => ' alert alert-success alert-dismissible fade show in text-center ',
-                'message' => ' Настройки сохранились ',
-            ];
+            DataBaseService::updateSetting($accountId, $Setting->TokenMoySklad, $request->payment_type,
+                $request->createDocument_asWay,null,null, $request->OperationCash, $request->OperationCard, $request->OperationMobile);
         } catch (\Throwable $e){
-            $message = [
-                'alert' => ' alert alert-danger alert-dismissible fade show in text-center ',
-                'message' => $e->getMessage(),
-            ];
+
         }
 
-        return view('setting.document', [
+        return redirect()->route('getWorker', [
             'accountId' => $accountId,
             'isAdmin' => $isAdmin,
-            'message' => $message,
-            'paymentDocument' =>  $request->paymentDocument,
         ]);
     }
 }

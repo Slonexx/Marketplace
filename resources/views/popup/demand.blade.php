@@ -29,18 +29,16 @@
                 object_Id = receivedMessage.popupParameters.object_Id;
                 accountId = receivedMessage.popupParameters.accountId;
                 entity_type = receivedMessage.popupParameters.entity_type;
-                let params = { object_Id: object_Id, accountId: accountId, };
-                let final = url + formatParams(params);
+                let data = { object_Id: object_Id, accountId: accountId, };
 
-                //ДОБАВИЛ
-                receivedMessage = null
+                let settings = ajax_settings(url, "GET", data);
+                console.log(url + ' settings ↓ ')
+                console.log(settings)
 
-                console.log('receivedMessage = ' + final)
-
-                let xmlHttpRequest = new XMLHttpRequest();
-                xmlHttpRequest.addEventListener("load", function () {
+                $.ajax(settings).done(function (json) {
+                    console.log(url + ' response ↓ ')
+                    console.log(json)
                     $('#lDown').modal('hide')
-                    let json = JSON.parse(this.responseText)
 
                     id_ticket = json.attributes.ticket_id
                     window.document.getElementById("numberOrder").innerHTML = json.name;
@@ -79,7 +77,7 @@
                             window.document.getElementById("message").style.display = "block";
                         }
                     }
-
+                    window.document.getElementById('cash').value = window.document.getElementById("sum").innerHTML
                     if (json.attributes.ticket_id != null){
                         window.document.getElementById("ShowCheck").style.display = "block";
                         window.document.getElementById("refundCheck").style.display = "block";
@@ -88,16 +86,17 @@
                     }
 
                     window.document.getElementById("closeButtonId").style.display = "block";
-                });
-                xmlHttpRequest.open("GET", final);
-                xmlHttpRequest.send();
+                })
+
             }
         });
 
         function sendKKM(pay_type){
-            let button_hide = '';
-            if (pay_type == 'return') button_hide = 'refundCheck';
-            if (pay_type == 'sell') button_hide = 'getKKM';
+            let url = 'https://smartkaspi.kz/Popup/demand/send';
+
+            let button_hide = ''
+            if (pay_type === 'return') button_hide = 'refundCheck'
+            if (pay_type === 'sell') button_hide = 'getKKM'
 
             window.document.getElementById(button_hide).style.display = "none";
             let modalShowHide = 'show';
@@ -109,42 +108,18 @@
             let SelectorInfo = document.getElementById('valueSelector');
             let option = SelectorInfo.options[SelectorInfo.selectedIndex];
 
-            if (option.value == 0){
-                if (!money_cash) {
-                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму наличных';
-                    window.document.getElementById('message').style.display = "block";
-                    modalShowHide = 'hide'
-                }
-            }
-            if (option.value == 1){
-                if (!money_card) {
-                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму карты';
-                    window.document.getElementById('message').style.display = "block";
-                    modalShowHide = 'hide'
-                }
-            }
-            if (option.value == 2){
-                if (!money_mobile){
-                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму мобильных';
-                    window.document.getElementById('message').style.display = "block";
-                    modalShowHide = 'hide'
-                }
-            }
-            if (option.value == 3){
-                if (!money_card && !money_cash && !money_mobile){
-                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму';
-                    window.document.getElementById('message').style.display = "block";
-                    modalShowHide = 'hide'
-                }
+            let error_what = option_value_error_fu(option.value, money_cash, money_card, money_mobile)
+            if (error_what === true){
+                modalShowHide = 'hide'
             }
 
+
             if (total-0.01 <= money_card+money_cash+money_mobile) {
-                let url = 'https://smartkaspi.kz/Popup/demand/send';
-                //let url = 'https://rekassa/Popup/customerorder/send';
                 if (modalShowHide === 'show'){
-                    $('#downL').modal('toggle');
-                    let products = [];
-                    for (let i = 0; i < 20; i++) {
+
+                    $('#downL').modal('toggle')
+                    let products = []
+                    for (let i = 0; i < 99; i++) {
                         if ( window.document.getElementById(i).style.display === 'block' ) {
                             products[i] = {
                                 id:window.document.getElementById('productId_'+i).innerText,
@@ -158,49 +133,59 @@
                         }
                     }
 
-                    let xmlHttpRequest = new XMLHttpRequest()
-                    xmlHttpRequest.withCredentials = true
+                    let data =  {
+                        "accountId": accountId,
+                        "object_Id": object_Id,
+                        "entity_type": entity_type,
 
-                    let settings = {
-                        "url": url,
-                        "method": "GET",
-                        "timeout": 0,
-                        "headers": {"Content-Type": "application/json",},
-                        "data": {
-                            "accountId": accountId,
-                            "object_Id": object_Id,
-                            "entity_type": entity_type,
+                        "money_card": money_card,
+                        "money_cash": money_cash,
+                        "money_mobile": money_mobile,
 
-                            "money_card": money_card,
-                            "money_cash": money_cash,
-                            "money_mobile": money_mobile,
+                        "pay_type": pay_type,
+                        "total": total,
 
-                            "pay_type": pay_type,
-                            "total": total,
+                        "position": JSON.stringify(products),
+                    }
+                    console.log(url + ' data ↓ ')
+                    console.log(data)
 
-                            "position": JSON.stringify(products),
-                        },
-                    };
-
-                    console.log(settings);
-
-                    $.ajax(settings).done(function (response) {
-                        $('#downL').modal('hide')
-                        let json = response
-
-                        if (json.message === 'Ticket created!'){
-                            window.document.getElementById("messageGoodAlert").innerText = "Чек создан";
-                            window.document.getElementById("messageGood").style.display = "block";
-                            window.document.getElementById("ShowCheck").style.display = "block";
-                            window.document.getElementById("closeShift").style.display = "block";
-                            modalShowHide = 'hide';
-                            let response = json.response;
-                            id_ticket = response.id;
-                        } else {
-                            window.document.getElementById('messageAlert').innerText = "Ошибка 400";
-                            window.document.getElementById('message').style.display = "block";
-                            window.document.getElementById(button_hide).style.display = "block";
-                            modalShowHide = 'hide';
+                    $.ajax({
+                        url: url,
+                        method: 'post',
+                        dataType: 'json',
+                        data: data,
+                        success: function(response){
+                            $('#downL').modal('hide')
+                            console.log(url + ' response ↓ ')
+                            console.log(response)
+                            if (response.code === 200){
+                                window.document.getElementById("messageGoodAlert").innerText = "Чек создан";
+                                window.document.getElementById("messageGood").style.display = "block";
+                                window.document.getElementById("ShowCheck").style.display = "block";
+                                window.document.getElementById("closeShift").style.display = "block";
+                                modalShowHide = 'hide';
+                                id_ticket = response.res.response.id;
+                            } else {
+                                if (response.res.hasOwnProperty('error')) {
+                                    if (response.res.error.code === 'CASH_REGISTER_SHIFT_PERIOD_EXPIRED') {
+                                        window.document.getElementById('messageAlert').innerText = "Предыдущая смена не закрыта !";
+                                        window.document.getElementById('message').style.display = "block";
+                                        window.document.getElementById(button_hide).style.display = "block";
+                                        modalShowHide = 'hide';
+                                    } else  {
+                                        window.document.getElementById('messageAlert').innerText = response.res.error.code;
+                                        window.document.getElementById('message').style.display = "block";
+                                        window.document.getElementById(button_hide).style.display = "block";
+                                        modalShowHide = 'hide';
+                                    }
+                                } else {
+                                    window.document.getElementById('messageAlert').innerText = "Ошибка 400";
+                                    window.document.getElementById('message').style.display = "block";
+                                    window.document.getElementById(button_hide).style.display = "block";
+                                    modalShowHide = 'hide';
+                                }
+                            }
                         }
                     });
                     modalShowHide = 'hide';
@@ -214,21 +199,24 @@
             }
         }
 
-
         function ShowCheck(){
             let urlrekassa = 'https://app.rekassa.kz/'
-            let url = 'https://smartkaspi.kz//api/ticket';
-            let params = {
+            //let url = 'http://rekassa/Popup/customerorder/closeShift';
+            let url = 'https://smartkaspi.kz/api/ticket';
+            let data = {
                 accountId: accountId,
                 id_ticket: id_ticket,
             };
-            let final = url + formatParams(params);
-            let xmlHttpRequest = new XMLHttpRequest();
-            xmlHttpRequest.addEventListener("load", function () {
-                window.open(urlrekassa + this.responseText);
-            });
-            xmlHttpRequest.open("GET", final);
-            xmlHttpRequest.send();
+
+            let settings = ajax_settings(url, "GET", data);
+            console.log(url + ' settings ↓ ')
+            console.log(settings)
+
+            $.ajax(settings).done(function (response) {
+                console.log(url + ' response ↓ ')
+                console.log(response)
+                window.open(urlrekassa + response);
+            })
         }
 
         function SelectorSum(Selector){
@@ -481,7 +469,7 @@
                 </div>
                 <div class="modal-body text-center" style="background-color: #e5eff1">
                     <div class="row">
-                        <img style="width: 100%" src="https://i.gifer.com/1uoA.gif" alt="">
+                        <img style="width: 100%" src="https://smartkaspi.kz/Config/download.gif" alt="">
                     </div>
                 </div>
             </div>
@@ -498,7 +486,7 @@
                 </div>
                 <div class="modal-body text-center" style="background-color: #e5eff1">
                     <div class="row">
-                        <img style="width: 100%" src="https://i.gifer.com/1uoA.gif" alt="">
+                        <img style="width: 100%" src="https://smartkaspi.kz/Config/download.gif" alt="">
                     </div>
                 </div>
             </div>
@@ -507,6 +495,17 @@
 
 @endsection
 <script>
+
+    function ajax_settings(url, method, data){
+        return {
+            "url": url,
+            "method": method,
+            "timeout": 0,
+            "headers": {"Content-Type": "application/json",},
+            "data": data,
+        }
+    }
+
     function newPopup(){
         window.document.getElementById("sum").innerHTML = ''
 
@@ -546,8 +545,6 @@
         $('#downL').modal('hide');
     }
 
-
-
     function formatParams(params) {
         return "?" + Object
             .keys(params)
@@ -557,66 +554,96 @@
             .join("&")
     }
 
+    function option_value_error_fu(index_option, money_card, money_cash, money_mobile){
+        console.log(index_option)
+        let params = false
+        switch (index_option) {
+            case 0 && "0": {
+                if (!money_cash) {
+                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму наличных'
+                    window.document.getElementById('message').style.display = "block"
+                    params = true
+                }
+                break
+            }
+            case 1 && "1": {
+                if (!money_cash) {
+                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму карты'
+                    window.document.getElementById('message').style.display = "block"
+                    params = true
+                }
+                break
+            }
+            case 2 && "2": {
+                if (!money_mobile){
+                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму мобильных'
+                    window.document.getElementById('message').style.display = "block"
+                    params = true
+                }
+                break
+            }
+            case 3 && "3": {
+                if (!money_card && !money_cash && !money_mobile){
+                    window.document.getElementById('messageAlert').innerText = 'Вы не ввели сумму'
+                    window.document.getElementById('message').style.display = "block"
+                    params = true
+                }
+                break
+            }
+            default: {
 
+            }
+
+        }
+        return params
+    }
 
     function roundToTwo(num) { return +(Math.round(num + "e+2")  + "e-2"); }
 
     function isNumberKeyCash(evt){
-        var charCode = (evt.which) ? evt.which : event.keyCode
+        let charCode = (evt.which) ? evt.which : event.keyCode;
         if (charCode == 46){
-            var inputValue = $("#cash").val();
-            var count = (inputValue.match(/'.'/g) || []).length;
+            let inputValue = $("#cash").val();
+            let count = (inputValue.match(/'.'/g) || []).length;
             if(count<1){
-                if (inputValue.indexOf('.') < 1){
-                    return true;
-                }
-                return false;
+                return inputValue.indexOf('.') < 1;
+
             }else{
                 return false;
             }
         }
-        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
-            return false;
-        }
-        return true;
+        return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+
     }
     function isNumberKeyCard(evt){
-        var charCode = (evt.which) ? evt.which : event.keyCode
+        let charCode = (evt.which) ? evt.which : event.keyCode;
         if (charCode == 46){
-            var inputValue = $("#card").val();
-            var count = (inputValue.match(/'.'/g) || []).length;
+            let inputValue = $("#card").val();
+            let count = (inputValue.match(/'.'/g) || []).length;
             if(count<1){
-                if (inputValue.indexOf('.') < 1){
-                    return true;
-                }
-                return false;
+                return inputValue.indexOf('.') < 1;
+
             }else{
                 return false;
             }
         }
-        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
-            return false;
-        }
-        return true;
+        return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+
     }
     function isNumberKeyMobile(evt){
-        var charCode = (evt.which) ? evt.which : event.keyCode
+        let charCode = (evt.which) ? evt.which : event.keyCode;
         if (charCode == 46){
-            var inputValue = $("#mobile").val();
-            var count = (inputValue.match(/'.'/g) || []).length;
+            let inputValue = $("#mobile").val();
+            let count = (inputValue.match(/'.'/g) || []).length;
             if(count<1){
-                if (inputValue.indexOf('.') < 1){
-                    return true;
-                }
-                return false;
+                return inputValue.indexOf('.') < 1;
+
             }else{
                 return false;
             }
         }
-        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
-            return false;
-        }
-        return true;
+        return !(charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57));
+
     }
 
     function deleteBTNClick(Object){
@@ -641,15 +668,15 @@
             accountId: accountId,
             pincode: pinCode,
         };
-        //let url = 'http://rekassa/Popup/customerorder/closeShift';
         let url = 'https://smartkaspi.kz/Popup/customerorder/closeShift';
-        let final = url + formatParams(params);
+        let settings = ajax_settings(url, "GET", params);
+        console.log(url + ' settings ↓ ')
+        console.log(settings)
 
-        console.log("final = " + final);
+        $.ajax(settings).done(function (json) {
+            console.log(url + ' response ↓ ')
+            console.log(json)
 
-        let xmlHttpRequest = new XMLHttpRequest();
-        xmlHttpRequest.addEventListener("load", function () {
-            let json = JSON.parse(this.responseText);
             if (json.statusCode === 200){
                 window.document.getElementById('messageAlert').innerText = json.message;
                 window.document.getElementById('message').style.display = "block";
@@ -658,8 +685,6 @@
                 window.document.getElementById('messageAlert').innerText = "ошибка";
                 window.document.getElementById('message').style.display = "block";
             }
-        });
-        xmlHttpRequest.open("GET", final);
-        xmlHttpRequest.send();
+        })
     }
 </script>

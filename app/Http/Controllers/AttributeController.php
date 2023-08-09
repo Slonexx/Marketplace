@@ -215,7 +215,7 @@ class AttributeController extends Controller
         $this->attributeService = $attributeService;
     }
 
-    public function setAllAttributes(Request $request)
+    public function setAllAttributesR(Request $request)
     {
         $data = $request->validate([
             "tokenMs" => 'required|string',

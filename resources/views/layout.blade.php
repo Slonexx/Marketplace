@@ -27,7 +27,8 @@
                         <a id="link_5" class="mt-1" href="/Setting/info/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Информация </a>
                         <a id="link_6" class="mt-1" href="/Setting/Device/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Кассовый аппарат </a>
                         <a id="link_7" class="mt-1" href="/Setting/Document/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Документ </a>
-                        <a id="link_8" class="mt-1" href="/kassa/change/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Смена </a>
+                        <a id="link_8" class="mt-1" href="/Setting/Automation/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Автоматизация </a>
+                        <a id="link_9" class="mt-1" href="/kassa/change/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Смена </a>
                     </div>
                 </div>
                 <a class="mt-1 mb-1" href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
@@ -60,7 +61,7 @@
 <style>
 
     .head-full {
-        height: 780px;
+        height: 1080px;
     }
 
     body {
