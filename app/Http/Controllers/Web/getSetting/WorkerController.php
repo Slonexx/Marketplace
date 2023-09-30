@@ -38,7 +38,7 @@ class WorkerController extends Controller
 
         $Setting = new getSetting($accountId);
         $tokenMs = $Setting->tokenMs;
-        $url_employee = 'https://online.moysklad.ru/api/remap/1.2/entity/employee';
+        $url_employee = 'https://api.moysklad.ru/api/remap/1.2/entity/employee';
         $Client = new MsClient($tokenMs);
         $Body_employee = $Client->get($url_employee)->rows;
         $security = [];

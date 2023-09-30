@@ -430,13 +430,13 @@ class TicketService
         $url = null;
         switch ($enType) {
             case "customerorder":
-                $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/" . $enId;
+                $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/" . $enId;
                 break;
             case "demand":
-                $url = "https://online.moysklad.ru/api/remap/1.2/entity/demand/" . $enId;
+                $url = "https://api.moysklad.ru/api/remap/1.2/entity/demand/" . $enId;
                 break;
             case "salesreturn":
-                $url = "https://online.moysklad.ru/api/remap/1.2/entity/salesreturn/" . $enId;
+                $url = "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/" . $enId;
                 break;
         }
         return $url;
@@ -638,7 +638,7 @@ class TicketService
     private function getUUH(getSetting $Setting, mixed $id_entity, mixed $entity_type): array
     {
         $Client = new MsClient($Setting->tokenMs);
-        $body = $Client->get('https://online.moysklad.ru/api/remap/1.2/entity/' . $entity_type . '/' . $id_entity);
+        $body = $Client->get('https://api.moysklad.ru/api/remap/1.2/entity/' . $entity_type . '/' . $id_entity);
         $agent = $Client->get($body->agent->meta->href);
         $result = [];
 
@@ -660,7 +660,7 @@ class TicketService
         switch ($Setting->paymentDocument) {
             case "1":
             {
-                $url = 'https://online.moysklad.ru/api/remap/1.2/entity/';
+                $url = 'https://api.moysklad.ru/api/remap/1.2/entity/';
                 if ($entity_type != 'salesreturn') {
                     $url = $url . 'cashin';
                 } else {
@@ -696,7 +696,7 @@ class TicketService
             }
             case "2":
             {
-                $url = 'https://online.moysklad.ru/api/remap/1.2/entity/';
+                $url = 'https://api.moysklad.ru/api/remap/1.2/entity/';
                 if ($entity_type != 'salesreturn') {
                     $url = $url . 'paymentin';
                 } else {
@@ -704,7 +704,7 @@ class TicketService
                     break;
                 }
 
-                $rate_body = $client->get("https://online.moysklad.ru/api/remap/1.2/entity/currency/")->rows;
+                $rate_body = $client->get("https://api.moysklad.ru/api/remap/1.2/entity/currency/")->rows;
                 $rate = null;
                 foreach ($rate_body as $item) {
                     if ($item->name == "тенге" or $item->fullName == "Казахстанский тенге") {
@@ -750,7 +750,7 @@ class TicketService
             }
             case "3":
             {
-                $url = 'https://online.moysklad.ru/api/remap/1.2/entity/';
+                $url = 'https://api.moysklad.ru/api/remap/1.2/entity/';
                 if ($entity_type != 'salesreturn') {
                     foreach ($vars['payments'] as $item) {
                         if ($item['type'] == "PAYMENT_CASH") {
@@ -759,7 +759,7 @@ class TicketService
                             $url_to_body = $url . 'paymentin';
                         }
 
-                        $rate_body = $client->get("https://online.moysklad.ru/api/remap/1.2/entity/currency/")->rows;
+                        $rate_body = $client->get("https://api.moysklad.ru/api/remap/1.2/entity/currency/")->rows;
                         $rate = null;
                         foreach ($rate_body as $item_rate) {
                             if ($item_rate->name == "тенге" or $item_rate->fullName == "Казахстанский тенге") {
@@ -807,7 +807,7 @@ class TicketService
             }
             case "4":
             {
-                $url = 'https://online.moysklad.ru/api/remap/1.2/entity/';
+                $url = 'https://api.moysklad.ru/api/remap/1.2/entity/';
                 $url_to_body = null;
                 if ($entity_type != 'salesreturn') {
                     foreach ($vars['payments'] as $item) {
@@ -860,7 +860,7 @@ class TicketService
 
                         if ($url_to_body == null) continue;
 
-                        $rate_body = $client->get("https://online.moysklad.ru/api/remap/1.2/entity/currency/")->rows;
+                        $rate_body = $client->get("https://api.moysklad.ru/api/remap/1.2/entity/currency/")->rows;
                         $rate = null;
                         foreach ($rate_body as $item_rate) {
                             if ($item_rate->name == "тенге" or $item_rate->fullName == "Казахстанский тенге") {

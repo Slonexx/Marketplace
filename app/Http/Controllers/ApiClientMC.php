@@ -20,14 +20,11 @@ class ApiClientMC {
 
     public function requestGet()
     {
-        //$accept = "application/json";
-        // if($vnd == true){
-        //     $accept = "application/vnd.api+json";
-        // } else {
-        //     $accept = "application/json";
-        // }
+
         $headers = [
             'Authorization' => $this->apiKey,
+            'Content-Type' => 'application/json',
+            'Accept-Encoding' => 'gzip',
         ];
         $client = new Client();
 
@@ -42,22 +39,19 @@ class ApiClientMC {
         $headers = [
             'Authorization' => $this->apiKey,
             'Content-Type' => 'application/json',
+            'Accept-Encoding' => 'gzip',
         ];
 
         $client = new Client([
             'headers' => $headers,
         ]);
 
-
-       // try {
             $res = $client->post($this->uri,[
             'body' => json_encode($body),
             ]);
-       // } catch (ClientException $e) {
-         //   dd($e->getMessage());
-       // }
 
-        
+
+
 
         return json_decode($res->getBody());
     }
@@ -66,6 +60,8 @@ class ApiClientMC {
         $headers = [
             'Authorization' => $this->apiKey,
             'Content-Type' => 'application/json',
+            'Accept-Encoding' => 'gzip',
+
         ];
 
         $client = new Client([
@@ -82,6 +78,8 @@ class ApiClientMC {
     {
         $headers = [
             'Authorization' => $this->apiKey,
+            'Content-Type' => 'application/json',
+            'Accept-Encoding' => 'gzip',
         ];
 
         $client = new Client([

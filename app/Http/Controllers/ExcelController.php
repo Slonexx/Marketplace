@@ -11,7 +11,7 @@ class ExcelController extends Controller
     public function getProductsExcel(Request $request, $TokenMoySklad)
     {
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $apiKey = $TokenMoySklad;
         $client = new ApiClientMC($uri,$apiKey);
         $data = $client->requestGet();
@@ -108,7 +108,7 @@ class ExcelController extends Controller
 
     public function changeCheckedAttribute($apiKey,$meta,$id)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product/".$id;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product/".$id;
         $client = new ApiClientMC($uri,$apiKey);
         $body = [
             'attributes' => [

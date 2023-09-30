@@ -8,7 +8,7 @@ class UomController extends Controller
 {
     public function getUom($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/uom";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/uom";
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;

@@ -10,7 +10,7 @@ class AgentAttributesController extends Controller
 
     public function getAttributeGos($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
         $this->client = new ApiClientMC($uri,$apiKey);
         $json = $this->client->requestGet();
         $foundedMeta = null;

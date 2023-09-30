@@ -8,7 +8,7 @@ class PositionController extends Controller
 {
     public function setPositions($orderId,$status,$entries,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions";
         $client = new ApiClientMC($uri,$apiKey);
         foreach($entries as $entry){
 
@@ -37,14 +37,14 @@ class PositionController extends Controller
                     ],
                 ];
             }
-            
+
             $client->requestPost($position);
         }
     }
 
     public function setPositionReserve($orderId, $positionId, $quantityReserve,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions"."/".$positionId;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId."/positions"."/".$positionId;
         $client = new ApiClientMC($uri,$apiKey);
         $bodyReserve = [
             "reserve" => $quantityReserve,
@@ -54,12 +54,12 @@ class PositionController extends Controller
 
     public function searchProduct($product,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$product->code;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$product->code;
         $client = new ApiClientMC($uri,$apiKey);
         $res = $client->requestGet();
 
         if($res->meta->size == 0){
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".urlencode($product->name);
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=name=".urlencode($product->name);
             $client->setRequestUrl($uri);
             $res = $client->requestGet();
         }
@@ -74,7 +74,7 @@ class PositionController extends Controller
 
     private function createProduct($entry,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$apiKey);
         $product['name'] = $entry['product']->name;
         $product['article'] = $entry['product']->code;

@@ -88,7 +88,7 @@ class OrderController extends Controller
 
     public function getOrdersFromMS($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$apiKey);
         $jsonAllOrders = $client->requestGet();
         //dd($jsonAllOrders);
@@ -127,7 +127,7 @@ class OrderController extends Controller
 
     public function searchOrdersMs($orderIdKaspi,$apiKey)
     {
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderIdKaspi;
+        $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderIdKaspi;
         $client = new ApiClientMC($url,$apiKey);
         $json = $client->requestGet();
         return ($json->meta->size > 0);
@@ -175,7 +175,7 @@ class OrderController extends Controller
             "number_account" => $request->organization_account_number,
         ];
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$request->tokenMs);
 
         $count = 0;
@@ -316,7 +316,7 @@ class OrderController extends Controller
 
     private function getOrdersMsWithStatus($apiKey): array
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder";
         $client = new ApiClientMC($uri,$apiKey);
         $jsonAllOrders = $client->requestGet();
         //dd($jsonAllOrders);
@@ -352,7 +352,7 @@ class OrderController extends Controller
 
     public function searchOrderMsWithStatus($orderId, $apiKey): ?array
     {
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderId;
+        $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder?filter=externalCode=".$orderId;
         $client = new ApiClientMC($url,$apiKey);
         $json = $client->requestGet();
         if ($json->meta->size == 0) return null;
@@ -495,7 +495,7 @@ class OrderController extends Controller
 
     private function changeOrderStatusMs($orderId,$metaState, $apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/".$orderId;
         $client = new ApiClientMC($uri,$apiKey);
         $client->requestPut([
             "state" => [

@@ -69,7 +69,7 @@ class AttributeController extends Controller
         ];
 
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes";
         $client = new ApiClientMC($uri, $apiKey);
         $json = $client->requestGet();
 
@@ -91,7 +91,7 @@ class AttributeController extends Controller
 
     public function createOrderAttributes($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
         $client = new ApiClientMC($uri, $apiKey);
         $json = $client->requestGet();
 
@@ -127,7 +127,7 @@ class AttributeController extends Controller
                     "required" => false,
                 ];
 
-                $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
+                $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
                 $client->setRequestUrl($uri);
                 $json = $client->requestGet();
                 $foundedAttrib = false;
@@ -149,7 +149,7 @@ class AttributeController extends Controller
 
     public function createAgentAttributes($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/context/companysettings/metadata";
         $client = new ApiClientMC($uri, $apiKey);
         $json = $client->requestGet();
 
@@ -185,7 +185,7 @@ class AttributeController extends Controller
                 "required" => false,
             ];
 
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/counterparty/metadata/attributes";
             $client->setRequestUrl($uri);
             $json = $client->requestGet();
             $foundedAttrib = false;

@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class AgentController extends Controller
 {
-    public function getAgent($customer,$address,$apiKey) 
+    public function getAgent($customer,$address,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty?search=".$customer->cellPhone;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/counterparty?search=".$customer->cellPhone;
         $client = new ApiClientMC($uri,$apiKey);
         $jsonRes = $client->requestGet();
         $resultMeta = null;
@@ -24,7 +24,7 @@ class AgentController extends Controller
     }
 
     public function createAgent($customer,$address,$apiKey){
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/counterparty";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/counterparty";
         $client = new ApiClientMC($uri,$apiKey);
         $attributes = app(AgentAttributesController::class)->getAttributeGos($apiKey);
         //$attributes = app(SessionController::class)->getCookie('gos_attribute');

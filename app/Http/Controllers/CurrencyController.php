@@ -9,7 +9,7 @@ class CurrencyController extends Controller
 {
     public function getKzCurrency($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/currency?seacrh=тенге";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/currency?seacrh=тенге";
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;
@@ -32,7 +32,7 @@ class CurrencyController extends Controller
 
     public function createCurrency($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/currency";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/currency";
         $client = new ApiClientMC($uri,$apiKey);
         $currency = [
             "system" => true,

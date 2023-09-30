@@ -21,7 +21,7 @@ class ExportProductController extends Controller
 
     public function getProductCount($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$apiKey);
         $jsonProducts = $client->requestGet();
         $count = 0;
@@ -34,7 +34,7 @@ class ExportProductController extends Controller
                         && $attrib->type == 'boolean' && $attrib->value == 1)
                     {
                         $flagAddToKaspi = true;
-                    } elseif ($attrib->name == 'Опубликован на Kaspi' 
+                    } elseif ($attrib->name == 'Опубликован на Kaspi'
                     && $attrib->type == 'boolean' && $attrib->value == 0) {
                         $flagCheckNotPublish = true;
                     }

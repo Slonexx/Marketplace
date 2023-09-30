@@ -30,7 +30,7 @@ class OrderAttributesController extends Controller
             return null;
         }
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata/attributes";
         $this->client = new ApiClientMC($uri,$apiKey);
         $json = $this->client->requestGet();
         $foundedMeta = null;

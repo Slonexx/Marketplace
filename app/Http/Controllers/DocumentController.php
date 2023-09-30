@@ -15,7 +15,7 @@ class DocumentController extends Controller
     #CANCELLING – ожидает отмены
 
     #COMPLETED – завершён
-    
+
     #KASPI_DELIVERY_RETURN_REQUESTED – ожидает возврата
     #RETURN_ACCEPTED_BY_MERCHANT – ожидает решения по возврату
     #RETURNED – возвращён
@@ -55,7 +55,7 @@ class DocumentController extends Controller
               }
 
               if($demandOption > 0){
-                    
+
                  $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
                  $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
 
@@ -70,15 +70,15 @@ class DocumentController extends Controller
                 }
               }
 
-             
-              
+
+
             break;
             case 'COMPLETED':
               // "Доставлен";
               if($paymentOption > 0){
                 $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
               }
-              
+
               if($demandOption > 0){
                 $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
                 if($demandOption == 2){
@@ -86,7 +86,7 @@ class DocumentController extends Controller
                  }
               }
 
-              
+
             break;
             case 'KASPI_DELIVERY_RETURN_REQUESTED':
                 case 'RETURN_ACCEPTED_BY_MERCHANT':
@@ -109,8 +109,8 @@ class DocumentController extends Controller
                            $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
                         }
                     }
-                    
-                    
+
+
                     break;
         }
 
@@ -118,7 +118,7 @@ class DocumentController extends Controller
 
     private function createFactureout($apiKey,$metaDemand)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/factureout";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/factureout";
         $client = new ApiClientMC($uri,$apiKey);
         $docBody = [
             "demands" => [
@@ -134,11 +134,11 @@ class DocumentController extends Controller
     {
         $uri = null;
         if ($isPayment == 2) {
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/paymentin";
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/paymentin";
         } elseif($isPayment == 1) {
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/cashin";
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/cashin";
         }
-        
+
 
         //dd($metaOrder);
 
@@ -166,14 +166,14 @@ class DocumentController extends Controller
         if(array_key_exists("organizationAccount",$formattedOrder)){
             $docBody["organizationAccount"] = $formattedOrder['organizationAccount'];
         }
-        
+
 
         $client->requestPost($docBody);
     }
 
     private function createDenamd($apiKey, $meta, $formattedOrder, $entries)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/demand";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/demand";
         $client = new ApiClientMC($uri,$apiKey);
         $docBodyDemand = [
             "agent" => $formattedOrder['agent'],
@@ -195,12 +195,12 @@ class DocumentController extends Controller
         if(array_key_exists("organizationAccount",$formattedOrder)){
             $docBodyDemand["organizationAccount"] = $formattedOrder['organizationAccount'];
         }
-        
+
 
 
         $createdDemand = $client->requestPost($docBodyDemand);
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/demand"."/".$createdDemand->id."/positions";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/demand"."/".$createdDemand->id."/positions";
         $client->setRequestUrl($uri);
         foreach($entries as $entry) {
             $bodyDemandPositions = [
@@ -213,7 +213,7 @@ class DocumentController extends Controller
             $client->requestPost($bodyDemandPositions);
         }
 
-        $uri = 'https://online.moysklad.ru/api/remap/1.2/entity/demand'.'/'.$createdDemand->id;
+        $uri = 'https://api.moysklad.ru/api/remap/1.2/entity/demand'.'/'.$createdDemand->id;
         $client->setRequestUrl($uri);
         $bodyOrder = [
             "customerOrder" => [
@@ -226,7 +226,7 @@ class DocumentController extends Controller
 
     private function createReturn($apiKey,$metaDemand,$formattedOrder,$entries)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/salesreturn";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn";
         $client = new ApiClientMC($uri,$apiKey);
         $docBodyReturn = [
             "agent" => $formattedOrder['agent'],
@@ -248,12 +248,12 @@ class DocumentController extends Controller
         if(array_key_exists("organizationAccount",$formattedOrder)){
             $docBodyReturn["organizationAccount"] = $formattedOrder['organizationAccount'];
         }
-        
+
 
 
         $createdReturn = $client->requestPost($docBodyReturn);
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/salesreturn"."/".$createdReturn->id."/positions";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn"."/".$createdReturn->id."/positions";
         $client->setRequestUrl($uri);
         foreach($entries as $entry) {
             $bodyReturnPositions = [
@@ -274,9 +274,9 @@ class DocumentController extends Controller
     {
         $uri = null;
         if ($isPayment == 2) {
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/paymentout";
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/paymentout";
         } elseif($isPayment == 1) {
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/cashout";
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/cashout";
         }
 
         $client = new ApiClientMC($uri, $apiKey);
@@ -306,7 +306,7 @@ class DocumentController extends Controller
         if(array_key_exists("organizationAccount",$formattedOrder)){
             $docBody["organizationAccount"] = $formattedOrder['organizationAccount'];
         }
-        
+
         $client->requestPost($docBody);
     }
 
@@ -314,8 +314,8 @@ class DocumentController extends Controller
     {
         // if($payments == null && $demands == null){
         //     $this->initDocuments($orderEntries,$statusOrder,$metaOrder,$isPayment, $formattedOrder, $apiKey);
-        // } 
-        
+        // }
+
         $meta = $metaOrder;
 
         $sum = 0;
@@ -346,7 +346,7 @@ class DocumentController extends Controller
                             if($demandOption == 0){
                                 $this->deletePayments($payments,$apiKey);
                             }
-                        } 
+                        }
 
                         if($demands == null){
                             if($demandOption > 0){
@@ -374,22 +374,22 @@ class DocumentController extends Controller
 
                             if($demandOption == 2 && $metaDemand != null){
                                 $this->createFactureout($apiKey,$metaDemand);
-                            } 
+                            }
 
                             if($metaReturn != null && $paymentOption>0){
                                 $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
                             }
-                            
+
                         }
 
-                           
-              
+
+
                 break;
             case 'COMPLETED':
               // "Доставлен";
               if ($payments == null && $paymentOption > 0) {
                 $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
-              } 
+              }
 
               if($demandOption > 0){
                 $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
@@ -398,8 +398,8 @@ class DocumentController extends Controller
                 }
               }
 
-              
-              
+
+
             break;
             case 'KASPI_DELIVERY_RETURN_REQUESTED':
                 case 'RETURN_ACCEPTED_BY_MERCHANT':
@@ -408,14 +408,14 @@ class DocumentController extends Controller
                     $metaDemand = null;
                     if ($payments == null && $paymentOption > 0) {
                         $this->createPayInDocument($apiKey,$meta,$paymentOption,$formattedOrder,$sum);
-                      } 
-        
+                      }
+
                       if($demands == null){
 
                         if($demandOption > 0){
                            $metaDemand = $this->createDenamd($apiKey,$meta,$formattedOrder,$orderEntries);
                         }
-                        
+
                       } else {
                         foreach($demands as $demand){
                             $metaDemand = $demand->meta;
@@ -425,16 +425,16 @@ class DocumentController extends Controller
 
                       if($demandOption == 2 && $metaDemand != null){
                         $this->createFactureout($apiKey,$metaDemand);
-                      } 
+                      }
 
                       if($demandOption > 0 && $metaDemand != null){
                         $metaReturn = $this->createReturn($apiKey,$metaDemand,$formattedOrder,$orderEntries);
                         if($paymentOption > 0){
                             $this->createPayOutDocument($apiKey,$metaReturn,$paymentOption,$formattedOrder,$sum);
                         }
-                        
+
                       }
-                    
+
                 break;
         }
 

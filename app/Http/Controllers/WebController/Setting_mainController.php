@@ -35,11 +35,11 @@ class Setting_mainController extends Controller
         }
         else $success = "0" ;
 
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
-        $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
-        $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
-        $url_store = "https://online.moysklad.ru/api/remap/1.2/entity/store";
+        $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+        $url_organization = "https://api.moysklad.ru/api/remap/1.2/entity/organization";
+        $url_saleschannel = "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel";
+        $url_project = "https://api.moysklad.ru/api/remap/1.2/entity/project";
+        $url_store = "https://api.moysklad.ru/api/remap/1.2/entity/store";
 
         $Setting = new getSettingVendorController($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;

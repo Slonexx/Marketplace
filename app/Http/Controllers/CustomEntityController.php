@@ -8,7 +8,7 @@ class CustomEntityController extends Controller
 {
     public function createCustomEntity($apiKey, $entityName, $values)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customentity";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customentity";
         $client = new ApiClientMC($uri,$apiKey);
         $bodyEntity = [
             "name" => $entityName,
@@ -24,7 +24,7 @@ class CustomEntityController extends Controller
 
     public function createEntityElement($apiKey,$entityId,$elementName)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customentity/".$entityId;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customentity/".$entityId;
         $client = new ApiClientMC($uri,$apiKey);
         $bodyEntityEl = [
             "name" => $elementName,

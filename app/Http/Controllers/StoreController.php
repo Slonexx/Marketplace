@@ -9,7 +9,7 @@ class StoreController extends Controller
 {
     public function getKaspiStore($storeName,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/store?search=".$storeName;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/store?search=".$storeName;
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;
@@ -32,7 +32,7 @@ class StoreController extends Controller
 
     public function createStore($storeName,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/store";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/store";
         $client = new ApiClientMC($uri,$apiKey);
         $store = [
             "name" => $storeName,

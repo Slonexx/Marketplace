@@ -8,7 +8,7 @@ class SalesChannelController extends Controller
 {
     public function getSaleChannel($saleChannelName,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel?search=".$saleChannelName;
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel?search=".$saleChannelName;
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;
@@ -33,7 +33,7 @@ class SalesChannelController extends Controller
 
     public function createSaleChannel($saleChannelName,$apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel";
         $client = new ApiClientMC($uri,$apiKey);
         $saleChannel = [
             "name" => $saleChannelName,

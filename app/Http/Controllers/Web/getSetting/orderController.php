@@ -30,9 +30,9 @@ class orderController extends Controller
         if ($CheckCreatProduct == null) $CheckCreatProduct = "1";
         if ($Store == null) $Store = "0";
 
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
-        $url_store = "https://online.moysklad.ru/api/remap/1.2/entity/store";
+        $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+        $url_organization = "https://api.moysklad.ru/api/remap/1.2/entity/organization";
+        $url_store = "https://api.moysklad.ru/api/remap/1.2/entity/store";
 
         if($Organization != null){
             $urlCheck = $url_organization . "/" . $Organization;

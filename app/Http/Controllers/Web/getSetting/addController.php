@@ -17,9 +17,9 @@ class addController extends Controller
         $mainSetting = new getMainSetting($accountId);
 
         $TokenMoySklad = $Setting->TokenMoySklad;
-        $url_customerorder = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $url_saleschannel = "https://online.moysklad.ru/api/remap/1.2/entity/saleschannel";
-        $url_project = "https://online.moysklad.ru/api/remap/1.2/entity/project";
+        $url_customerorder = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+        $url_saleschannel = "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel";
+        $url_project = "https://api.moysklad.ru/api/remap/1.2/entity/project";
         $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
             $pool->as('body_customerorder')->withToken($TokenMoySklad)->get($url_customerorder),
             $pool->as('body_saleschannel')->withToken($TokenMoySklad)->get($url_saleschannel),

@@ -8,7 +8,7 @@ class PriceTypeController extends Controller
 {
     public function getPriceType($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/context/companysettings/pricetype";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/context/companysettings/pricetype";
         $client = new ApiClientMC($uri,$apiKey);
         $json = $client->requestGet();
         $foundedMeta = null;

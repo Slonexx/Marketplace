@@ -129,7 +129,7 @@
                                             @php
                                                 $id = $row->id;
                                                 $array_element = [];
-                                                $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
+                                                $url_accounts = "https://api.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
                                                 $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
                                                 $Body_accounts = $clinet->requestGet()->rows;
 
@@ -159,7 +159,7 @@
                                                 @php
                                                     $id = $row->id;
                                                     $array_element = [];
-                                                    $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
+                                                    $url_accounts = "https://api.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
                                                     $clinet = new \App\Http\Controllers\ApiClientMC($url_accounts, $apiKey);
                                                     $Body_accounts = $clinet->requestGet()->rows;
 

@@ -64,12 +64,12 @@ class ProductController extends Controller
 
     public function getMsProducts($apiKey)
     {
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$apiKey);
         $jsonProducts = $client->requestGet();
         $productsFromMsOpt1 = [];
         $productsFromMsOpt2 = [];
-        
+
         $count = 0;
         foreach($jsonProducts->rows as $key=>$row){
             if(property_exists($row, 'article') == true){
@@ -77,7 +77,7 @@ class ProductController extends Controller
             } else {
                 $productsFromMsOpt1[$count] = "";
             }
-            
+
             $productsFromMsOpt2[$count] = $row->name;
             $count++;
         }
@@ -88,7 +88,7 @@ class ProductController extends Controller
         ];
     }
 
-    public function getNotAddedProducts($tokenMs,$tokenKaspi, $urlKaspi, $option) 
+    public function getNotAddedProducts($tokenMs,$tokenKaspi, $urlKaspi, $option)
     {
        $productsFromKaspi = $this->getKaspiProducts($tokenKaspi,$tokenMs, $urlKaspi);
        //$productsFromMs = $this->getMsProducts($tokenMs);
@@ -125,7 +125,7 @@ class ProductController extends Controller
                     }
                     break;
             }
-            
+
        }
        return $notAddedProducts;
     }
@@ -133,18 +133,18 @@ class ProductController extends Controller
     public function searchProductMs($article,$name,$apiKey)
     {
         if($article != null && $name != null){
-            $urlArticleName = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article
+            $urlArticleName = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article
             .";name=".urlencode($name);
             $client = new ApiClientMC($urlArticleName,$apiKey);
             $json = $client->requestGet();
             return ($json->meta->size > 0);
         } elseif($article != null && $name == null){
-            $urlArticle = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article;
+            $urlArticle = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=article=".$article;
             $client = new ApiClientMC($urlArticle,$apiKey);
             $json = $client->requestGet();
             return ($json->meta->size > 0);
         } elseif($article == null && $name != null){
-             $urlName = "https://online.moysklad.ru/api/remap/1.2/entity/product?filter=name=".urlencode($name);
+             $urlName = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=name=".urlencode($name);
             $client = new ApiClientMC($urlName,$apiKey);
             $json = $client->requestGet();
             return ($json->meta->size > 0);
@@ -169,10 +169,10 @@ class ProductController extends Controller
         $urlKaspi = "https://kaspi.kz/shop/api/v2/orders?page[number]=0&page[size]=20&filter[orders][state]=".
         $request->state."&filter[orders][creationDate][\$ge]=".
         $fdate."&filter[orders][creationDate][\$le]=".$sdate;
-        
+
         $products = $this->getNotAddedProducts($request->tokenMs,$request->tokenKaspi,$urlKaspi,$request->option);
 
-        $uri = "https://online.moysklad.ru/api/remap/1.2/entity/product";
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $client = new ApiClientMC($uri,$request->tokenMs);
 
         foreach ($products as $product){

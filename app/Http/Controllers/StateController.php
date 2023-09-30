@@ -15,7 +15,7 @@ class StateController extends Controller
         if($status == null){
             return null;
         } else {
-            $uri = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+            $uri = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
             $client = new ApiClientMC($uri,$apiKey);
             $jsonStates = $client->requestGet();
             $foundedState = null;

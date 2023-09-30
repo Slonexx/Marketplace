@@ -27,8 +27,8 @@ class postOrderController extends Controller
         } else $PaymentAccount = null;
 
         $TokenMoySklad = $Setting->TokenMoySklad;
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
-        $url_organization = "https://online.moysklad.ru/api/remap/1.2/entity/organization";
+        $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
+        $url_organization = "https://api.moysklad.ru/api/remap/1.2/entity/organization";
 
         $urlCheck = $url_organization . "/" . $request->Organization;
         $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [

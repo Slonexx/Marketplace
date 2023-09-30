@@ -109,7 +109,7 @@
                                     @php
                                         $id = $row->id;
                                         $array_element = [];
-                                        $url_accounts = "https://online.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
+                                        $url_accounts = "https://api.moysklad.ru/api/remap/1.2/entity/organization/".$id."/accounts";
                                         $clinet = new \App\Clients\MsClient($apiKey);
                                         $Body_accounts = $clinet->get($url_accounts)->rows;
                                     @endphp

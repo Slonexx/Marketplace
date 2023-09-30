@@ -34,7 +34,7 @@ class demandController extends Controller
     }
 
     public function info_object_Id($object_Id, $Setting){
-        $url = "https://online.moysklad.ru/api/remap/1.2/entity/demand/".$object_Id;
+        $url = "https://api.moysklad.ru/api/remap/1.2/entity/demand/".$object_Id;
         $Client = new MsClient($Setting->tokenMs);
         $Body = $Client->get($url);
         $attributes = null;

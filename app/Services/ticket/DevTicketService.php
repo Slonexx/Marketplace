@@ -384,13 +384,13 @@ class DevTicketService
         $url = null;
         switch ($enType){
             case "customerorder":
-                $url = "https://online.moysklad.ru/api/remap/1.2/entity/customerorder/".$enId;
+                $url = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/".$enId;
             break;
             case "demand":
-                $url = "https://online.moysklad.ru/api/remap/1.2/entity/demand/".$enId;
+                $url = "https://api.moysklad.ru/api/remap/1.2/entity/demand/".$enId;
             break;
             case "salesreturn":
-                $url = "https://online.moysklad.ru/api/remap/1.2/entity/salesreturn/".$enId;
+                $url = "https://api.moysklad.ru/api/remap/1.2/entity/salesreturn/".$enId;
             break;
         }
         return $url;
@@ -589,7 +589,7 @@ class DevTicketService
     private function getUUH(getSetting $Setting, mixed $id_entity, mixed $entity_type): array
     {
         $Client = new MsClient($Setting->tokenMs);
-        $body = $Client->get('https://online.moysklad.ru/api/remap/1.2/entity/'.$entity_type.'/'.$id_entity);
+        $body = $Client->get('https://api.moysklad.ru/api/remap/1.2/entity/'.$entity_type.'/'.$id_entity);
         $agent = $Client->get($body->agent->meta->href);
         $result = [];
 
