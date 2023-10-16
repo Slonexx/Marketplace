@@ -37,18 +37,11 @@ class ExcelController extends Controller
                 continue;
             }
 
-            // if(property_exists($row, 'attributes') == true) {
-            //     $product['brand'] = $row->attributes[0]->value;
-            // } else {
-            //     continue;
-            // }
-
             $isHaveBrand = false;
             $isHaveCheckToAdd = false;
             $checkedMetaToAdd = null;
             $isAddedToKaspi = false;
             foreach($row->attributes as $attribute){
-                //print_r($attribute);
 
                 if($attribute->name == "brand (KASPI)"){
                     $product['brand'] = $attribute->value;
@@ -98,7 +91,7 @@ class ExcelController extends Controller
                 array_push($arrProduct,$product);
         }
 
-        //dd($arrProduct);
+        dd($arrProduct);
 
         if(count($arrProduct) > 0 ) {
             $export = new ProductExport($arrProduct);
