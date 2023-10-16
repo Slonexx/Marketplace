@@ -30,7 +30,7 @@ class ExcelController extends Controller
         $arrProduct = array();
         foreach ($data->rows as $row) {
             $product = null;
-
+            dd($product);
             if (property_exists($row, 'article') == true) {
                 $product['SKU'] = $row->article;
             } else {
@@ -89,9 +89,6 @@ class ExcelController extends Controller
             $product['preorder'] = "";
 
             if ($checkedMetaToAdd != null) $this->changeCheckedAttribute($apiKey, $checkedMetaToAdd, $row->id);
-
-
-            dd($product);
 
             $arrProduct[] = $product;
         }
