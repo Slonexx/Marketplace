@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\getSetting;
 
+use App\Clients\MsClient;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getMainSetting;
@@ -16,6 +17,7 @@ class orderController extends Controller
         $Setting = new getSettingVendorController($accountId);
         $mainSetting = new getMainSetting($accountId);
         $TokenMoySklad = $Setting->TokenMoySklad;
+        $ClientMs = new MsClient($TokenMoySklad);
 
         $Organization = $Setting->Organization;
         $PaymentDocument = $Setting->PaymentDocument;
@@ -36,26 +38,21 @@ class orderController extends Controller
 
         if($Organization != null){
             $urlCheck = $url_organization . "/" . $Organization;
-            $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
-                $pool->as('body')->withToken($TokenMoySklad)->get($url),
-                $pool->as('organization')->withToken($TokenMoySklad)->get($urlCheck),
-                $pool->as('body_organization')->withToken($TokenMoySklad)->get($url_organization),
-                $pool->as('body_store')->withToken($TokenMoySklad)->get($url_store),
-            ]);
-            $Organization = $responses['organization']->object();
+            $Body = $ClientMs->get($url)->states;
+            $body_organization = $ClientMs->get($url_organization)->rows;
+            $Body_store = $ClientMs->get($url_store)->rows;
+            $Organization = $ClientMs->get($urlCheck);
         } else {
             $Organization = "0";
-            $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
-                $pool->as('body')->withToken($TokenMoySklad)->get($url),
-                $pool->as('body_organization')->withToken($TokenMoySklad)->get($url_organization),
-                $pool->as('body_store')->withToken($TokenMoySklad)->get($url_store),
-            ]);
+            $Body = $ClientMs->get($url)->states;
+            $body_organization = $ClientMs->get($url_organization)->rows;
+            $Body_store = $ClientMs->get($url_store)->rows;
         }
 
         return view('setting.order',[
-            'Body' => $responses['body']->object()->states,
-            "Body_organization" => $responses['body_organization']->object()->rows,
-            "Body_store" => $responses['body_store']->object()->rows,
+            'Body' => $Body,
+            "Body_organization" => $body_organization,
+            "Body_store" => $Body_store,
 
             "Organization" => $Organization,
             "PaymentDocument" => $PaymentDocument,
