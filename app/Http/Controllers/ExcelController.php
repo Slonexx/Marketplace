@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Clients\MsClient;
 use Illuminate\Http\Request;
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -13,25 +14,27 @@ class ExcelController extends Controller
 
         $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $apiKey = $TokenMoySklad;
-        $client = new ApiClientMC($uri,$apiKey);
-        $data = $client->requestGet();
+        $client = new MsClient($apiKey);
+        $data = $client->get($uri);
 
         //dd($data);
         $arrProduct = array();
         foreach ($data->rows as $row) {
             $product = null;
-            //dd($row);
-            if(!property_exists($row, 'attributes')) {
+
+            if (property_exists($row, 'attributes')) {
+
+            } else {
                 continue;
             }
 
-            if(property_exists($row, 'article') == true) {
+            if (property_exists($row, 'article') == true) {
                 $product['SKU'] = $row->article;
             } else {
                 continue;
             }
 
-            if(property_exists($row, 'name') == true) {
+            if (property_exists($row, 'name') == true) {
                 $product['model'] = $row->name;
             } else {
                 continue;
@@ -41,72 +44,73 @@ class ExcelController extends Controller
             $isHaveCheckToAdd = false;
             $checkedMetaToAdd = null;
             $isAddedToKaspi = false;
-            foreach($row->attributes as $attribute){
+            foreach ($row->attributes as $attribute) {
 
-                if($attribute->name == "brand (KASPI)"){
+                if ($attribute->name == "brand (KASPI)") {
                     $product['brand'] = $attribute->value;
                     $isHaveBrand = true;
-                } elseif($attribute->name == "Добавлять товар на Kaspi"){
-                    if($attribute->value == 1){
+                } elseif ($attribute->name == "Добавлять товар на Kaspi") {
+                    if ($attribute->value == 1) {
                         $isHaveCheckToAdd = true;
                         $checkedMetaToAdd = $attribute->meta;
                     }
-                }elseif($attribute->name == 'Опубликован на Kaspi'){
-                   if($attribute->value == 1) {
+                } elseif ($attribute->name == 'Опубликован на Kaspi') {
+                    if ($attribute->value == 1) {
                         $isAddedToKaspi = true;
-                   }
+                    }
                 } else {
                     break;
                 }
             }
 
-            if($isAddedToKaspi == true){
-                 continue;
-            }
-
-            if($isHaveBrand == false || $isHaveCheckToAdd == false){
+            if ($isAddedToKaspi == true) {
                 continue;
             }
 
-            if(property_exists($row,'salePrices') == true) {
+            if ($isHaveBrand == false || $isHaveCheckToAdd == false) {
+                continue;
+            }
+
+            if (property_exists($row, 'salePrices') == true) {
                 if ($row->salePrices[0]->value <= 0) continue;
-                else{
-                   $product['price'] = $row->salePrices[0]->value;
-                   $product['price'] /= 100.0;
+                else {
+                    $product['price'] = $row->salePrices[0]->value;
+                    $product['price'] /= 100.0;
                 }
             } else {
                 continue;
             }
-                $product['PP1'] = "yes";
-                $product['PP2'] = "yes";
-                $product['PP3'] = "yes";
-                $product['PP4'] = "yes";
-                $product['PP5'] = "no";
-                $product['preorder'] = "";
-                //dd($product);
+            $product['PP1'] = "yes";
+            $product['PP2'] = "yes";
+            $product['PP3'] = "yes";
+            $product['PP4'] = "yes";
+            $product['PP5'] = "no";
+            $product['preorder'] = "";
+            //dd($product);
 
-                if($checkedMetaToAdd != null)
-                $this->changeCheckedAttribute($apiKey,$checkedMetaToAdd,$row->id);
+            if ($checkedMetaToAdd != null) $this->changeCheckedAttribute($apiKey, $checkedMetaToAdd, $row->id);
+
+            dd($product);
 
             $arrProduct[] = $product;
         }
 
         //dd($arrProduct);
 
-        if(count($arrProduct) > 0 ) {
+        if (count($arrProduct) > 0) {
             $export = new ProductExport($arrProduct);
             $today = date("Y-m-d H:i:s");
-            return Excel::download($export, 'products'.$today.'.xlsx');
+            return Excel::download($export, 'products' . $today . '.xlsx');
         } else {
             return redirect()->back();
         }
 
     }
 
-    public function changeCheckedAttribute($apiKey,$meta,$id)
+    public function changeCheckedAttribute($apiKey, $meta, $id)
     {
-        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product/".$id;
-        $client = new ApiClientMC($uri,$apiKey);
+        $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product/" . $id;
+        $client = new ApiClientMC($uri, $apiKey);
         $body = [
             'attributes' => [
                 0 => [
