@@ -23,8 +23,8 @@
         <form class="mt-3" action="{{route('ExcelProducts' , ['TokenMoySklad' => $TokenMoySklad] )}}" method="POST">
             <div class="row">
                 <div class="col-sm-8">Количество товаров которые можно отправить в Магазин Kaspi: <span id="count"></span> </div>
-                <div id="btn" class="col-sm-4 d-flex justify-content-end text-black btnP" style="display: none">
-                    <button type="submit" class="btn btn-outline-dark">Скачать Excel</button>
+                <div class="col-sm-4 d-flex justify-content-end text-black btnP">
+                    <button id="btn" type="submit" class="btn btn-outline-dark"  style="display: none">Скачать Excel</button>
                 </div>
             </div>
         </form>
