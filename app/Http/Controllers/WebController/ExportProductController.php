@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebController;
 
+use App\Clients\MsClient;
 use App\Http\Controllers\ApiClientMC;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Controller;
@@ -22,26 +23,29 @@ class ExportProductController extends Controller
     public function getProductCount($apiKey)
     {
         $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
-        $client = new ApiClientMC($uri,$apiKey);
-        $jsonProducts = $client->requestGet();
+        $client = new MsClient($apiKey);
+
+        $metadata = $client->get('https://api.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes')->rows;
+        foreach ($metadata as $item){
+            if ($item->name == 'Добавлять товар на Kaspi') {
+                $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=".$item->meta->href.'=true';
+            }
+        }
+        $jsonProducts = $client->get($uri);
         $count = 0;
         foreach($jsonProducts->rows as $row){
             $flagAddToKaspi = false;
             $flagCheckNotPublish = false;
             if(property_exists($row, 'attributes')){
                  foreach($row->attributes as $attrib){
-                    if( $attrib->name == 'Добавлять товар на Kaspi'
-                        && $attrib->type == 'boolean' && $attrib->value == 1)
-                    {
+                    if($attrib->name == 'Добавлять товар на Kaspi' && $attrib->value) {
                         $flagAddToKaspi = true;
-                    } elseif ($attrib->name == 'Опубликован на Kaspi'
-                    && $attrib->type == 'boolean' && $attrib->value == 0) {
+                    } elseif ($attrib->name == 'Опубликован на Kaspi' && $attrib->value == 0) {
                         $flagCheckNotPublish = true;
                     }
                 }
             }
-            if($flagAddToKaspi == true && $flagCheckNotPublish == true){
-                $count++;
+            if($flagAddToKaspi and !$flagCheckNotPublish){ $count++;
             }
         }
         return $count;

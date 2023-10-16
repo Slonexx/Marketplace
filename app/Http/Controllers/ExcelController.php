@@ -17,13 +17,19 @@ class ExcelController extends Controller
         $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $apiKey = $TokenMoySklad;
         $client = new MsClient($apiKey);
+
+        $metadata = $client->get('https://api.moysklad.ru/api/remap/1.2/entity/product/metadata/attributes')->rows;
+        foreach ($metadata as $item){
+            if ($item->name == 'Добавлять товар на Kaspi') {
+                $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product?filter=".$item->meta->href.'=true';
+            }
+        }
+
         $data = $client->get($uri);
 
         $arrProduct = array();
         foreach ($data->rows as $row) {
             $product = null;
-
-            if (!property_exists($row, 'attributes')) { continue; }
 
             if (property_exists($row, 'article') == true) {
                 $product['SKU'] = $row->article;
@@ -47,7 +53,7 @@ class ExcelController extends Controller
                     $product['brand'] = $attribute->value;
                     $isHaveBrand = true;
                 } elseif ($attribute->name == "Добавлять товар на Kaspi") {
-                    if ($attribute->value == 1) {
+                    if ($attribute->value) {
                         $isHaveCheckToAdd = true;
                         $checkedMetaToAdd = $attribute->meta;
                     }
@@ -60,7 +66,7 @@ class ExcelController extends Controller
                 }
             }
 
-            if ($isAddedToKaspi == true) {
+            if ($isAddedToKaspi) {
                 continue;
             }
 
