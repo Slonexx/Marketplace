@@ -88,10 +88,10 @@ class ExcelController extends Controller
                 if($checkedMetaToAdd != null)
                 $this->changeCheckedAttribute($apiKey,$checkedMetaToAdd,$row->id);
 
-                array_push($arrProduct,$product);
+            $arrProduct[] = $product;
         }
 
-        dd($arrProduct);
+        //dd($arrProduct);
 
         if(count($arrProduct) > 0 ) {
             $export = new ProductExport($arrProduct);
