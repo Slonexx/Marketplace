@@ -36,7 +36,7 @@
 
         if (count > 0) {
             window.document.getElementById('btn').style.display = 'flex'
-        }
+        } else  window.document.getElementById('btn').style.display = 'none'
 
     </script>
 
