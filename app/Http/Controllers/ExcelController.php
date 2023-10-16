@@ -58,7 +58,7 @@ class ExcelController extends Controller
                         $checkedMetaToAdd = $attribute->meta;
                     }
                 } elseif ($attribute->name == 'Опубликован на Kaspi') {
-                    if ($attribute->value == 1) {
+                    if ($attribute->value) {
                         $isAddedToKaspi = true;
                     }
                 } else {
@@ -66,9 +66,7 @@ class ExcelController extends Controller
                 }
             }
 
-            if ($isAddedToKaspi) {
-                continue;
-            }
+            if ($isAddedToKaspi) { continue; }
 
             if ($isHaveBrand == false || $isHaveCheckToAdd == false) {
                 continue;
