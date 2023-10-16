@@ -69,7 +69,7 @@ class ExcelController extends Controller
             }
 
             if ($isAddedToKaspi) { continue; }
-            dd($product, $isHaveBrand, $isHaveCheckToAdd);
+            //dd($product, $isHaveBrand, $isHaveCheckToAdd);
             if ($isHaveBrand == false || $isHaveCheckToAdd == false) {
                 continue;
             }
