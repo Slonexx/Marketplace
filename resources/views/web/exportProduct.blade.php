@@ -22,13 +22,22 @@
         </div>
         <form class="mt-3" action="{{route('ExcelProducts' , ['TokenMoySklad' => $TokenMoySklad] )}}" method="POST">
             <div class="row">
-                <div class="col-sm-8">Количество товаров которые можно отправить в Магазин Kaspi: {{$Count}} </div>
-                <div class="col-sm-4 d-flex justify-content-end text-black btnP">
+                <div class="col-sm-8">Количество товаров которые можно отправить в Магазин Kaspi: <span id="count"></span> </div>
+                <div id="btn" class="col-sm-4 d-flex justify-content-end text-black btnP" style="display: none">
                     <button type="submit" class="btn btn-outline-dark">Скачать Excel</button>
                 </div>
             </div>
         </form>
     </div>
+
+    <script>
+        let count = '{{$Count}}'
+
+        if (count > 0) {
+            window.document.getElementById('btn').style.display = 'flex'
+        }
+
+    </script>
 
 @endsection
 
