@@ -21,6 +21,10 @@ class ExcelController extends Controller
         foreach ($data->rows as $row) {
             $product = null;
             //dd($row);
+            if(!property_exists($row, 'attributes')) {
+                continue;
+            }
+
             if(property_exists($row, 'article') == true) {
                 $product['SKU'] = $row->article;
             } else {
