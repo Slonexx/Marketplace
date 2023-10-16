@@ -12,12 +12,13 @@ class ExcelController extends Controller
     public function getProductsExcel(Request $request, $TokenMoySklad)
     {
 
+
+
         $uri = "https://api.moysklad.ru/api/remap/1.2/entity/product";
         $apiKey = $TokenMoySklad;
         $client = new MsClient($apiKey);
         $data = $client->get($uri);
 
-        dd($data);
         $arrProduct = array();
         foreach ($data->rows as $row) {
             $product = null;
