@@ -30,7 +30,7 @@ class ExcelController extends Controller
         $arrProduct = array();
         foreach ($data->rows as $row) {
             $product = null;
-            dd($product);
+
             if (property_exists($row, 'article') == true) {
                 $product['SKU'] = $row->article;
             } else {
@@ -47,6 +47,8 @@ class ExcelController extends Controller
             $isHaveCheckToAdd = false;
             $checkedMetaToAdd = null;
             $isAddedToKaspi = false;
+
+            dd($product);
             foreach ($row->attributes as $attribute) {
 
                 if ($attribute->name == "brand (KASPI)") {
