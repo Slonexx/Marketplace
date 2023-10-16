@@ -48,7 +48,7 @@ class ExcelController extends Controller
             $checkedMetaToAdd = null;
             $isAddedToKaspi = false;
 
-            dd($product);
+
             foreach ($row->attributes as $attribute) {
 
                 if ($attribute->name == "brand (KASPI)") {
@@ -69,7 +69,7 @@ class ExcelController extends Controller
             }
 
             if ($isAddedToKaspi) { continue; }
-
+            dd($product);
             if ($isHaveBrand == false || $isHaveCheckToAdd == false) {
                 continue;
             }
