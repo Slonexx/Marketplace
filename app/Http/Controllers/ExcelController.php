@@ -91,6 +91,8 @@ class ExcelController extends Controller
             if ($checkedMetaToAdd != null) $this->changeCheckedAttribute($apiKey, $checkedMetaToAdd, $row->id);
 
 
+            dd($product);
+
             $arrProduct[] = $product;
         }
 
