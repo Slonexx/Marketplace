@@ -69,11 +69,11 @@ class ExcelController extends Controller
             }
 
             if ($isAddedToKaspi) { continue; }
-
+            dd($product, $isHaveBrand, $isHaveCheckToAdd);
             if ($isHaveBrand == false || $isHaveCheckToAdd == false) {
                 continue;
             }
-            dd($product);
+
             if (property_exists($row, 'salePrices') == true) {
                 if ($row->salePrices[0]->value <= 0) continue;
                 else {
