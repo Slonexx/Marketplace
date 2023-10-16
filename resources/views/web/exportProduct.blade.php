@@ -34,9 +34,9 @@
         let count = '{{$Count}}'
         window.document.getElementById('count').innerText = count
 
-        if (parseInt(count) > 0) {
+        if (count !== '0') {
             window.document.getElementById('btn').style.display = 'flex'
-        } else  window.document.getElementById('btn').style.display = 'none'
+        }
 
     </script>
 
