@@ -28,7 +28,7 @@ Route::post('products', [ProductController::class,'insertProducts']);
 Route::get('property',[ProductPropertyController::class,'getPropertiesByCategory']);
 Route::get('categories',[ProductPropertyController::class,'getAllCategories']);
 Route::get('values', [ProductPropertyController::class,'getValuesByPropertyCategory']);
-Route::get('excelProducts/{TokenMoySklad}', [ExcelController::class,'getProductsExcel'])->name('ExcelProducts');
+Route::post('excelProducts/{TokenMoySklad}', [ExcelController::class,'getProductsExcel'])->name('ExcelProducts');
 
 Route::post('setAttributes', [AttributeController::class, 'createAllAttributes']);
 

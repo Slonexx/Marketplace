@@ -19,7 +19,7 @@
             <p>6. В меню выберите Товары→Загрузить прайс-лист</p>
             <p>7. В открывшемся окне выберите &#34;Загрузить файл вручную&#34; и вставьте ранее скаченный файл</p>
         </div>
-        <form class="mt-3" action="{{route('ExcelProducts' , ['TokenMoySklad' => $TokenMoySklad] )}}" method="get">
+        <form class="mt-3" action="{{route('ExcelProducts' , ['TokenMoySklad' => $TokenMoySklad] )}}" method="POST">
             <div class="row">
                 <div class="col-sm-8">Количество товаров которые можно отправить в Магазин Kaspi: {{$Count}} </div>
                 <div class="col-sm-4 d-flex justify-content-end text-black btnP">
