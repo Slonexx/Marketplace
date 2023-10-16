@@ -17,7 +17,7 @@ class ExcelController extends Controller
         $client = new MsClient($apiKey);
         $data = $client->get($uri);
 
-        //dd($data);
+        dd($data);
         $arrProduct = array();
         foreach ($data->rows as $row) {
             $product = null;
@@ -82,8 +82,6 @@ class ExcelController extends Controller
             $product['PP4'] = "yes";
             $product['PP5'] = "no";
             $product['preorder'] = "";
-
-            dd($product);
 
             if ($checkedMetaToAdd != null) $this->changeCheckedAttribute($apiKey, $checkedMetaToAdd, $row->id);
 
