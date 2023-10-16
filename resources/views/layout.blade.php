@@ -31,7 +31,7 @@
                         <a id="link_9" class="mt-1" href="/kassa/change/{{$accountId}}?isAdmin={{ request()->isAdmin }}"> Смена </a>
                     </div>
                 </div>
-                <a class="mt-1 mb-1" href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
+                <a id="link_21" class="mt-1 mb-1" href="/ExportProduct/{{$accountId}}?isAdmin={{ request()->isAdmin }}">Отправка товаров через Excel </a>
                    {{-- @endif
                 @endif--}}
             </div>

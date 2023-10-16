@@ -22,11 +22,7 @@ class ExcelController extends Controller
         foreach ($data->rows as $row) {
             $product = null;
 
-            if (property_exists($row, 'attributes')) {
-
-            } else {
-                continue;
-            }
+            if (!property_exists($row, 'attributes')) { continue; }
 
             if (property_exists($row, 'article') == true) {
                 $product['SKU'] = $row->article;
@@ -86,11 +82,11 @@ class ExcelController extends Controller
             $product['PP4'] = "yes";
             $product['PP5'] = "no";
             $product['preorder'] = "";
-            //dd($product);
+
+            dd($product);
 
             if ($checkedMetaToAdd != null) $this->changeCheckedAttribute($apiKey, $checkedMetaToAdd, $row->id);
 
-            dd($product);
 
             $arrProduct[] = $product;
         }
