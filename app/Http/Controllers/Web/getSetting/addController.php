@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\getSetting;
 
+use App\Clients\MsClient;
 use App\Http\Controllers\Config\getSettingVendorController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getMainSetting;
@@ -15,25 +16,26 @@ class addController extends Controller
         $isAdmin = $request->isAdmin;
         $Setting = new getSettingVendorController($accountId);
         $mainSetting = new getMainSetting($accountId);
-
         $TokenMoySklad = $Setting->TokenMoySklad;
+        $ClientMs = new MsClient($TokenMoySklad);
+
+
         $url_customerorder = "https://api.moysklad.ru/api/remap/1.2/entity/customerorder/metadata";
         $url_saleschannel = "https://api.moysklad.ru/api/remap/1.2/entity/saleschannel";
         $url_project = "https://api.moysklad.ru/api/remap/1.2/entity/project";
-        $responses = Http::withToken($TokenMoySklad)->pool(fn (Pool $pool) => [
-            $pool->as('body_customerorder')->withToken($TokenMoySklad)->get($url_customerorder),
-            $pool->as('body_saleschannel')->withToken($TokenMoySklad)->get($url_saleschannel),
-            $pool->as('body_project')->withToken($TokenMoySklad)->get($url_project),
-        ]);
+
+        $Body_customerorder = $ClientMs->get($url_customerorder)->states;
+        $body_saleschannel = $ClientMs->get($url_saleschannel)->rows;
+        $body_project = $ClientMs->get($url_project)->rows;
 
         $Saleschannel = $Setting->Saleschannel; $Project = $Setting->Project;
         if ($Saleschannel == null) $Saleschannel = "0"; if ($Project == null) $Project = "0";
 
         return view('setting.add',[
 
-            "Body_customerorder" => $responses['body_customerorder']->object()->states,
-            "Body_saleschannel" => $responses['body_saleschannel']->object()->rows,
-            "Body_project" => $responses['body_project']->object()->rows,
+            "Body_customerorder" => $Body_customerorder,
+            "Body_saleschannel" => $body_saleschannel,
+            "Body_project" => $body_project,
 
             "Saleschannel" => $Saleschannel,  "Project" => $Project,
 
