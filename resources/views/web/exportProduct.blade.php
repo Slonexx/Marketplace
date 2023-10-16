@@ -35,7 +35,7 @@
         window.document.getElementById('count').innerText = count
 
         if (count != '0') {
-            window.document.getElementById('btn').style.display = 'flex'
+            //window.document.getElementById('btn').style.display = 'flex'
         }
 
     </script>
