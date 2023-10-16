@@ -36,16 +36,19 @@ class ExportProductController extends Controller
         foreach($jsonProducts->rows as $row){
             $flagAddToKaspi = false;
             $flagCheckNotPublish = false;
+            $flagBrand = false;
             if(property_exists($row, 'attributes')){
                  foreach($row->attributes as $attrib){
                     if($attrib->name == 'Добавлять товар на Kaspi' && $attrib->value) {
                         $flagAddToKaspi = true;
                     } elseif ($attrib->name == 'Опубликован на Kaspi' && $attrib->value == 0) {
                         $flagCheckNotPublish = true;
+                    } elseif ($row->name == "brand (KASPI)" and $row->value != '') {
+                        $flagBrand = true;
                     }
                 }
             }
-            if($flagAddToKaspi and !$flagCheckNotPublish){ $count++;
+            if($flagAddToKaspi and !$flagCheckNotPublish and $flagBrand){ $count++;
             }
         }
         return $count;
