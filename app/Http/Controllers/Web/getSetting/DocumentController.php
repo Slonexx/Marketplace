@@ -11,6 +11,7 @@ class DocumentController extends Controller
     public function getDocument($accountId, Request $request){
         $isAdmin = $request->isAdmin;
         $Setting = new getSetting($accountId);
+
         $tokenMs = $Setting->tokenMs;
         $paymentDocument = $Setting->paymentDocument;
         $payment_type = $Setting->payment_type;
@@ -57,6 +58,7 @@ class DocumentController extends Controller
         return view('setting.document', [
             'accountId' => $accountId,
             'isAdmin' => $isAdmin,
+
 
             'paymentDocument' => $paymentDocument,
             'payment_type' => $payment_type,

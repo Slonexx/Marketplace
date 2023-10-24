@@ -22,9 +22,11 @@ class postDocumentController extends Controller
 
         }
 
-        return redirect()->route('getWorker', [
-            'accountId' => $accountId,
-            'isAdmin' => $isAdmin,
-        ]);
+        $message = [
+            'alert' => ' alert alert-success alert-dismissible fade show in text-center ',
+            'message' => ' Настройки сохранились ',
+        ];
+
+        return redirect()->route('getDocument', [ 'accountId' => $accountId, 'isAdmin' => $isAdmin, 'message'=>$message ]);
     }
 }
