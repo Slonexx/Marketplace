@@ -15,7 +15,6 @@ class AutomationController extends Controller
 
     public function getAutomation(Request $request, $accountId): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        if ($request->isAdmin == "NO") { return redirect()->route('indexNoAdmin', ["accountId" => $accountId, "isAdmin" => $request->isAdmin]); }
 
         if (isset($request->message)) {
             $message = $request->message;
