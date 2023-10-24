@@ -16,18 +16,9 @@
             </div>
         </div>
 
-
-        @isset($message)
-
-            <div class="mt-2 {{$message['alert']}}"> {{ $message['message'] }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-
-        @endisset
-
-        <div id="Max_device" class="alert alert-danger alert-dismissible fade show in text-center mt-2"
-             role="alert" style="display: none"> Уже максимальное количество кассовых аппаратов </div>
-
+        <div class="mt-3 alert alert-warning alert-dismissible fade show in text-center" style="font-size: 16px">
+            Данный раздел позволяет автоматизировать фискализацию путём создания собственных сценариев.
+        </div>
 
         <form action="/Setting/Automation/{{ $accountId }}?isAdmin={{ $isAdmin }}" method="post">
             @csrf <!-- {{ csrf_field() }} -->
