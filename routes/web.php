@@ -48,7 +48,7 @@ Route::post('/Setting/add/{accountId}', [postAddController::class, 'postAddSetti
 
 
 Route::get('/Setting/info/{accountId}', [indexController::class, 'reKassaInfo']);
-Route::get('/Setting/Device/{accountId}', [DeviceController::class, 'getDevice']);
+Route::get('/Setting/Device/{accountId}', [DeviceController::class, 'getDevice'])->name('getDevice');
 Route::post('/Setting/Device/{accountId}', [postDeviceController::class, 'postDevice']);
 
 Route::get('/Setting/Document/{accountId}', [DocumentController::class, 'getDocument'])->name('getDocument');
