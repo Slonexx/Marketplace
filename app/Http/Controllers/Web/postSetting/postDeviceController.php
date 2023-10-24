@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\getData\getDeviceFirst;
 use App\Http\Controllers\getData\getDevices;
 use App\Http\Controllers\getData\getSetting;
+use App\Services\AdditionalServices\AttributeService;
 use App\Services\workWithBD\DataBaseService;
 use Illuminate\Http\Request;
 
@@ -74,6 +75,9 @@ class postDeviceController extends Controller
         $vendorAPI = new VendorApiController();
         $vendorAPI->updateAppStatus($cfg->appId, $accountId, $app->getStatusName());
         $app->persist();
+
+        $data = ['tokenMs'=> $getSettingVendorController->TokenMoySklad, 'accountId'=>$accountId];
+        (new AttributeService())->setAllAttributesMs($data);
 
         return redirect()->route('getDocument', ['accountId' => $accountId, 'isAdmin' => $isAdmin]);
     }
